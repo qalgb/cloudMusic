@@ -1,11 +1,17 @@
 <template>
   <div>
+    <!-- 歌单推荐 -->
+    <Recommend />
   </div>
 </template>
 
 <script>
+import Recommend from './Recommend'
 export default {
-  name: '',
+  name: 'Home',
+  components: {
+    Recommend
+  }
 }
 </script>
 
