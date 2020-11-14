@@ -1,12 +1,11 @@
 <template>
-  <div>
-  </div>
+  <div>yyy</div>
 </template>
 
 <script>
 export default {
-  name: '',
-}
+  name: "App",
+};
 </script>
 
 <style scoped>
