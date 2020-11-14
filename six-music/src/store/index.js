@@ -7,7 +7,7 @@ import state from './state'
 import mutations from './mutations'
 import actions from './actions'
 import getters from './getters'
-import modules from './modules'
+// import modules from './modules'
 // 使用Vuex
 Vue.use(Vuex)
 //实例化
@@ -18,5 +18,5 @@ export default new Vuex.Store({
   actions,
   getters,
   // 包含多个子模块的对象
-  modules
+  // modules
 })
