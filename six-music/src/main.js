@@ -11,10 +11,6 @@ import store from './store'
 Vue.config.productionTip = false
 
 new Vue({
-  // 定义事件总线
-  beforeCreate () {
-    Vue.prototype.$bus = new Vue()
-  },
   // 渲染App组件
   render: h => h(App),
   router,
