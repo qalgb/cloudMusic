@@ -11,7 +11,6 @@ import store from './store'
 Vue.config.productionTip = false
 
 new Vue({
-
   // 渲染App组件
   render: h => h(App),
   router,
