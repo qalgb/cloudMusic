@@ -6,17 +6,14 @@ import App from './App.vue'
 import router from './router'
 // 引入store
 // import store from './store'
+import { Pagination } from 'element-ui';
 
 // 设置浏览器提示信息
 Vue.config.productionTip = false
-
+Vue.use(Pagination)
 new Vue({
-  // 定义事件总线
-  beforeCreate () {
-    Vue.prototype.$bus = new Vue()
-  },
   // 渲染App组件
   render: h => h(App),
   router,
-  store
+  // store
 }).$mount('#app')

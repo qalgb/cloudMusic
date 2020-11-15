@@ -1,4 +1,4 @@
-// 引入Vue
+/* // 引入Vue
 import Vue from 'vue'
 // 引入Vuex
 import Vuex from 'vuex'
@@ -19,4 +19,4 @@ export default new Vuex.Store({
   getters,
   // 包含多个子模块的对象
   modules
-})
+}) */
