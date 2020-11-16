@@ -11,3 +11,14 @@ th {
   font-family: poppin, Tahoma, Arial, \5fae\8f6f\96c5\9ed1, sans-serif;
   font-family: Tahoma, Arial, \5fae\8f6f\96c5\9ed1, sans-serif/9;
 }
+a {
+  color: #000;
+  text-decoration: none;
+}
+a:hover {
+  color: #31c27c !important;
+  text-decoration: none;
+}
+img {
+  display: block;
+}

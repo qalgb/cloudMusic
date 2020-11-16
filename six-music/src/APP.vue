@@ -1,23 +1,25 @@
 <template>
   <div>
-    <!-- <Header /> -->
-    <!-- <router-view></router-view> -->
-    <Recommend />
+    <Header />
+    <router-view></router-view>
     <!-- <Footer /> -->
   </div>
 </template>
 
 <script>
 // 引入Header组件
-// import Header from './components/Header'
+import Header from './components/Header'
 // 引入Footer组件
 // import Footer from './components/Footer'
-import Recommend from './pages/Home/Recommend'
+// import {reqSongRecommend} from '@/api'
 export default {
   name: 'App',
   components: {
-    Recommend,
+    Header,
   },
+  mounted () {
+    
+  }
 }
 </script>
 
