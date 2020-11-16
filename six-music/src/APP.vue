@@ -1,10 +1,16 @@
 <template>
-  <div></div>
+  <Playlist />
 </template>
 
 <script>
+import Playlist from "./pages/Playlist";
+
 export default {
-  name: "APP",
+  name: "App",
+  //注册组件
+  components: {
+    Playlist,
+  },
 };
 </script>
 
