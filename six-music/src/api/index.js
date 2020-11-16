@@ -6,8 +6,16 @@ export const reqSongListTag = () => ajax.get(`/playlist/hot`);
 // 获取歌单推荐
 export const reqSongRecommend = () => ajax.get(`/personalized?limit=10`);
 // 获取精品歌单
-export const reqSongHotList = (tag) =>
-  ajax.get("/top/playlist/highquality/?cat=" + tag);
+export const reqSongHotList = (tag) => ajax.get('/top/playlist/highquality/?cat=' + tag)
+// 获取新音乐
+export const reqNewSongList = (code) => ajax.get(`/top/song?type=${code}`)
+// 获取banner
+export const reqBanners = () => ajax.get('/homepage/block/page')
+// 获取新碟首发
+export const reqDiscList = (area) => ajax.get(`/album/new?area=${area}&limit=20`)
+// 获取排行榜摘要
+export const reqTopList = () => ajax.get('/toplist/detail')
+
 // 请求所有榜单数据
 export const reqRankInfo = () =>
   ajax({

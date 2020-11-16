@@ -10,5 +10,5 @@ export default [
   {
     path: "/mymusic",
     component: MyMusic,
-  },
+  }
 ];

@@ -22,7 +22,7 @@ VueRouter.prototype.replace = function(
 Vue.use(VueRouter);
 // 实例化路由器并暴露
 const router = new VueRouter({
-  mode: "hash",
+  mode: 'hash',
   routes,
   // 解决路由跳转到滚动的位置
   scrollBehavior(to, from, savedPosition) {
