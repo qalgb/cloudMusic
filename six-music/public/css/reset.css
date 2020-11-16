@@ -31,10 +31,7 @@ small { font-size: 12px; } /* 小于 12px 的中文很难阅读，让 small 正�
 ul, ol, li { list-style: none; }
 
 /* 重置文本格式元素 */
-a { 
-    text-decoration: none; 
-    color: #000 !important;
-}
+a { text-decoration: none; color: #000 !important;}
 
 
 /* 重置表单元素 */

@@ -23,14 +23,18 @@ export const reqRankInfo = () =>
     method: "GET",
   });
 // 请求所有榜单歌曲列表
-export const reqRankSongList = (id) =>
-  ajax({
-    url: `/playlist/detail?${id}`,
-    method: "GET",
-  });
-//请求登录信息
-export const reqLoginInfo = (phoneNum, password) =>
-  ajax.get(`/login/cellphone?phone=${phoneNum}&password=${password}`);
-//获取账户信息
-export const reqUserInfo = (cookie) =>
-  ajax.get(`/user/account?cookie=${cookie}`);
+export const reqRankSongList = (id) => ajax({
+  url:`/playlist/detail?id=${id}`,
+  method: 'GET',
+})
+// 请求歌单评论
+export const reqSongListComment = (id) => ajax({
+  url: `/comment/playlist?id=${id}`,
+  method: 'GET'
+})
+// 发送/删除/回复评论
+// t:0 删除   t:1 发送   t:2 回复 回复必须要用commentId
+export const reqSendOrReqOrDelComment = (t,type,id,content,commentId) => ajax({
+  url: `/comment?t=${t}&type=${type}&id=${id}&content=${content}&commentId=${commentId}`,
+  method: 'GET'
+})

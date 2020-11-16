@@ -50,7 +50,9 @@
       <li><a href="javascript:;" class="smallActive">首页</a></li>
       <li><a href="javascript:;">歌手</a></li>
       <li><a href="javascript:;">新碟</a></li>
-      <li><a href="javascript:;">排行榜</a></li>
+      <li>
+        <router-link to="home/rank">排行榜</router-link>
+      </li>
       <li><a href="javascript:;">分类歌单</a></li>
       <li><a href="javascript:;">电台</a></li>
       <li><a href="javascript:;">MV</a></li>
