@@ -21,7 +21,7 @@ import DiscList from './DiscList'
 import RankList from './RankList'
 
 export default {
-  name: 'Home',
+  name: "Home",
   components: {
     Recommend,
     Launch,
@@ -32,5 +32,4 @@ export default {
 }
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

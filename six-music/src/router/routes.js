@@ -3,6 +3,7 @@ import Home from "../pages/Home";
 import MyMusic from "../pages/MyMusic";
 import Rank from "../pages/Rank"
 
+import Mv from "../pages/Mv";
 export default [
   {
     path: "/",
@@ -15,5 +16,14 @@ export default [
   {
     path: "/home/rank",
     component: Rank,
-  }
+  },
+  {
+    path: "/mv",
+    component: Mv,
+  },
+  {
+    path: "/",
+    redirect: "/",
+  },
+  
 ];

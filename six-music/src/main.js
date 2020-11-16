@@ -5,7 +5,9 @@ import App from "./APP.vue";
 // 引入router
 import router from "./router";
 // 引入store
-import store from "./store";
+import store from './store'
+import { Pagination } from 'element-ui';
+Vue.use(Pagination)
 // 引入antd组件
 import { Button, Icon, Input } from 'ant-design-vue';
 // 引入swiper的样式

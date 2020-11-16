@@ -46,3 +46,5 @@ export const reqSongUrl = (id) => ajax({
   url:`/song/url?${id}`,
   method:'GET',
 })
+// 获取全部mv
+export const reqAllMv = () => ajax.get(`/mv/all`)
