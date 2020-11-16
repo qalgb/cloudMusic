@@ -1,5 +1,7 @@
 import rank from './rank'
+import home from './home'
 
-export default{
+export default {
+  home,
   rank
 }

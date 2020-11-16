@@ -2,16 +2,18 @@
   <div class="pagesHead">
     <div class="pagesHeadInner">
       <h1 class="headLogo">
-        <img
-          src="https://y.gtimg.cn/mediastyle/yqq/img/logo.png?nowebp=1"
-          alt=""
-        />
+        <a href="##">
+          <img
+            src="https://y.gtimg.cn/mediastyle/yqq/img/logo.png?nowebp=1"
+            alt=""
+          />
+        </a>
       </h1>
       <ul class="headNav">
         <li class="musicPavilion">音乐馆</li>
         <li class="myMusic active">我的音乐</li>
-        <li>客户端</li>
-        <li>开放平台</li>
+        <li class="client">客户端</li>
+        <li class="openPlatform">开放平台</li>
         <li class="vip">VIP</li>
       </ul>
       <div class="search">
@@ -20,7 +22,9 @@
           class="searchInput"
           aria-label="请输入搜索内容"
           placeholder="搜索音乐、MV、歌单、用户"
+          v-model="searchInfo"
         />
+        <div class="searchInfo"></div>
         <button><i class="iconSearch"></i></button>
       </div>
       <a href="##" class="userPic">
@@ -33,12 +37,30 @@
       <button class="openVip selectChoose isSelect">开通VIP</button>
       <button class="topUp selectChoose">充值</button>
     </div>
+    <ul class="musicPavilionNav">
+      <li><a href="javascript:;">首页</a></li>
+      <li><a href="javascript:;">歌手</a></li>
+      <li><a href="javascript:;">新碟</a></li>
+      <li>
+        <router-link to="home/rank">排行榜</router-link>
+      </li>
+      <li><a href="javascript:;">分类歌单</a></li>
+      <li><a href="javascript:;">电台</a></li>
+      <li><a href="javascript:;">MV</a></li>
+      <li><a href="javascript:;">数字专辑</a></li>
+      <li><a href="javascript:;">票务</a></li>
+    </ul>
   </div>
 </template>
 
 <script>
 export default {
   name: "Header",
+  data() {
+    return {
+      searchInfo: "",
+    };
+  },
 };
 </script>
 
@@ -72,6 +94,7 @@ export default {
   text-align: center;
   padding: 0 20px;
   font-size: 18px;
+  cursor: pointer;
 }
 
 .headNav li:hover {
@@ -123,6 +146,7 @@ export default {
   height: 16px;
   background-image: url("https://y.gtimg.cn/mediastyle/yqq/img/icon_sprite.png?max_age=2592000&v=85678e8f28c7b4bcad5c209b21b7e3b3&v=85678e8f28c7b4bcad5c209b21b7e3b3");
   background-position: 0 -40px;
+  cursor: pointer;
 }
 
 .userPic {
@@ -173,4 +197,33 @@ export default {
 .topUp {
   width: 83px;
 }
+
+.musicPavilionNav {
+  height: 51px;
+  line-height: 51px;
+  border-top: 1px solid #f2f2f2;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.musicPavilionNav > li {
+  float: left;
+  font-size: 15px;
+  color: #c1c1c1;
+  margin-right: 47px;
+}
+
+.musicPavilionNav > li > a {
+  display: block;
+  text-decoration: none;
+}
+
+.musicPavilionNav > li > a:hover {
+  color: #31c27c !important;
+  text-decoration: none;
+}
+
+
 </style>
