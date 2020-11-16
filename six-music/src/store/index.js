@@ -7,7 +7,7 @@ import state from './state'
 import mutations from './mutations'
 import actions from './actions'
 import getters from './getters'
-import modules from './modules'
+//import modules from './modules'
 // 使用Vuex
 Vue.use(Vuex)
 //实例化
