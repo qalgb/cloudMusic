@@ -230,6 +230,10 @@ export default {
 </script>
 
 <style scoped>
+h3,
+a {
+  color: #999;
+}
 .footerOuter {
   width: 100%;
   color: #999;
@@ -237,6 +241,7 @@ export default {
 }
 
 .footerInner {
+  min-width: 1200px;
   max-width: 1200px;
   margin: 0 auto;
   border-bottom: 1px solid #353535;
@@ -358,6 +363,9 @@ export default {
 }
 
 .footer_copyright {
+  min-width: 1200px;
+  max-width: 1200px;
+  margin: 0 auto;
   text-align: center;
   line-height: 28px;
   padding: 24px 0;

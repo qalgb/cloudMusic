@@ -50,6 +50,7 @@ export default {
 .slide-top-a {
   font-size: 58px;
   font-weight: 200;
+  color: #fff;
   animation: slide-top-a 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
 }
 

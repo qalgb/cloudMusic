@@ -1,4 +1,5 @@
 import Home from "../pages/Home";
+//我的音乐
 import MyMusic from "../pages/MyMusic";
 
 export default [
@@ -9,9 +10,5 @@ export default [
   {
     path: "/mymusic",
     component: MyMusic,
-  },
-  {
-    path: "/",
-    redirect: "/",
   },
 ];
