@@ -69,7 +69,6 @@ export default {
 /* 下班部分头部 */
 .mod_part_detail_top {
   display: flex;
-
   justify-content: space-between;
 }
 /* 全部歌单h2标签 */
@@ -83,7 +82,7 @@ export default {
   display: flex;
   height: 40px;
   line-height: 40px;
-  margin-top: 10px;
+  margin-top: 15px;
 }
 .mod_part_detail_top_right .p1 {
   background-color: #31c27c;
@@ -91,6 +90,7 @@ export default {
   border-color: #31c27c;
   padding: 0 20px;
   border-radius: 2px;
+  height: 40px;
 }
 .mod_part_detail_top_right .p2 {
   border-top-right-radius: 2px;
@@ -116,19 +116,31 @@ export default {
 }
 /* 歌单列表标题图 */
 .playlist__item img {
-  widows: 100%;
-  height: 164px;
+  widows: 224px;
+  height: 224px;
 }
 /* 列表标题名字 */
 .playlist__title_txt {
   margin-top: 10px;
 }
+.playlist__title_txt:hover{
+  color: #31c27c;
+}
+
+
 /* 列表提供者 */
 .playlist__author {
   color: #999;
   height: 22px;
   margin: 5px 0;
 }
+.playlist__author:hover{
+  color: #31c27c;
+}
+
+
+
+
 /* 播放量 */
 .playlist__other {
   color: #999;
@@ -138,7 +150,7 @@ export default {
 /* ---------分割线-------- */
 /* 底部内容 */
 .client_guide {
-  /* margin: 0 auto; */
+  margin-bottom: 20px;
 }
 
 .client_guide h2 {
