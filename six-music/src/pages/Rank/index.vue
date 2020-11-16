@@ -1,30 +1,13 @@
 <template>
   <div class="main">
+    <!-- 左侧导航 -->
     <div class="nav">
       <div class="nav_list">
         <dl>
-          <dt>巅峰榜</dt>
-          <dd><a href="javascript:;">飙升榜</a></dd>
-          <dd><a href="javascript:;">热歌榜</a></dd>
-          <dd><a href="javascript:;">新歌榜</a></dd>
-          <dd><a href="javascript:;">听歌识曲榜</a></dd>
-          <dd><a href="javascript:;">MV榜</a></dd>
-        </dl>
-        <dl>
-          <dt>巅峰榜</dt>
-          <dd><a href="javascript:;">飙升榜</a></dd>
-          <dd><a href="javascript:;">热歌榜</a></dd>
-          <dd><a href="javascript:;">新歌榜</a></dd>
-          <dd><a href="javascript:;">听歌识曲榜</a></dd>
-          <dd><a href="javascript:;">MV榜</a></dd>
-        </dl>
-        <dl>
-          <dt>巅峰榜</dt>
-          <dd><a href="javascript:;">飙升榜</a></dd>
-          <dd><a href="javascript:;">热歌榜</a></dd>
-          <dd><a href="javascript:;">新歌榜</a></dd>
-          <dd><a href="javascript:;">听歌识曲榜</a></dd>
-          <dd><a href="javascript:;">MV榜</a></dd>
+          <dt>所有榜单</dt>
+          <dd v-for="item in rankInfo" :key="item.id">
+            <a href="javascript:;">{{item.name}}</a>
+          </dd>
         </dl>
       </div>
     </div>
@@ -37,11 +20,26 @@
       </div>
       <!-- 按钮列表 -->
       <div class="con_toolbar">
-        <a href="javascript:;" class="active">播放全部</a>
-        <a href="javascript:;">添加到</a>
-        <a href="javascript:;">下载</a>
-        <a href="javascript:;">批量操作</a>
-        <a href="javascript:;">评论(66666)</a>
+        <a href="javascript:;" class="active">
+          <a-icon type="caret-right"/>
+          播放全部
+        </a>
+        <a href="javascript:;">
+          <a-icon type="plus-square" />
+          添加到
+        </a>
+        <a href="javascript:;">
+          <a-icon type="download" />
+          下载
+        </a>
+        <a href="javascript:;">
+          <a-icon type="unordered-list" />
+          批量操作
+        </a>
+        <a href="javascript:;">
+          <a-icon type="message" />
+          评论(66666)
+        </a>
       </div>
       <!-- 歌曲列表 -->
       <div class="con_songlist">
@@ -53,7 +51,10 @@
         <ul class="songlist_list">
           <li>
             <div class="number">1</div>
-            <div class="rank">202%</div>
+            <div class="rank">
+              <a-icon type="rise" />
+              <p>202%</p>
+            </div>
             <div class="name">
               <img src="./1.jpeg" alt="">
               <span>可不可以</span>
@@ -140,8 +141,8 @@
                 <p class="comment_user">时不待我</p>
                 <p class="comment_context">嗯嗯嗯</p>
                 <p class="comment_time">11月13日 19:53</p>
-                <p class="comment_com">评论</p>
-                <p class="comment_like">点赞</p>
+                <p class="comment_com"><a-icon type="message" /> 123</p>
+                <p class="comment_like"><a-icon type="like" /> 123</p>
               </div>
             </li>
             <li class="comment_list_item">
@@ -176,15 +177,33 @@
             </li>
           </ul>
         </div>
-        <div class="footer"></div>
       </div>
     </div>    
   </div>
 </template>
 
 <script>
+import { mapState } from 'vuex'
 export default {
-  name: 'Rank'
+  name: 'Rank',
+  computed: {
+    ...mapState({
+      // 获取数据并且按照标题长度排序
+      rankInfo: state => state.rank.rankInfo.sort(
+        (a,b) => {
+          return a.name.length - b.name.length
+        }
+      ),
+      // 获取所有榜单详细数据
+      
+    })
+  },
+  mounted () {
+    // 分发action
+    this.$store.dispatch('getRankInfo', this.rankInfo)
+    // 获取榜单歌曲列表
+    this.$store.dispatch('getRankSongList')
+  }
 }
 </script>
 
@@ -213,6 +232,7 @@ export default {
     display: block;
     line-height: 22px;
     padding: 8px 17px;
+    color: #000;
 }
 .nav_list dl dd a:hover{
   background-color: #31c27c;
@@ -228,6 +248,7 @@ export default {
   line-height: 64px;
   height: 64px;
   margin-bottom: 10px;
+  overflow: hidden;
 }
 .con_header .header_title{
   float: left;
@@ -241,6 +262,10 @@ export default {
 }
 .con_header .header_rule{
   color: #000;
+}
+.con_toolbar{
+  width: 100%;
+  padding: 0;
 }
 .con_toolbar a{
     border-radius: 2px;
@@ -314,7 +339,7 @@ export default {
 .songlist_list li .rank{
   width: 82px;
   font-size: 12px;
-  line-height: 80px;
+  padding-top: 20px;
   text-align: center;
 }
 .songlist_list li .name{
