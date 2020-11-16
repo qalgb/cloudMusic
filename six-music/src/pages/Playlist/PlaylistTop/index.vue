@@ -1,17 +1,23 @@
 <template>
   <div class="mod_playlist_tag">
     <div
-      v-for="(item, index) in this.result.classIfication.categories"
+      v-for="(items, index) in dataGroup_qiang"
       :key="index"
       class="playlist_tag__list playlist_tag__list--lang"
     >
-      <h3 class="playlist_tag__tit c_tx_thin">{{ item }}</h3>
+      <h3 class="playlist_tag__tit c_tx_thin">{{ categories[index] }}</h3>
       <ul class="playlist_tag__tags" @click="active">
-        <li class="playlist_tag__itembox">国语</li>
-        <li class="playlist_tag__itembox">英语</li>
-        <li class="playlist_tag__itembox">韩语</li>
-        <li class="playlist_tag__itembox">粤语</li>
-        <li class="playlist_tag__itembox">日语</li>
+        <li
+          class="playlist_tag__itembox"
+          v-for="(item, index) in items"
+          :key="index"
+        >
+          {{ item.name }}
+        </li>
+        <!-- <li class="playlist_tag__itembox">英语</li>
+          <li class="playlist_tag__itembox">韩语</li>
+          <li class="playlist_tag__itembox">粤语</li>
+          <li class="playlist_tag__itembox">日语</li> -->
         <li class="playlist_tag__itembox" @click="pupUp">
           更多∨
         </li>
@@ -27,23 +33,24 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
   name: "PlaylistTop",
   data() {
     return {
       isShow: true, //弹出框判断
-      dataGroup: {}, //获取的数据重新整理
+      dataGroup: [], //获取的数据重新整理
+      dataGroup_qiang: "",
     };
   },
 
   //计算属性
   computed: {
-    ...mapState({
-      result: (state) => state.playlist,
-    }),
-    // dataGroup:{...this.result.classIfication.categories}
+    // ...mapState({
+    //   result: (state) => state.playlist,
+    // }),
+    ...mapGetters(["dataList", "categories"]),
   },
   // 方法
   methods: {
@@ -53,8 +60,6 @@ export default {
       window.onclick = () => {
         this.isShow = !this.isShow;
       };
-      const categoriess = this.result.classIfication.categories;
-      console.log(categoriess);
     },
     // 点击添加active属性
     active(e) {
@@ -66,14 +71,20 @@ export default {
   },
 
   // 界面渲染之后的生命周期回调
-  mounted() {
+  async mounted() {
     // 分发getClassIfication
-    this.$store.dispatch("getClassIfication");
+    await this.$store.dispatch("getClassIfication");
 
-    // const categoriess = this.result.classIfication.categories;
-    // console.log(categoriess);
-    // this.dataGroup = { ...categoriess };
-    // console.log(this.dataGroup);
+    //
+
+    this.$nextTick(() => {
+      this.dataGroup = this.dataList;
+
+      this.dataGroup_qiang = this.dataGroup.map((item) => {
+        item.length = 5;
+        return item;
+      });
+    });
   },
 
   //监视
@@ -119,6 +130,8 @@ export default {
   flex-wrap: wrap;
   border-right: 1px solid #cccccc;
   min-width: 220px;
+  /* height: 110px;
+  overflow: hidden; */
 }
 /* 每一个li */
 .playlist_tag__itembox {
