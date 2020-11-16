@@ -5,7 +5,7 @@
       <div class="nav_list">
         <dl>
           <dt>所有榜单</dt>
-          <dd v-for="item in rankInfo" :key="item.id">
+          <dd v-for="item in rankInfo" :key="item.id" @click="getSongList(item.id)">
             <a href="javascript:;">{{item.name}}</a>
           </dd>
         </dl>
@@ -183,26 +183,24 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState,mapGetters } from 'vuex'
 export default {
   name: 'Rank',
   computed: {
     ...mapState({
-      // 获取数据并且按照标题长度排序
-      rankInfo: state => state.rank.rankInfo.sort(
-        (a,b) => {
-          return a.name.length - b.name.length
-        }
-      ),
-      // 获取所有榜单详细数据
-      
-    })
+      rankSongList: state => state.rank.rankSongList
+    }),
+    ...mapGetters(['rankInfo'])
   },
   mounted () {
     // 分发action
-    this.$store.dispatch('getRankInfo', this.rankInfo)
-    // 获取榜单歌曲列表
-    this.$store.dispatch('getRankSongList')
+    this.$store.dispatch('getRankInfo')
+  },
+  methods: {
+    getSongList(id) {
+      // 获取榜单歌曲列表
+      this.$store.dispatch('getRankSongList', id )
+    }
   }
 }
 </script>
@@ -242,7 +240,6 @@ export default {
 /* 右侧内容 */
 .main .content{
   width: 990px;
-  height: 500px;
 }
 .con_header{
   line-height: 64px;
