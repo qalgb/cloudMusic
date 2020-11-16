@@ -17,15 +17,7 @@
     "nprogress": "^0.2.0",
     "swiper": "^5.4.2",
     "vue": "^2.6.11",
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "vue-route": "^1.5.1",
-=======
     "vue-router": "^3.4.9",
->>>>>>> hjy
-=======
-    "vue-router": "^3.4.9",
->>>>>>> lgb
     "vuex": "^3.5.1"
   },
   "devDependencies": {

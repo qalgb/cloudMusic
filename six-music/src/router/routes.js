@@ -9,9 +9,5 @@ export default [
   {
     path: "/mymusic",
     component: MyMusic,
-  },
-  {
-    path: "/",
-    redirect: "/",
-  },
+  }
 ];
