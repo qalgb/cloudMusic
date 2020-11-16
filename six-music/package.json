@@ -16,7 +16,11 @@
     "less-loader": "^7.1.0",
     "nprogress": "^0.2.0",
     "vue": "^2.6.11",
+<<<<<<< HEAD
     "vue-route": "^1.5.1",
+=======
+    "vue-router": "^3.4.9",
+>>>>>>> hjy
     "vuex": "^3.5.1"
   },
   "devDependencies": {
