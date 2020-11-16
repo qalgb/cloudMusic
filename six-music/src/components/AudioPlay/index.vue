@@ -1,6 +1,6 @@
 <template>
   <div class="player">
-    <header>
+    <header class="playHeader">
       <h1 class="playertitle">
         <a href="http://y.qq.com">
           <img class="playerlogo" src="./img/player_logo.png" alt />
@@ -86,6 +86,9 @@
         <div class="playFoot"></div>
       </div>
     </div>
+    <footer class="playFoot">
+      
+    </footer>
   </div>
 </template>
 <script>
@@ -98,13 +101,12 @@ export default {
   height: 100%;
   background-color: rgb(91, 89, 72);
 }
-header {
+.playHeader{
+  height: 100%;
   overflow: hidden;
 }
 .playertitle {
-  position: absolute;
-  top: 20px;
-  left: 20px;
+  margin: 20px 0 0 20px;
 }
 .playerlogo {
   opacity: 0.3;
@@ -119,8 +121,11 @@ header {
   right: 20px;
 }
 .playerLogin .playerPro {
-  float: left;
+  /* display: flex; */
   margin-right: 26px;
+}
+.playerLogin,.userInfo{
+  display: flex;
 }
 .playerLogin .playerPro .playerSlogan {
   font-size: 14px;
@@ -143,9 +148,7 @@ header {
 .playerLogin .playerPro .clientDown:hover {
   color: white;
 }
-.playerLogin .userInfo {
-  float: right;
-}
+
 .playerLogin .userInfo a {
   text-decoration: none;
 }
@@ -169,7 +172,6 @@ header {
 }
 
 .playMain {
-  /* height: 850px; */
   height: 100%;
   max-width: 1626px;
   margin: 0 auto;
@@ -177,8 +179,7 @@ header {
 }
 .playMain .playerForm {
   width: 100%;
-  position: relative;
-  top: 62px;
+  margin-top: 62px;
 }
 
 .playMain .playerSongs .funBtn {
@@ -215,10 +216,10 @@ header {
 .playMain .songsListHeader {
   height: 50px;
   line-height: 50px;
+  display: flex;
+
 }
-.playMain .songsListHeader li {
-  float: left;
-}
+
 .playMain .songListEdit {
   padding-right: 45px;
 }
@@ -244,12 +245,12 @@ header {
   width: 100%;
   display: inline-block;
   border-bottom: 1px solid rgba(255, 255, 255, 0.02);
+  display: flex;
 }
 .songsList input,
 .songsList span {
   line-height: 50px;
   height: 50px;
-  float: left;
 }
 .songListItem {
   width: 33px;
@@ -261,12 +262,9 @@ header {
 }
 .songInfo {
   width: 340px;
-  /* height: 467px; */
-  /* background-color: salmon; */
   display: block;
   display: flex;
   align-items: center;
-  /* flex-wrap: wrap; */
   flex-direction: column;
 }
 .songInfo div{
