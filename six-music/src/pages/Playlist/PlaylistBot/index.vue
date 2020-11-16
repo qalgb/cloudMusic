@@ -11,35 +11,35 @@
 
       <div class="mod_playlist mod_playlist--all">
         <div class="playlist__item">
-          <img src="../../image/300.jpg" />
+          <img src="@/image/300.jpg" />
           <p class="playlist__title_txt">全是回忆!那些年</p>
           <p class="playlist__author">安多</p>
           <p class="playlist__other">播放量: <span>4643.8</span> 万</p>
         </div>
 
         <div class="playlist__item">
-          <img src="../../image/300.jpg" />
+          <img src="@/image/300.jpg" />
           <p class="playlist__title_txt">全是回忆!那些年</p>
           <p class="playlist__author">安多</p>
           <p class="playlist__other">播放量: <span>4643.8</span> 万</p>
         </div>
 
         <div class="playlist__item">
-          <img src="../../image/300.jpg" />
+          <img src="@/image/300.jpg" />
           <p class="playlist__title_txt">全是回忆!那些年</p>
           <p class="playlist__author">安多</p>
           <p class="playlist__other">播放量: <span>4643.8</span> 万</p>
         </div>
 
         <div class="playlist__item">
-          <img src="../../image/300.jpg" />
+          <img src="@/image/300.jpg" />
           <p class="playlist__title_txt">全是回忆!那些年</p>
           <p class="playlist__author">安多</p>
           <p class="playlist__other">播放量: <span>4643.8</span> 万</p>
         </div>
 
         <div class="playlist__item">
-          <img src="../../image/300.jpg" />
+          <img src="@/image/300.jpg" />
           <p class="playlist__title_txt">全是回忆!那些年</p>
           <p class="playlist__author">安多</p>
           <p class="playlist__other">播放量: <span>4643.8</span> 万</p>

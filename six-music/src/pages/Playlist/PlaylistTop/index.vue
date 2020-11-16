@@ -71,6 +71,7 @@ export default {
 .mod_playlist_tag {
   display: flex;
   margin-bottom: 20px;
+  background-image: url("");
   /* background-color: #ddd; */
 }
 /* 小容器，包含h3与ul */
