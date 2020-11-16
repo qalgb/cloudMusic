@@ -30,10 +30,10 @@ code, kbd, pre, samp, tt { font-family: "Courier New", Courier, monospace; } /* 
 small { font-size: 12px; } /* 小于 12px 的中文很难阅读，让 small 正常化 */
 
 /* 重置列表元素 */
-ul, ol { list-style: none; }
+ul, ol, li { list-style: none; }
 
 /* 重置文本格式元素 */
-a { text-decoration: none; color: #666;}
+a { text-decoration: none; color: #000 !important;}
 
 
 /* 重置表单元素 */
@@ -62,11 +62,6 @@ hr {
 /* 让非ie浏览器默认也显示垂直滚动条，防止因滚动条引起的闪烁 */
 html { overflow-y: scroll; }
 
-a:link:hover{
-    color : rgb(79, 76, 212) !important;
-    text-decoration: underline;
-}
-
 /* 清除浮动 */
 .clearfix::after {
     display: block;
@@ -75,3 +70,4 @@ a:link:hover{
     clear: both;
     visibility: hidden;
 }
+
