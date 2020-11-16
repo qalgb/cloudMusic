@@ -6,10 +6,12 @@ import App from './App.vue'
 import router from './router'
 // 引入store
 import store from './store'
+//清除默认样式
+import "./resrt.css"
 
 // 设置浏览器提示信息
 Vue.config.productionTip = false
-
+ 
 new Vue({
   // 定义事件总线
   beforeCreate () {

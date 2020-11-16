@@ -1,11 +1,17 @@
 <template>
   <div>
+    <NewDisc />
   </div>
 </template>
 
 <script>
+import NewDisc from './NewDisc';
 export default {
-  name: '',
+  name: 'Home',
+  components:{
+    NewDisc
+  }
+  
 }
 </script>
 
