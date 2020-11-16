@@ -19,4 +19,4 @@ export default new Vuex.Store({
   // getters,
   // 包含多个子模块的对象
   modules
-}) 
+})
