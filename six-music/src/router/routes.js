@@ -1,18 +1,6 @@
-<<<<<<< HEAD
-// 引入Mv组件
-import Home from '@/pages/Home'
-export default [
-   // Trade路由组件
-   {
-    path: '/',
-    component: Home,
-    
-  },
-]
-=======
 import Home from "../pages/Home";
 import MyMusic from "../pages/MyMusic";
-
+import Mv from "../pages/Mv";
 export default [
   {
     path: "/",
@@ -23,8 +11,12 @@ export default [
     component: MyMusic,
   },
   {
+    path: "/mv",
+    component: Mv,
+  },
+  {
     path: "/",
     redirect: "/",
   },
+  
 ];
->>>>>>> master

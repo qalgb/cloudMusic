@@ -17,3 +17,5 @@ export const reqRankSongList = (id) => ajax({
   url:`/playlist/detail?${id}`,
   method: 'GET',
 })
+// 获取全部mv
+export const reqAllMv = () => ajax.get(`/mv/all`)
