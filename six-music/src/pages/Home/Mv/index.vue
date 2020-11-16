@@ -185,7 +185,7 @@
               </div>
               <div class="li_box_info">
                 <span class="box_info_span"
-                  ><i class="box_info_span_i"></i>2.1万</span
+                  ><i class="box_info_span_i" ></i>2.1万</span
                 >2020-12-25
               </div>
             </div>
@@ -670,9 +670,9 @@ a:hover {
   display: inline-block;
   width: 19px;
   height: 12px;
-  background-position: -180px -20px;
   margin-right: 5px;
   vertical-align: -1px;
+  background: url("../images/elf.png") -180px -20px no-repeat;
 }
 .paging {
   clear: both;
