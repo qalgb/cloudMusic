@@ -9,7 +9,7 @@ import 'nprogress/nprogress.css'
 
 // 设置请求时根路径及请求超时时间
 const ajax = axios.create({
-  baseURL: '/',
+  baseURL: 'http://localhost:3000',
   timeOut: 20000
 })
 // 请求拦截器
