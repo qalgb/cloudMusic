@@ -38,3 +38,11 @@ export const reqSendOrReqOrDelComment = (t,type,id,content,commentId) => ajax({
   url: `/comment?t=${t}&type=${type}&id=${id}&content=${content}&commentId=${commentId}`,
   method: 'GET'
 })
+/*
+  请求歌曲url
+  说明：必须调用此接口, 传入的音乐 id( 可多个 , 用逗号隔开 ), 才能获取对应的音乐的 url,未登录状态返回试听片段(返回字段包含被截取的正常歌曲的开始时间和结束时间)
+*/ 
+export const reqSongUrl = (id) => ajax({
+  url:`/song/url?${id}`,
+  method:'GET',
+})
