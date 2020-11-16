@@ -9,7 +9,6 @@ import router from './router'
 
 // 设置浏览器提示信息
 Vue.config.productionTip = false
-
 new Vue({
   // 渲染App组件
   render: h => h(App),
