@@ -5,7 +5,7 @@
       <div class="nav_list">
         <dl>
           <dt>所有榜单</dt>
-          <dd v-for="(item) in rankInfo" :key="item.id" @click="getSongList(item.id)">
+          <dd v-for="(item) in rankInfo" :key="item.id" @click="getSongList($event,item.id,item.trackNumberUpdateTime)">
             <a href="javascript:;" :class="[item.id === curId ? 'active': '']">{{item.name}}</a>
           </dd>
         </dl>
@@ -14,8 +14,8 @@
     <div class="content">
       <!-- 头部 -->
       <div class="con_header">
-        <h1 class="header_title">流行指数榜</h1>
-        <span class="header_date">2020-11-14</span>
+        <h1 class="header_title">{{rankName}}</h1>
+        <span class="header_date">{{rankTime}}</span>
         <span class="header_rule">榜单规则</span>
       </div>
       <!-- 按钮列表 -->
@@ -56,20 +56,23 @@
         </ul>
       </div>
       <!-- 评论 -->
-      <Comment :songListComment="songListComment"  :curId="curId"/>
+      <Comment :songListComment="songListComment" :curId="curId" @sendComent="getCommentList"/>
     </div>    
   </div>
 </template>
 
 <script>
 import { mapGetters, mapState } from 'vuex'
+import moment from 'moment'
 import List from './List'
 import Comment from '@/components/Comment'
 export default {
   name: 'Rank',
   data () {
     return {
-      curId: null
+      curId: '',
+      rankName: '',
+      rankTime: ''
     }
   },
   components: {
@@ -80,25 +83,34 @@ export default {
     ...mapState({
       songListComment: state => state.rank.songListComment
     }),
-    ...mapGetters(['rankInfo','rankSongList']), 
+    ...mapGetters(['rankInfo','rankSongList']),
+    // getRankTime (id) {
+
+    // } 
   },
   async mounted () {
     // 分发action
     await this.$store.dispatch('getRankInfo')
+    this.curId = this.rankInfo[1].id
+    this.rankTime = this.rankInfo[1].trackNumberUpdateTime
     // 获取歌单列表
-    await this.getSongList()
-    
+    await this.getSongList(event,this.curId,this.rankTime)
   },
   methods: {
     // 点击拉去数据
-    getSongList(id = 3779629) {
-      this.curId = id
-      console.log(this.curId);
+    getSongList(event,id,time) {
+      this.rankName = event.target.innerText || '云音乐新歌榜'
+      this.rankTime = moment(time).format('YYYY-MM-DD')
       // 获取榜单歌曲列表
       this.$store.dispatch('getRankSongList', id )
-      // 获取歌单评论
-      this.$store.dispatch('getSongListComment', id)
+      // 拉取歌单评论
+      this.getCommentList(id)
+      this.curId = id
     },
+    // 获取歌单评论
+    async getCommentList(id){
+      await this.$store.dispatch('getSongListComment', id)
+    }
   }
 }
 </script>

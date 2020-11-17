@@ -51,11 +51,11 @@
       <li><a href="javascript:;">歌手</a></li>
       <li><a href="javascript:;">新碟</a></li>
       <li>
-        <router-link to="home/rank">排行榜</router-link>
+        <router-link to="/rank">排行榜</router-link>
       </li>
       <li><a href="javascript:;">分类歌单</a></li>
       <li><a href="javascript:;">电台</a></li>
-      <li><a href="javascript:;" @click="gotoMv">MV</a></li>
+      <li><router-link to="javascript:;">MV</router-link></li>
       <li><a href="javascript:;">数字专辑</a></li>
       <li><a href="javascript:;">票务</a></li>
     </ul>
@@ -119,11 +119,6 @@ export default {
       }
     }
   },
-  methods: {
-    gotoMv(){
-      this.$router.replace('/mv')
-    }
-  }
 };
 </script>
 
