@@ -315,6 +315,9 @@ export default {
 .swiper-slide .songInfo {
   width: 224px;
 }
+.swiper-slide .songInfo a{
+  color: #000 !important;
+}
 .swiper-slide p {
   color: #999;
   white-space: nowrap;

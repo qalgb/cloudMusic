@@ -87,6 +87,9 @@ export default {
       this.isActive = true;
       this.isShow = true;
     },
+    gotoMv() {
+      this.$router.replace("/mv");
+    },
     //跳转到我的音乐
     goMyMusic() {
       this.$router.replace({ path: "/mymusic" });
@@ -119,11 +122,6 @@ export default {
       }
     }
   },
-  methods: {
-    gotoMv(){
-      this.$router.replace('/mv')
-    }
-  }
 };
 </script>
 

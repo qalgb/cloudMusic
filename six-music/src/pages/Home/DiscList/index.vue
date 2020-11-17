@@ -120,6 +120,9 @@ export default {
 </script>
 
 <style scoped>
+a{
+  color: #000!important;
+}
 .DiscContainer {
   position: relative;
   background: url('../images/bg_detail.jpg') 50% 0 repeat-x;
