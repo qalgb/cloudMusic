@@ -62,5 +62,16 @@ export const reqLoginInfo = (phoneNum, password) =>
 //获取账户信息
 export const reqUserInfo = (cookie) =>
   ajax.get(`/user/account?cookie=${cookie}`);
-// 获取详细歌单信息
+// yyj 获取详细歌单信息
 export const reqClassIfication = () => ajax.get("/playlist/catlist");
+
+// yyj 获取精品推荐歌单
+export const reqRecommended = () => ajax.get('/top/playlist')
+
+// yyj 获取精品最新歌单
+export const reqLatestPlaylist = () => ajax.get(`/top/playlist?limit=20&order=new`)
+
+// yyj 获取分类歌单
+export const reqCategoryPlaylist = (name) => ajax.get(`/top/playlist?limit=20&cat=${name}`)
+
+// 

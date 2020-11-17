@@ -4,8 +4,8 @@ import MyMusic from "../pages/MyMusic";
 import Rank from "../pages/Rank"
 
 import Mv from "../pages/Mv";
-export default [
-  {
+import Playlist from "@/pages/Playlist";
+export default [{
     path: "/",
     component: Home,
   },
@@ -22,8 +22,12 @@ export default [
     component: Mv,
   },
   {
+    path: "/playlist",
+    component: Playlist,
+  },
+  {
     path: "/",
     redirect: "/",
   },
-  
+
 ];
