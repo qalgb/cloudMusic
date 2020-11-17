@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="contail">
     <div class="color">
       <div class="mod_tag"></div>
       <div class="tag_item">
@@ -10,14 +10,14 @@
         <span>日本</span>
       </div>
 
-      <div class="song_list" v-for="(item,index) in newDiscList" :key="item.id">
-        <div class="song_box">
-          <img src="item.picUrl" />
+      <div class="song_list">
+        <div class="song_box"  v-for="(item,index) in newDiscList" :key="item.id">
+          <img :src="item.picUrl" />
           <div class="song_name">
-            <a href="##">{{item.artists.name}}</a>
+            <a href="##">{{item.artist.name}}</a>
           </div>
           <div class="singer">
-            <a href="##">Higher Brothers</a>
+            <a href="##">{{item.name}}</a>
           </div>
           <div class="song_date">2020-11-09</div>
         </div>
@@ -49,6 +49,10 @@ export default {
 
 
 <style>
+.contail{
+  width: 100%;
+  height: 1500px;
+}
 .color {
   background: url("./images/bg_detail.jpg") repeat-x;
   height: 400px;
@@ -70,9 +74,10 @@ export default {
   overflow: hidden;
 }
 .song_list {
-  height: 1394.4px;
+  height:100%;
   width: 1200px;
   margin: 0 auto;
+
 }
 .song_box {
   display: inline-block;
@@ -80,8 +85,7 @@ export default {
   padding-bottom: 44px;
   font-size: 14px;
   vertical-align: top;
-  line-height: 1.5;
-  float: left;
+  line-height: 1.5; 
 }
 .song_box img {
   width: 224px;

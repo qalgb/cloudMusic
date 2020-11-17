@@ -20,7 +20,7 @@ export default {
   mutations: {
     //获取新专辑列表
     RECEIVE_NEWDISC_LIST(state,newDiscList){
-      state.newDiscList=newDiscList
+      state.newDiscList=newDiscList.slice(0,20)
     },
     //获取分类后的电台
     RECEIVE_RADIO_NAME(state,radioName){
