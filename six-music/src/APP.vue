@@ -14,7 +14,7 @@ import AudioPlay from './components/AudioPlay'
 export default {
   name: 'App',
   components: {
-    AudioPlay,
+    // AudioPlay,
     Header,
     Footer
   },

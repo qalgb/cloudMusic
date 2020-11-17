@@ -9,7 +9,7 @@ import store from './store'
 import { Pagination } from 'element-ui';
 Vue.use(Pagination)
 // 引入antd组件
-import { Button, Icon, Input } from 'ant-design-vue';
+import { Button, Icon, Input, Modal, message } from 'ant-design-vue';
 // 引入swiper的样式
 import 'swiper/css/swiper.css'
 // 汉化moment
@@ -23,6 +23,8 @@ Vue.config.productionTip = false;
 Vue.component(Button.name, Button);
 Vue.component(Icon.name, Icon);
 Vue.component(Input.TextArea.name, Input.TextArea);
+Vue.use(Modal)
+Vue.prototype.$message = message
 
 new Vue({
   // 渲染App组件

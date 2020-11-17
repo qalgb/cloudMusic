@@ -55,7 +55,7 @@
       </li>
       <li><a href="javascript:;">分类歌单</a></li>
       <li><a href="javascript:;">电台</a></li>
-      <li><a href="javascript:;" @click="gotoMv">MV</a></li>
+      <li><a href="javascript:;" >MV</a></li>
       <li><a href="javascript:;">数字专辑</a></li>
       <li><a href="javascript:;">票务</a></li>
     </ul>
@@ -117,11 +117,6 @@ export default {
       } else {
         this.isSuccess = false;
       }
-    }
-  },
-  methods: {
-    gotoMv(){
-      this.$router.replace('/mv')
     }
   }
 };
