@@ -1,17 +1,21 @@
 <template>
   <div>
-    <NewDisc />
+    <!-- 歌单推荐 -->
+    <Recommend />
+    <!-- 新歌首发 -->
+    <Launch />
   </div>
 </template>
 
 <script>
-import NewDisc from './NewDisc';
+import Recommend from './Recommend'
+import Launch from './Launch'
 export default {
   name: 'Home',
-  components:{
-    NewDisc
+  components: {
+    Recommend,
+    Launch
   }
-  
 }
 </script>
 
