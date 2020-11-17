@@ -48,3 +48,13 @@ export const reqSongUrl = (id) => ajax({
 })
 // 获取全部mv
 export const reqAllMv = () => ajax.get(`/mv/all`)
+
+//请求登录信息
+export const reqLoginInfo = (phoneNum, password) =>
+  ajax.get(`/login/cellphone?phone=${phoneNum}&password=${password}`);
+//获取账户信息
+export const reqUserInfo = (cookie) =>
+  ajax.get(`/user/account?cookie=${cookie}`);
+
+  // 获取详细歌单信息
+ export const reqClassIfication =()=>ajax.get('/playlist/catlist')
