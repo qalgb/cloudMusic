@@ -15,6 +15,8 @@ export const reqBanners = () => ajax.get('/homepage/block/page')
 export const reqDiscList = (area) => ajax.get(`/album/new?area=${area}&limit=20`)
 // 获取排行榜摘要
 export const reqTopList = () => ajax.get('/toplist/detail')
+// 获取详细歌单信息
+export const reqClassIfication =()=>ajax.get('/playlist/catlist')
 
 // 请求所有榜单数据
 export const reqRankInfo = () =>

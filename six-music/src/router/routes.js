@@ -2,6 +2,7 @@ import Home from "../pages/Home";
 //我的音乐
 import MyMusic from "../pages/MyMusic";
 import Rank from "../pages/Rank"
+import AudioPlay from '../components/AudioPlay'
 
 import Mv from "../pages/Mv";
 export default [
@@ -20,6 +21,10 @@ export default [
   {
     path: "/mv",
     component: Mv,
+  },
+  {
+    path: "/musicplay",
+    component: AudioPlay,
   },
   {
     path: "/",

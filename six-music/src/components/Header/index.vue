@@ -97,6 +97,9 @@ export default {
       const result = await reqUserInfo(localStorage.getItem("cookie"));
       this.userInfo = result.profile;
     },
+    gotoMv(){
+      this.$router.replace('/mv')
+    }
   },
   async mounted() {
     console.log(this.$route.path.indexOf("mymusic"));
@@ -119,11 +122,6 @@ export default {
       }
     }
   },
-  methods: {
-    gotoMv(){
-      this.$router.replace('/mv')
-    }
-  }
 };
 </script>
 

@@ -233,12 +233,12 @@ export default {
   },
   methods: {
     play () {
-      const audio = this.$refs.audio
       if (!this.isPlay) {
-        audio.play()
+        this.audio.play()
         this.isPlay = true
+        console.log('1',this.audio)
       }else{
-        this.$refs.audio.pause()
+        this.audio.pause()
         this.isPlay = false
       }
     },
