@@ -12,6 +12,7 @@
     "axios": "^0.21.0",
     "babel-plugin-import": "^1.13.1",
     "core-js": "^3.6.5",
+    "element-ui": "^2.14.1",
     "less": "^3.12.2",
     "less-loader": "^7.1.0",
     "moment": "^2.29.1",

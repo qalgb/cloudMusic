@@ -55,7 +55,7 @@
       </li>
       <li><a href="javascript:;">分类歌单</a></li>
       <li><a href="javascript:;">电台</a></li>
-      <li><a href="javascript:;" @click="gotoMv">MV</a></li>
+      <li><a href="javascript:;" :class="{ active: !isActive }" @click="gotoMv">MV</a></li>
       <li><a href="javascript:;">数字专辑</a></li>
       <li><a href="javascript:;">票务</a></li>
     </ul>
@@ -93,6 +93,12 @@ export default {
       this.isActive = false;
       this.isShow = false;
     },
+    // 跳转到mv
+    gotoMv(){
+      this.$router.replace({path :'/mv'})
+      this.isActive = true;
+      this.isShow = true;
+    },
     async getUserInfo() {
       const result = await reqUserInfo(localStorage.getItem("cookie"));
       this.userInfo = result.profile;
@@ -119,11 +125,6 @@ export default {
       }
     }
   },
-  methods: {
-    gotoMv(){
-      this.$router.replace('/mv')
-    }
-  }
 };
 </script>
 

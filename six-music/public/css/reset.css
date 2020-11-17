@@ -1,9 +1,6 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
+
 /* @import "./iconfont.css"; */
 
->>>>>>> yyj
 /* 清除内外边距 */
 body,
 h1,
@@ -21,11 +18,6 @@ dd,
 ul,
 ol,
 li,
-=======
- /* 清除内外边距 */
-body, h1, h2, h3, h4, h5, h6, hr, p, blockquote,
-dl, dt, dd, ul, ol, li,
->>>>>>> yh
 pre,
 fieldset,
 lengend,
@@ -97,11 +89,7 @@ li {
 }
 
 /* 重置文本格式元素 */
-<<<<<<< HEAD
 a { text-decoration: none; color: #000 !important;}
-=======
-a { text-decoration: none; color: #000!important;}
->>>>>>> yh
 
 
 /* 重置表单元素 */

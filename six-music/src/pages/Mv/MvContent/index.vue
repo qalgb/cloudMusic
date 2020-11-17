@@ -14,7 +14,7 @@
     <!-- 内容详情 -->
     <div class="mv_content">
       <ul class="mv_content_ul">
-        <li class="content_ul_li" v-for="(item) in allMv" :key="item">
+        <li class="content_ul_li" v-for="(item) in allMv" :key="item.id">
           <div class="ul_li_box">
             <a
               href="javascript:;"
