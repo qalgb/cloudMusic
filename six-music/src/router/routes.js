@@ -10,11 +10,11 @@ export default [
     component: Home,
   },
   {
-    path: "/home/mymusic",
+    path: "/mymusic",
     component: MyMusic,
   },
   {
-    path: "/home/rank",
+    path: "/rank",
     component: Rank,
   },
   {
@@ -25,5 +25,4 @@ export default [
     path: "/",
     redirect: "/",
   },
-  
 ];

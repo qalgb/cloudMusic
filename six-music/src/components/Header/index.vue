@@ -51,11 +51,11 @@
       <li><a href="javascript:;">歌手</a></li>
       <li><a href="javascript:;">新碟</a></li>
       <li>
-        <router-link to="home/rank">排行榜</router-link>
+        <router-link to="/rank">排行榜</router-link>
       </li>
       <li><a href="javascript:;">分类歌单</a></li>
       <li><a href="javascript:;">电台</a></li>
-      <li><a href="javascript:;" >MV</a></li>
+      <li><router-link to="/mv">MV</router-link></li>
       <li><a href="javascript:;">数字专辑</a></li>
       <li><a href="javascript:;">票务</a></li>
     </ul>
@@ -99,7 +99,6 @@ export default {
     },
   },
   async mounted() {
-    console.log(this.$route.path.indexOf("mymusic"));
     //active样式是否渲染
     if (this.$route.path.indexOf("mymusic") === 1) {
       this.isActive = false;
@@ -118,7 +117,7 @@ export default {
         this.isSuccess = false;
       }
     }
-  }
+  },
 };
 </script>
 

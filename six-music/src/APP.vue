@@ -9,7 +9,7 @@
 <script>
 import Header from './components/Header'
 import Footer from './components/Footer'
-import AudioPlay from './components/AudioPlay'
+// import AudioPlay from './components/AudioPlay'
 
 export default {
   name: 'App',

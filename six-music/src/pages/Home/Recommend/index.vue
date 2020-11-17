@@ -33,7 +33,7 @@
             :key="item.id"
           >
             <div class="song_cover">
-              <img :src="item.picUrl" />
+              <img v-lazy="item.picUrl" />
               <i class="mod_cover__mask"></i>
               <i class="mod_cover__icon_play"></i>
             </div>
@@ -314,6 +314,9 @@ export default {
 }
 .swiper-slide .songInfo {
   width: 224px;
+}
+.swiper-slide .songInfo a{
+  color: #000 !important;
 }
 .swiper-slide p {
   color: #999;

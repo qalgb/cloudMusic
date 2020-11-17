@@ -92,7 +92,6 @@ export default {
     },
     //点击授权登录
     async logining() {
-      console.log(typeof this.$route.path, this.$route.path);
       const result = await reqLoginInfo(this.phoneNum, this.password);
       if (result.code === 200) {
         localStorage.setItem("cookie", result.cookie);
