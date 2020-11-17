@@ -5,16 +5,26 @@
     <div class="mv_top">
       <h2 class="mv_top_left">全部MV</h2>
       <div class="mv_top_right">
-        <a href="javascript:;" class="top_right top_right_new top_right_click"
+        <a
+          href="javascript:;"
+          class="top_right top_right_new"
+          :class="[newMv === true ? 'top_right_click' : '']"
+          @click="isnewMv(newMv,heatMv) "
           >最新</a
         >
-        <a href="javascript:;" class="top_right top_right_heat">最热</a>
+        <a
+          href="javascript:;"
+          class="top_right top_right_heat"
+          :class="[heatMv === true ? 'top_right_click' : '']"
+          @click="isheatMv(heatMv,newMv) "
+          >最热</a
+        >
       </div>
     </div>
     <!-- 内容详情 -->
     <div class="mv_content">
       <ul class="mv_content_ul">
-        <li class="content_ul_li" v-for="(item) in allMv" :key="item.id">
+        <li class="content_ul_li" v-for="item in allMv" :key="item.id">
           <div class="ul_li_box">
             <a
               href="javascript:;"
@@ -27,41 +37,29 @@
             >
               <img
                 class="box_a_img"
-                :src=item.cover
-                data-original="//y.gtimg.cn/music/photo_new/T015R640x360M000001h52Fz0FSC1D.jpg?max_age=2592000"
-                onerror="this.src='//y.gtimg.cn/mediastyle/global/img/mv_300.png?max_age=31536000';this.onerror=null;"
-                alt="Unliked You"
-                style="display: block; visibility: visible;"
+                :src="item.cover"
               />
               <i class="box_a_i"></i>
             </a>
             <h3 class="li_box_h3">
               <a
                 href="javascript;:"
-                onclick="setStatCookie&amp;&amp;setStatCookie();"
                 class="box_h3_a"
-                data-stat="y_new.mv_lib.mv_name"
-                data-vid="f0033cch1ur"
-                title="Unliked You"
-                >{{item.name}}</a
+                >{{ item.name }}</a
               >
             </h3>
 
             <div class="li_box_div" title="Keano">
               <a
                 href="javascript:;"
-                onclick="setStatCookie&amp;&amp;setStatCookie();"
-                data-stat="y_new.mv_lib.mv_singername"
-                data-singermid="000F6MXZ3yaylv"
-                title="Keano"
               >
-              {{item.artistName}}
+                {{ item.artistName }}
               </a>
             </div>
             <div class="li_box_info">
               <span class="box_info_span"
-                ><i class="box_info_span_i"></i>2.1万</span
-              >2020-12-25
+                ><i class="box_info_span_i"></i>{{ item.playCount }}</span
+              >
             </div>
           </div>
         </li>
@@ -105,20 +103,43 @@
   </div>
 </template>
 <script>
-import { mapState } from "vuex"
+import { mapState } from "vuex";
 export default {
   name: "Tag",
-  // 计算属性 
+  data() {
+    return {
+      newMv: true,
+      heatMv:false,
+    };
+  },
+  // 计算属性
   computed: {
     // 通过vuex的辅助函数获取数据
     ...mapState({
-    allMv: state => state.mv.allMv
-  }),
+      allMv: (state) => state.mv.allMv,
+      mvData: (state) => state.mv.mvData,
+    }),
   },
-  
-  mounted () {
-    this.$store.dispatch('getAllMv')
-  }
+
+  mounted() {
+    // 分发
+    this.$store.dispatch("getAllMv");
+  },
+  methods: {
+    // 点击切换样式
+    isnewMv(newMv,heatMv) {
+      if (!newMv) {
+        this.newMv= true,
+        this.heatMv = false
+      }
+    },
+    isheatMv(heatMv,newMv){
+      if (!heatMv) {
+        this.heatMv=true,
+        this.newMv = false
+      }
+    }
+  },
 };
 </script>
 <style scoped>
@@ -185,7 +206,7 @@ export default {
   padding-top: 56.5476%;
   margin-bottom: 15px;
 }
-.li_box_a:hover .box_a_i{
+.li_box_a:hover .box_a_i {
   transform: scale(1.2);
   opacity: 1;
   transition: all 2s;
@@ -197,7 +218,7 @@ export default {
   width: 100%;
   height: 100%;
 }
-.li_box_a:hover .box_a_img{
+.li_box_a:hover .box_a_img {
   transform: scale(1.2);
   transition: transform 2s;
 }
@@ -208,8 +229,8 @@ export default {
   margin: -35px;
   background: url("../images/2.png");
   opacity: 0;
-  width:70px;
-  height:70px;
+  width: 70px;
+  height: 70px;
 }
 .li_box_h3 {
   overflow: hidden;
@@ -220,7 +241,7 @@ export default {
 }
 .li_box_div a,
 .li_box_div,
-.li_box_info{
+.li_box_info {
   color: #999 !important;
 }
 .li_box_div {
