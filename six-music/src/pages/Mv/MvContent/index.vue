@@ -7,11 +7,11 @@
       <div class="mv_top_right">
         <a
           href="javascript:;"
-          class="top_right top_right_new"
-          v-for="(item) in newMv" :key="item.id"
-          :class="[ newMvData === item.id ? 'top_right_click' : '']"
-          @click="isnewMv(newMvData,item.id) "
-          >最新</a
+          class="top_right"
+          v-for="(item,index) in newMv" :key="index"
+          :class="[ newMvData === index ? 'top_right_click' : '']"
+          @click="isnewMv(newMvData,index) "
+          >{{item.title}}</a
         >
       </div>
     </div>
@@ -124,8 +124,8 @@ export default {
   },
   methods: {
     // 点击切换样式
-    isnewMv(newMvData,id){
-      this.newMvData = id
+    isnewMv(newMvData,index){
+      this.newMvData = index
       
     }
   },
@@ -165,6 +165,7 @@ export default {
   font-size: 14px;
   border-width: 1px;
   border-style: solid;
+  border-right: 1px solid #000;
 }
 .top_right_new {
   border-right: none;
