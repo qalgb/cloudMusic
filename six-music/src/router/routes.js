@@ -6,6 +6,7 @@ import Register from "../pages/Register";
 import AudioPlay from '../components/AudioPlay'
 import Mv from "../pages/Mv";
 import Playlist from "@/pages/Playlist";
+import MvVideo from "../pages/MvVideo"
 export default [
   {
     path: "/",
@@ -18,6 +19,10 @@ export default [
   {
     path: "/rank",
     component: Rank,
+  },
+  {
+    path: "/mv/mvvideo",
+    component: MvVideo,
   },
   {
     path: "/mv",

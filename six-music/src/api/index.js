@@ -54,7 +54,6 @@ export const reqSongUrl = (id) =>
   });
 // 获取全部mv
 export const reqAllMv = () => ajax.get(`/mv/all`);
-
 //请求登录信息
 export const reqLoginInfo = (phoneNum, password) =>
   ajax.get(`/login/cellphone?phone=${phoneNum}&password=${password}`);
