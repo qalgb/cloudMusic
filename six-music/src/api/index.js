@@ -16,7 +16,7 @@ export const reqBanners = () => ajax.get("/homepage/block/page");
 export const reqDiscList = (area) =>
   ajax.get(`/album/new?area=${area}&limit=20`);
 // 获取排行榜摘要
-export const reqTopList = () => ajax.get("/toplist/detail");
+export const reqTopList = () => ajax.get('/toplist/detail')
 
 // 请求所有榜单数据
 export const reqRankInfo = () =>
@@ -47,7 +47,6 @@ export const reqSendOrReqOrDelComment = (t, type, id, content, commentId, cookie
   请求歌曲url
   说明：必须调用此接口, 传入的音乐 id( 可多个 , 用逗号隔开 ), 才能获取对应的音乐的 url,未登录状态返回试听片段(返回字段包含被截取的正常歌曲的开始时间和结束时间)
 */
-
 export const reqSongUrl = (id) =>
   ajax({
     url: `/song/url?${id}`,

@@ -3,6 +3,7 @@ import Home from "../pages/Home";
 import MyMusic from "../pages/MyMusic";
 import Rank from "../pages/Rank";
 import Register from "../pages/Register";
+import AudioPlay from '../components/AudioPlay'
 import Mv from "../pages/Mv";
 import Playlist from "@/pages/Playlist";
 export default [
@@ -31,6 +32,9 @@ export default [
     path: "/playlist",
     component: Playlist,
 
+  },
+  {path: "/audioplay/:id?",
+    component: AudioPlay,
   },
   {
     path: "/",
