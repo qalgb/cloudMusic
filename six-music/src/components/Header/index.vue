@@ -37,9 +37,6 @@
         <div class="searchInfo"></div>
         <button><i class="iconSearch"></i></button>
       </div>
-      <!-- <a href="javascript:;" class="userPic" v-if="isSuccess">
-        <img :src="userInfo.avatarUrl" class="userPicImg" alt="" />
-      </a> -->
       <a-dropdown v-if="isSuccess">
         <a class="ant-dropdown-link">
           <img :src="userInfo.avatarUrl" class="userPicImg" alt="" />
@@ -94,7 +91,6 @@
       <li><a href="javascript:;">数字专辑</a></li>
       <li><a href="javascript:;">票务</a></li>
     </ul>
-    <!-- 登录弹窗 -->
   </div>
 </template>
 
@@ -106,11 +102,10 @@ export default {
   data() {
     return {
       searchInfo: "", //搜索框内容
-      isShow: this.$route.path, //音乐馆nav是否显示
+      isShow: true, //音乐馆nav是否显示
       isSuccess: false, //是否处于登录状态（是否有cookie）
       userInfo: [], //用户信息
-      cookie: localStorage.getItem("cookie"),
-      isButton: false,
+      isButton: 3, //登录按钮是否显示
     };
   },
   components: {
@@ -139,13 +134,16 @@ export default {
         location.reload();
       }, 500);
     },
+    getPath() {
+      if (this.$route.fullPath === "/mymusic") {
+        this.isShow = false;
+      } else if (this.$route.fullPath === "/") {
+        this.isShow = true;
+      }
+    },
   },
   async mounted() {
-    //active样式是否渲染
-    if (this.$route.path.indexOf("mymusic") === 1) {
-      this.isShow = false;
-    }
-
+    //判断cookie是否存在
     if (localStorage.getItem("cookie")) {
       //获取用户信息
       const result = await reqUserInfo(localStorage.getItem("cookie"));
@@ -157,6 +155,11 @@ export default {
         this.isSuccess = false;
       }
     }
+  },
+  watch: {
+    "$route.path"() {
+      return this.getPath();
+    },
   },
 };
 </script>
@@ -378,8 +381,6 @@ a {
 }
 
 .smallActive {
-  color: #31c27c;
+  color: #31c27c !important;
 }
-
-/* 登录弹窗样式 */
 </style>
