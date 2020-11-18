@@ -84,9 +84,6 @@ export default {
       songListComment: state => state.rank.songListComment
     }),
     ...mapGetters(['rankInfo','rankSongList']),
-    // getRankTime (id) {
-
-    // } 
   },
   async mounted () {
     // 分发action
