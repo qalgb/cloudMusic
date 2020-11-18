@@ -4,6 +4,7 @@ import MyMusic from "../pages/MyMusic";
 import Rank from "../pages/Rank";
 import Register from "../pages/Register";
 import Mv from "../pages/Mv";
+import Playlist from "@/pages/Playlist";
 export default [
   {
     path: "/",
@@ -24,7 +25,12 @@ export default [
   {
     path: "/register",
     component: Register,
-    meta: { isHide:true }
+    meta: { isHide: true },
+  },
+  {
+    path: "/playlist",
+    component: Playlist,
+
   },
   {
     path: "/",
