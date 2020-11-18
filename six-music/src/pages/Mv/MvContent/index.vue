@@ -1,6 +1,21 @@
 <template>
   <!-- 内容 -->
   <div class="mv">
+    <!-- 筛选 -->
+  <div class="mod_tag">
+    <div class="tag_list">
+      <h3 class="tag_tit">区域</h3>
+      <a
+        href="javascript:;"
+        class="tag_item "
+        v-for="(item, index) in areamv"
+        :key="index"
+        :class="[ereaTag === index ? 'contentTag' : '']"
+        @click="areaTitle(index)"
+        >{{ item }}</a
+      >
+    </div>
+  </div>
     <!-- 内容头部 -->
     <div class="mv_top">
       <h2 class="mv_top_left">全部MV</h2>
@@ -10,8 +25,8 @@
           class="top_right"
           v-for="(item,index) in newMv" :key="index"
           :class="[ newMvData === index ? 'top_right_click' : '']"
-          @click="isnewMv(newMvData,index) "
-          >{{item.title}}</a
+          @click="isnewMv(index) "
+          >{{item}}</a
         >
       </div>
     </div>
@@ -22,16 +37,12 @@
           <div class="ul_li_box">
             <a
               href="javascript:;"
-              onclick="setStatCookie&amp;&amp;setStatCookie();"
               class="li_box_a"
-              data-stat="y_new.mv_lib.mv_play"
-              data-vid="f0033cch1ur"
-              title="Unliked You"
-              hidefocus="true"
             >
-              <img
+              <img 
                 class="box_a_img"
-                :src="item.cover"
+                v-lazy="item.cover" 
+                @click="goMvVideo"
               />
               <i class="box_a_i"></i>
             </a>
@@ -102,31 +113,74 @@ export default {
   name: "Tag",
   data() {
     return {
-      newMvData:"",
-      newMv:[
-        {id:"1",title:"最新"},
-        {id:"2",title:"最热"},
+      area:'全部',
+      order:'最新',
+      newMvData:0,
+      newMv:['最新','最热'],
+      areamv: [
+        "全部",
+        "内地" ,
+        "港台",
+        "欧美" ,
+        "日本",
+        "韩国",
       ],
+      ereaTag: 0,
     };
   },
   // 计算属性
   computed: {
     // 通过vuex的辅助函数获取数据
     ...mapState({
+      // 获取全部的mv
       allMv: (state) => state.mv.allMv,
-      mvData: (state) => state.mv.mvData,
     }),
   },
 
   mounted() {
-    // 分发
-    this.$store.dispatch("getAllMv");
+    // 获取MV数据
+    this.getMvList(this.area,this.order)
   },
   methods: {
-    // 点击切换样式
-    isnewMv(newMvData,index){
+    // 分发
+    getMvList(area,order){
+      this.$store.dispatch("getAllMv",{
+        area,
+        order
+      });
+    },
+    areaTitle(index) {
+      // 获取当前点击的地区
+      const area = this.areamv[index]
+      this.area = area
+      // 给当前点击的元素样式
+      this.ereaTag = index;
+      // 获取到数据
+      const query = {
+        area,
+        order: this.order
+      }
+      this.$router.replace({ path: '/mv', query })
+      this.getMvList(area,this.order)
+    },
+    // 点击最新，最热
+    isnewMv(index){
+      // 获取到参数
+      const order = this.newMv[index]
       this.newMvData = index
-      
+
+      const query = {
+        area: this.area,
+        order
+      }
+
+      //获取mv数据
+      this.$router.replace({ path: '/mv', query })
+      this.getMvList(this.area,order)
+    },
+    // 跳转到MvVideo页面
+    goMvVideo(){
+      this.$router.replace({ path: "/mv/mvvideo" });
     }
   },
 };
@@ -136,6 +190,41 @@ export default {
 .mv {
   position: relative;
   margin-bottom: 30px;
+}
+/* 筛选 */
+.tag_list {
+  position: relative;
+  height: auto;
+  zoom: 1;
+  clear: both;
+  overflow: hidden;
+  line-height: 26px;
+  padding-left: 65px;
+}
+.mod_tag {
+  position: relative;
+  padding: 52px 0 0;
+}
+.tag_tit {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-weight: 400;
+  width: 65px;
+}
+
+a:hover {
+  color: green;
+  text-decoration: none;
+}
+.tag_item {
+  float: left;
+  padding: 0 8px;
+  margin: 0 24px 15px 0;
+}
+.contentTag {
+  background-color: #31c27c;
+  color: #fff !important;
 }
 .mv_top {
   overflow: hidden;
@@ -155,6 +244,7 @@ export default {
   line-height: 40px;
   border-radius: 2px;
   font-size: 0;
+  margin-top: 95px;
 }
 .top_right {
   position: relative;
@@ -207,6 +297,7 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+  transition: all 2s;
 }
 .li_box_a:hover .box_a_img {
   transform: scale(1.2);
@@ -221,6 +312,7 @@ export default {
   opacity: 0;
   width: 70px;
   height: 70px;
+  transition: all 2s;
 }
 .li_box_h3 {
   overflow: hidden;

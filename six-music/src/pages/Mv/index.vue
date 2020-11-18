@@ -1,7 +1,6 @@
 <template>
 <div class="bg">
   <div class="main">
-    <Tag />
     
     <MvContent />
   </div>
@@ -9,13 +8,11 @@
   
 </template>
 <script>
-import Tag from './Tag'
 import MvContent from './MvContent'
 export default {
   name: "Mv",
   
   components: {
-    Tag,
     MvContent,
   },
   
