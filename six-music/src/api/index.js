@@ -1,6 +1,7 @@
 // 封装每个接口的api函数
 import ajax from "./ajax";
 
+/* Home页面请求 */
 // 获取歌单分类标签
 export const reqSongListTag = () => ajax.get(`/playlist/hot`);
 // 获取歌单推荐
@@ -17,6 +18,13 @@ export const reqDiscList = (area) =>
   ajax.get(`/album/new?area=${area}&limit=20`);
 // 获取排行榜摘要
 export const reqTopList = () => ajax.get("/toplist/detail");
+// 获取MV
+export const reqMvList = (location) => ajax.get(`/mv/all?area=${location}`)
+
+/* 歌单详情页请求 */
+// 获取歌单详情
+export const reqPlayListDetail = (id) => ajax.get(`/playlist/detail?id=${id}`)
+
 
 // 请求所有榜单数据
 export const reqRankInfo = () =>
@@ -38,16 +46,15 @@ export const reqSongListComment = (id) =>
   });
 // 发送/删除/回复评论
 // t:0 删除   t:1 发送   t:2 回复 回复必须要用commentId
-export const reqSendOrReqOrDelComment = (t, type, id, content, commentId) =>
+export const reqSendOrReqOrDelComment = (t, type, id, content, commentId, cookie) =>
   ajax({
-    url: `/comment?t=${t}&type=${type}&id=${id}&content=${content}&commentId=${commentId}`,
+    url: `/comment?t=${t}&type=${type}&id=${id}&content=${content}&commentId=${commentId}&cookie=${cookie}`,
     method: "GET",
   });
 /*
   请求歌曲url
   说明：必须调用此接口, 传入的音乐 id( 可多个 , 用逗号隔开 ), 才能获取对应的音乐的 url,未登录状态返回试听片段(返回字段包含被截取的正常歌曲的开始时间和结束时间)
 */
-
 export const reqSongUrl = (id) =>
   ajax({
     url: `/song/url?${id}`,
@@ -58,8 +65,25 @@ export const reqAllMv = () => ajax.get(`/mv/all`);
 //请求登录信息
 export const reqLoginInfo = (phoneNum, password) =>
   ajax.get(`/login/cellphone?phone=${phoneNum}&password=${password}`);
-//获取账户信息
+//获取用户信息
 export const reqUserInfo = (cookie) =>
   ajax.get(`/user/account?cookie=${cookie}`);
+//获取用户详情uid
+export const reqUserDetail = (uid) =>
+  ajax.get(`/user/detail?uid=${uid}`);
+//获取账户信息 , 歌单，收藏，mv, dj 数量
+export const reqAccountInfo = (cookie) =>
+  ajax.get(`/user/subcount?cookie=${cookie}`);
 // 获取详细歌单信息
 export const reqClassIfication = () => ajax.get("/playlist/catlist");
+
+// yyj 获取精品推荐歌单
+export const reqRecommended = () => ajax.get('/top/playlist')
+
+// yyj 获取精品最新歌单
+export const reqLatestPlaylist = () => ajax.get(`/top/playlist?limit=20&order=new`)
+
+// yyj 获取分类歌单
+export const reqCategoryPlaylist = (name) => ajax.get(`/top/playlist?limit=20&cat=${name}`)
+
+// 

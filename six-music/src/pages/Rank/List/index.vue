@@ -12,10 +12,18 @@
     <span>{{item.name}}</span>
   </div>
   <div class="list_menu" :style="{visibility: isShowMenu ? 'hidden' : 'visible' }">
-    <a-icon type="play-circle" />
-    <a-icon type="plus-circle" />
-    <a-icon type="download" />
-    <a-icon type="share-alt" />
+    <router-link to="/musicplay" title="播放">
+      <a-icon type="play-circle" />
+    </router-link>
+    <a href="javascript:;" title="添加到歌单">
+      <a-icon type="plus-circle" />
+    </a>
+    <a href="javascript:;" title="下载">
+      <a-icon type="download" />
+    </a>
+    <a href="javascript:;" title="分享">
+      <a-icon type="share-alt" />
+    </a>
   </div>
   <div class="artist">
     {{getSongAr(index)}}
@@ -114,9 +122,9 @@ export default {
   font-size: 30px;
   line-height: 80px;
   text-align: right;
-  color: #999;
 }
 .songlist_list li .list_menu i{
+  color: #999;
   margin-right: 10px;
 }
 .songlist_list li .list_menu i:hover{

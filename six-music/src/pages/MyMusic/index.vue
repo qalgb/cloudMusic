@@ -1,17 +1,23 @@
 <template>
   <div>
-    <Login />
+    <MyInfo v-if="cookie" />
+    <Login v-else />
   </div>
 </template>
 
 <script>
 import Login from "./Login";
-// import MyInfo from "./MyInfo";
+import MyInfo from "./MyInfo";
 export default {
   name: "MyMusic",
   components: {
     Login,
-    // MyInfo,
+    MyInfo,
+  },
+  data() {
+    return {
+      cookie: localStorage.getItem("cookie"),
+    };
   },
 };
 </script>
