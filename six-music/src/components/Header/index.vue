@@ -110,7 +110,6 @@ export default {
       const result = await reqUserInfo(localStorage.getItem("cookie"));
       //判断是否获取成功
       if (result.code === 200) {
-        console.log(result);
         this.userInfo = result.profile;
         this.isSuccess = true;
       } else {
