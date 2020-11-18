@@ -28,6 +28,7 @@ export default {
   methods: {
     areaTitle(ereaTag,index){
       this.ereaTag = index
+      
     }
     
   }

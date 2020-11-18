@@ -8,16 +8,10 @@
         <a
           href="javascript:;"
           class="top_right top_right_new"
-          :class="[newMv === true ? 'top_right_click' : '']"
-          @click="isnewMv(newMv,heatMv) "
+          v-for="(item) in newMv" :key="item.id"
+          :class="[ newMvData === item.id ? 'top_right_click' : '']"
+          @click="isnewMv(newMvData,item.id) "
           >最新</a
-        >
-        <a
-          href="javascript:;"
-          class="top_right top_right_heat"
-          :class="[heatMv === true ? 'top_right_click' : '']"
-          @click="isheatMv(heatMv,newMv) "
-          >最热</a
         >
       </div>
     </div>
@@ -108,8 +102,11 @@ export default {
   name: "Tag",
   data() {
     return {
-      newMv: true,
-      heatMv:false,
+      newMvData:"",
+      newMv:[
+        {id:"1",title:"最新"},
+        {id:"2",title:"最热"},
+      ],
     };
   },
   // 计算属性
@@ -127,17 +124,9 @@ export default {
   },
   methods: {
     // 点击切换样式
-    isnewMv(newMv,heatMv) {
-      if (!newMv) {
-        this.newMv= true,
-        this.heatMv = false
-      }
-    },
-    isheatMv(heatMv,newMv){
-      if (!heatMv) {
-        this.heatMv=true,
-        this.newMv = false
-      }
+    isnewMv(newMvData,id){
+      this.newMvData = id
+      
     }
   },
 };
