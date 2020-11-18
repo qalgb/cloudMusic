@@ -3,22 +3,21 @@
     <div class="loginTop">
       <div class="LoginTopInner">
         <div class="userHeadPic">
-          <img
-            src="https://thirdqq.qlogo.cn/g?b=sdk&k=1YbOrqzCA3SE8j6F2n6KMw&s=140&t=1596873891"
-            alt=""
-          />
+          <img :src="userDetail.avatarUrl" alt="" />
         </div>
-        <h3 class="userTit"><span class="userName">龙国斌</span></h3>
+        <h3 class="userTit">
+          <span class="userName">{{ userDetail.nickname }}</span>
+        </h3>
         <ul class="follow">
           <li class="focus">
             <a href="javascript:;">
-              <strong class="focusNum">1</strong>
+              <strong class="focusNum">{{ userDetail.follows }}</strong>
               <span class="focusTit">关注</span>
             </a>
           </li>
           <li class="fans">
             <a href="javascript:;">
-              <strong class="fansNum">4396</strong>
+              <strong class="fansNum">{{ userDetail.followeds }}</strong>
               <span class="fansTit">粉丝</span></a
             >
           </li>
@@ -33,22 +32,52 @@
         <a href="javascript:;" class="myFans">粉丝</a>
         <a href="javascript:;" class="myVideo">我上传的视频</a>
       </div>
-      <MyLike />
+      <MyLike :userId="userId"/>  
     </div>
   </div>
 </template>
 
 <script>
+import { reqUserInfo, reqUserDetail } from "../../../api";
 import MyLike from "./MyLike";
+import { mapState } from 'vuex'
 export default {
   name: "MyInfo",
+  data() {
+    return {
+      // userDetail: [],
+      // accountInfo: [],
+      userId: ''
+    };
+  },
+  computed: {
+    ...mapState({
+      userInfo: state => state.mymusic.userInfo,
+      userDetail: state => state.mymusic.userDetail
+    })
+  },
   components: {
     MyLike,
+  },
+  async mounted() {
+    //获取userid
+    // let res = await reqUserInfo(localStorage.cookie);
+    // let { userId } = res.profile;
+    await this.$store.dispatch('getUserInfo', localStorage.cookie)
+    let { userId } = this.userInfo
+    this.userId = userId
+    //获取粉丝，等级，关注数
+    await this.$store.dispatch('getUserDetail', userId)
+    // let result = await reqUserDetail(userId);
+    // this.userDetail = result.profile;
   },
 };
 </script>
 
 <style scoped>
+.profileNav > a {
+  color: #fff !important;
+}
 .loginTop {
   height: 315px;
   padding-top: 65px;
@@ -120,7 +149,7 @@ export default {
 }
 
 .follow > li > a:hover strong {
-  color: #31C27C;
+  color: #31c27c;
 }
 
 .follow > li > a > strong {
@@ -159,7 +188,7 @@ export default {
   font-size: 16px;
 }
 
-.active {
-  color: #31C27C !important;
+.profileNav > .active {
+  color: #31c27c !important;
 }
 </style>

@@ -20,16 +20,16 @@
             <i class="toplist_line"></i>
             <h3 class="toplist_hd">
               <a href="javascript:;" class="toplist_tit">{{
-                this.topList[0].name
+                topList.length && topList[0].name
               }}</a>
             </h3>
             <ul class="toplist_songlist">
               <li
                 class="toplist_song"
-                v-for="(item, index) in topList[0].tracks"
+                v-for="(item, index) in topList.length && topList[0].tracks"
                 :key="index"
               >
-                <div class="toplist_number"><a href="javascript:;">1</a></div>
+                <div class="toplist_number"><a href="javascript:;">{{index+1}}</a></div>
                 <div class="toplist_songname">
                   <a href="javascript:;">{{ item.first }}</a>
                 </div>
@@ -47,13 +47,13 @@
             <i class="toplist_line"></i>
             <h3 class="toplist_hd">
               <a href="javascript:;" class="toplist_tit">{{
-                this.topList[1].name
+                topList.length && topList[1].name
               }}</a>
             </h3>
             <ul class="toplist_songlist">
-              <li class="toplist_song" v-for="(item, index) in topList[1].tracks"
+              <li class="toplist_song" v-for="(item, index) in topList.length && topList[1].tracks"
                 :key="index">
-                <div class="toplist_number"><a href="javascript:;">1</a></div>
+                <div class="toplist_number"><a href="javascript:;">{{index+1}}</a></div>
                 <div class="toplist_songname">
                   <a href="javascript:;">{{ item.first }}</a>
                 </div>
@@ -71,13 +71,13 @@
             <i class="toplist_line"></i>
             <h3 class="toplist_hd">
               <a href="javascript:;" class="toplist_tit">{{
-                this.topList[2].name
+                topList.length && topList[2].name
               }}</a>
             </h3>
             <ul class="toplist_songlist">
-              <li class="toplist_song" v-for="(item, index) in topList[2].tracks"
+              <li class="toplist_song" v-for="(item, index) in topList.length && topList[2].tracks"
                 :key="index">
-                <div class="toplist_number"><a href="javascript:;">1</a></div>
+                <div class="toplist_number"><a href="javascript:;">{{index+1}}</a></div>
                 <div class="toplist_songname">
                   <a href="javascript:;">{{ item.first }}</a>
                 </div>
@@ -95,13 +95,13 @@
             <i class="toplist_line"></i>
             <h3 class="toplist_hd">
               <a href="javascript:;" class="toplist_tit">{{
-                this.topList[3].name
+                topList.length && topList[3].name
               }}</a>
             </h3>
             <ul class="toplist_songlist">
-              <li class="toplist_song" v-for="(item, index) in topList[3].tracks"
+              <li class="toplist_song" v-for="(item, index) in topList.length && topList[3].tracks"
                 :key="index">
-                <div class="toplist_number"><a href="javascript:;">1</a></div>
+                <div class="toplist_number"><a href="javascript:;">{{index+1}}</a></div>
                 <div class="toplist_songname">
                   <a href="javascript:;">{{ item.first }}</a>
                 </div>
@@ -119,17 +119,18 @@
             <i class="toplist_line"></i>
             <h3 class="toplist_hd">
               <a href="javascript:;" class="toplist_tit">{{
-                this.topList[4].name
+                topList.length && topList[4].name
               }}</a>
             </h3>
             <ul class="toplist_songlist">
-              <li class="toplist_song">
-                <div class="toplist_number"><a href="javascript:;">1</a></div>
+              <li class="toplist_song" v-for="(item, index) in rap"
+                :key="index">
+                <div class="toplist_number"><a href="javascript:;">{{index+1}}</a></div>
                 <div class="toplist_songname">
-                  <a href="javascript:;">执迷不悟</a>
+                  <a href="javascript:;">{{item.first}}</a>
                 </div>
                 <div class="toplist_artist">
-                  <a href="javascript:;">小乐哥</a>
+                  <a href="javascript:;">{{item.second}}</a>
                 </div>
               </li>
             </ul>
@@ -145,7 +146,13 @@ import { mapState } from 'vuex'
 export default {
   name: 'RankList',
   data() {
-    return {}
+    return {
+      rap: [
+        {first: '经济舱(Live)',second: 'Kafe.Hu'},
+        {first: '烈火战马+空城计+重庆魂 (Live)',second: 'GAI周延'},
+        {first: '珍珠幻象(Live)',second: 'GALI'}
+      ]
+    }
   },
   computed: {
     ...mapState({
@@ -173,6 +180,7 @@ export default {
   max-width: 1200px;
   margin: 0 auto;
   position: relative;
+  padding-bottom: 4%;
 }
 .section_inner .index_more {
   position: absolute;

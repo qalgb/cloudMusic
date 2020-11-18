@@ -113,6 +113,9 @@ export default {
 </script>
 
 <style scoped>
+ol,ul,dl{
+  margin: 0;
+}
 .main{
   max-width: 1200px;
   margin: 0 auto;

@@ -1,6 +1,9 @@
 <template>
   <div>
-    <a @click="showModal" class="loginText"> 登录 </a>
+    <button @click="showModal" class="loginButton" v-if="isButton">
+      立即登录
+    </button>
+    <a @click="showModal" class="loginText" v-else> 登录 </a>
     <a-modal v-model="visible" title="安全登录">
       <template slot="footer">
         <div class="goLoginFooter">
@@ -78,6 +81,9 @@
 import { reqLoginInfo, reqUserInfo } from "../../api";
 export default {
   name: "GoLogin",
+  props: {
+    isButton: Boolean,
+  },
   data() {
     return {
       visible: false,
@@ -92,19 +98,21 @@ export default {
     },
     //点击授权登录
     async logining() {
-      console.log(typeof this.$route.path, this.$route.path);
-      const result = await reqLoginInfo(this.phoneNum, this.password);
-      if (result.code === 200) {
-        localStorage.setItem("cookie", result.cookie);
-        //成功提示消息
-        this.$message.success("登录成功!");
-        this.$router.push({ path: this.$route.path + "mymusic" });
-        this.visible = false;
+      if (this.phoneNum.trim() && this.password.trim()) {
+        const result = await reqLoginInfo(this.phoneNum, this.password);
+        if (result.code === 200) {
+          localStorage.setItem("cookie", result.cookie);
+          //成功提示消息
+          this.$message.success("登录成功!");
+          location.reload();
+          this.visible = false;
+        } else {
+          //失败提示消息
+          this.$message.error("账号或密码错误，请重新登录");
+          this.password = "";
+        }
       } else {
-        //失败提示消息
-        this.$message.error("账号或密码错误，请重新登录");
-        this.phoneNum = "";
-        this.password = "";
+        this.$message.warn("账号和密码不能为空");
       }
     },
   },
@@ -261,7 +269,7 @@ export default {
   margin: 0 5px;
 }
 
-.slide-top-c {
+.loginButton {
   display: block;
   font-size: 20px;
   height: 48px;
@@ -274,19 +282,5 @@ export default {
   color: #fff;
   outline: none;
   cursor: pointer;
-  animation: slide-top-b 1s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.2s both;
-}
-
-@keyframes slide-top-c {
-  0% {
-    -webkit-transform: translateY(0);
-    transform: translateY(0);
-    opacity: 0;
-  }
-  100% {
-    -webkit-transform: translateY(-100px);
-    transform: translateY(-100px);
-    opacity: 1;
-  }
 }
 </style>
