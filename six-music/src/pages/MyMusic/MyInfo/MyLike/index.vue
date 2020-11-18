@@ -2,14 +2,14 @@
   <div>
     <div class="mylikeNav">
       <a href="javascript:;" class="active">歌曲 0</a>
-      <a href="javascript:;">歌单 0</a>
+      <a href="javascript:;">歌单 {{ accountInfo.createdPlaylistCount }}</a>
       <a href="javascript:;">专辑 0</a>
       <a href="javascript:;">视频 0</a>
     </div>
     <div class="myLikeInfo">
       <i class="noInfo-icon"></i>
       <p>
-        什么也没有，去<a href="javascript:;" class="active">音乐馆</a
+        什么也没有，去<router-link to="/" class="active">音乐馆</router-link
         >发现好音乐！
       </p>
     </div>
@@ -17,8 +17,20 @@
 </template>
 
 <script>
+import { reqAccountInfo } from "../../../../api";
 export default {
   name: "MyLike",
+  data() {
+    return {
+      accountInfo: [],
+    };
+  },
+  async mounted() {
+    //获取mv,歌单等数据
+    let result = await reqAccountInfo(localStorage.cookie);
+    this.accountInfo = result;
+    console.log(this.accountInfo);
+  },
 };
 </script>
 

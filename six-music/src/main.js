@@ -7,7 +7,15 @@ import router from "./router";
 // 引入store
 import store from "./store";
 // 引入antd组件
-import { Button, Icon, Input, Modal, message } from "ant-design-vue";
+import {
+  Button,
+  Icon,
+  Input,
+  Modal,
+  message,
+  Dropdown,
+  Menu,
+} from "ant-design-vue";
 // 引入swiper的样式
 import "swiper/css/swiper.css";
 // 汉化moment
@@ -21,7 +29,9 @@ Vue.config.productionTip = false;
 Vue.component(Button.name, Button);
 Vue.component(Icon.name, Icon);
 Vue.component(Input.TextArea.name, Input.TextArea);
+Vue.component(Dropdown.name, Dropdown);
 Vue.use(Modal);
+Vue.use(Menu);
 Vue.prototype.$message = message;
 
 new Vue({

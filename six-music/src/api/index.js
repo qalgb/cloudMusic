@@ -59,8 +59,14 @@ export const reqAllMv = () => ajax.get(`/mv/all`);
 //请求登录信息
 export const reqLoginInfo = (phoneNum, password) =>
   ajax.get(`/login/cellphone?phone=${phoneNum}&password=${password}`);
-//获取账户信息
+//获取用户信息
 export const reqUserInfo = (cookie) =>
   ajax.get(`/user/account?cookie=${cookie}`);
+//获取用户详情uid
+export const reqUserDetail = (uid) =>
+  ajax.get(`/user/detail?uid=${uid}`);
+//获取账户信息 , 歌单，收藏，mv, dj 数量
+export const reqAccountInfo = (cookie) =>
+  ajax.get(`/user/subcount?cookie=${cookie}`);
 // 获取详细歌单信息
 export const reqClassIfication = () => ajax.get("/playlist/catlist");

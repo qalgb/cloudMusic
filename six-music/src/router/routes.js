@@ -1,8 +1,8 @@
 import Home from "../pages/Home";
 //我的音乐
 import MyMusic from "../pages/MyMusic";
-import Rank from "../pages/Rank"
-
+import Rank from "../pages/Rank";
+import Register from "../pages/Register";
 import Mv from "../pages/Mv";
 export default [
   {
@@ -10,11 +10,11 @@ export default [
     component: Home,
   },
   {
-    path: "/home/mymusic",
+    path: "/mymusic",
     component: MyMusic,
   },
   {
-    path: "/home/rank",
+    path: "/rank",
     component: Rank,
   },
   {
@@ -22,8 +22,12 @@ export default [
     component: Mv,
   },
   {
+    path: "/register",
+    component: Register,
+    meta: { isHide:true }
+  },
+  {
     path: "/",
     redirect: "/",
   },
-  
 ];
