@@ -74,4 +74,3 @@ export const reqLatestPlaylist = () => ajax.get(`/top/playlist?limit=20&order=ne
 // yyj 获取分类歌单
 export const reqCategoryPlaylist = (name) => ajax.get(`/top/playlist?limit=20&cat=${name}`)
 
-// 

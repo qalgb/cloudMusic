@@ -82,7 +82,6 @@ export default {
               (item) => item.category === item1 * 1
             )
           );
-
           return pre;
         }, []) || []
       );
