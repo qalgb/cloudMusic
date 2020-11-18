@@ -26,6 +26,13 @@
     </li>
   </ul>
 </div>
+  <!-- <a-pagination 
+    :default-current="1" 
+    :page="page"
+    :total="500" 
+    :defaultPageSize="10"
+    @change="change"
+  /> -->
 </div>
 </template>
 
@@ -33,13 +40,12 @@
 import moment from 'moment'
 export default {
   name: 'Comment',
-  props:{
-   songListComment: Object,
-   curId: Number
-  },
+  props:['songListComment','curId'],
+  // props:['curId'],
   data () {
     return {
-      lessText: ''  
+      lessText: '' , 
+      page:1
     }
   },
   computed: {
@@ -48,21 +54,40 @@ export default {
       return (time) => {
         return moment(time).format("MMMDo hh:mm")
       }
-    }
+    },
   },
+  // async mounted () {
+  //   // console.log('mountd',this.curId);
+  //   await this.getCommentList(this.curId )
+  // },
   methods: {
     // 发表评论
-    sendComment(){
-      const { curId } = this.$props
+    async sendComment(){
+      const { curId } = this
+      // console.log(curId)
+      // 获取父级传递过来的歌单id
+      const cookie = localStorage.getItem('cookie')
+      // 获取评论框内容
+      const content = this.lessText.trim()
       const commentInfo = {
-        t: 1,
+        t: 1, 
         type: 2,
         id: curId,
-        content:this.lessText,
-        commentId: null
+        content,
+        commentId: null,
+        cookie
       }
-      this.$store.dispatch('getSendOrReqOrDelComment',{ ...commentInfo })
+      // 分发发送评论请求
+      await this.$store.dispatch('getSendOrReqOrDelComment',{ ...commentInfo })
+      // 向父级提交更新了评论数据操作
+      this.$emit('sendComent',curId)
+      // 清空文本框内容
+      this.lessText = ''
     }
+    // // 分页
+    // change(page, pageSize){
+    //   console.log(page,pageSize);
+    // }
   }
 }
 </script>

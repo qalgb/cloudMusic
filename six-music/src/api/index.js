@@ -38,9 +38,9 @@ export const reqSongListComment = (id) =>
   });
 // 发送/删除/回复评论
 // t:0 删除   t:1 发送   t:2 回复 回复必须要用commentId
-export const reqSendOrReqOrDelComment = (t, type, id, content, commentId) =>
+export const reqSendOrReqOrDelComment = (t, type, id, content, commentId, cookie) =>
   ajax({
-    url: `/comment?t=${t}&type=${type}&id=${id}&content=${content}&commentId=${commentId}`,
+    url: `/comment?t=${t}&type=${type}&id=${id}&content=${content}&commentId=${commentId}&cookie=${cookie}`,
     method: "GET",
   });
 /*

@@ -42,18 +42,19 @@ export default{
       }
     },
     // 发送/回复/删除评论
-    async getSendOrReqOrDelComment ({ commit }, {t,type,id,content,commentId}) {
-      const result = await reqSendOrReqOrDelComment(t,type,id,content,commentId)
+    async getSendOrReqOrDelComment ({ commit,dispatch }, {t,type,id,content,commentId,cookie}) {
+      const result = await reqSendOrReqOrDelComment(t,type,id,content,commentId,cookie)
       // 如果没有登录 弹窗
       if (result.code === 301) {
         alert(result.msg)
         return
       }
       if (result.code === 200) {
-        commit('RECEIVE_SENDORREQORDEL_COMMENT',result.comment)
-        
+        // dispatch(result.comment)
+        // commit('RECEIVE_SENDORREQORDEL_COMMENT',result.comment) 
       }
-    }
+    },
+
   },
   getters: {
     // 获取数据并且按照标题长度排序
