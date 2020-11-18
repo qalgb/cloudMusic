@@ -272,11 +272,10 @@ export default {
       moveX: 0,
       // 是否允许拖动
       isClickSlider: false,
+      songUrl: ''
     };
   },
-  props:{
-    songId: String
-  },
+  
   mounted() {
     this.audio = this.$refs.audio;
     // currentTime属性变化时触发，每秒可能触发4到60次
@@ -290,11 +289,12 @@ export default {
   methods: {
     // 播放与暂停
     handlePlay() {
+      
       if (!this.isPlay) {
-        
+        const songId = this.$route.query.id
         // const result = await reqSongUrl(songId)
         // if (result.code === 200) {
-        //   const songUrl = result.data[0].url
+        //   this.songUrl = result.data[0].url
         // }
         this.$refs.audio.play();
         this.isPlay = true;
