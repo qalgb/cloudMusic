@@ -3,20 +3,7 @@
     <div class="mod_tag">
       <div class="tag_list" >
         <h3 class="tag_tit">区域</h3>
-        <a href="javascript:;" class="tag_item contentTag" >全部</a>
-        <a href="javascript:;" class="tag_item">内地</a>
-        <a href="javascript:;" class="tag_item">港台</a>
-        <a href="javascript:;" class="tag_item">欧美</a>
-        <a href="javascript:;" class="tag_item">日本</a>
-        <a href="javascript:;" class="tag_item">韩国</a>
-      </div>
-      <div class="tag_list">
-        <h3 class="tag_tit" >区域</h3>
-        <a href="javascript:;" class="tag_item contentTag" >全部</a>
-        <a href="javascript:;" class="tag_item" >内地</a>
-        <a href="javascript:;" class="tag_item" >内地</a>
-        <a href="javascript:;" class="tag_item" >内地</a>
-        <a href="javascript:;" class="tag_item" >内地</a>
+        <a href="javascript:;" class="tag_item " v-for="(item,index) in areamv" :key="item.id" :class="[ereaTag === index ?'contentTag' :'' ]" @click="areaTitle(ereaTag,index)"  >{{item.title}}</a>
       </div>
     </div>
 </template>
@@ -25,9 +12,24 @@ export default {
   name: "Tag",
   data () {
     return {
+      areamv:[
+        {id:'1',title:"全部"},
+        {id:'2',title:"内地"},
+        {id:'3',title:"港台"},
+        {id:'4',title:"欧美"},
+        {id:'5',title:"日本"},
+        {id:'6',title:"韩国"}
+      ],
+      ereaTag:''
     }
   },
+  mounted () {
+  },
   methods: {
+    areaTitle(ereaTag,index){
+      this.ereaTag = index
+    }
+    
   }
 }
 </script>

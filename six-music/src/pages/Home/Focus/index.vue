@@ -15,7 +15,7 @@
             :key="index"
           >
             <a href="javascript:;" class="list_link">
-              <img :src="item.pic" :alt="item.typeTitle" />
+              <img v-lazy="item.pic" :alt="item.typeTitle" />
             </a>
           </div>
         </div>

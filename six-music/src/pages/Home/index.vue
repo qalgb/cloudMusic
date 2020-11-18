@@ -10,6 +10,8 @@
     <DiscList />
     <!-- 排行榜 -->
     <RankList />
+    <!-- Mv -->
+    <Mv />
   </div>
 </template>
 
@@ -19,6 +21,7 @@ import Launch from './Launch'
 import Focus from './Focus'
 import DiscList from './DiscList'
 import RankList from './RankList'
+import Mv from './Mv'
 
 export default {
   name: "Home",
@@ -27,7 +30,8 @@ export default {
     Launch,
     Focus,
     DiscList,
-    RankList
+    RankList,
+    Mv
   }
 }
 </script>

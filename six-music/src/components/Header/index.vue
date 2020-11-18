@@ -14,12 +14,12 @@
       <ul class="headNav">
         <li
           class="musicPavilion"
-          :class="{ active: isActive }"
+          :class="{ active: isShow }"
           @click="goMusicPavilion"
         >
           音乐馆
         </li>
-        <li class="myMusic" :class="{ active: !isActive }" @click="goMyMusic">
+        <li class="myMusic" :class="{ active: !isShow }" @click="goMyMusic">
           我的音乐
         </li>
         <li class="client">客户端</li>
@@ -37,11 +37,44 @@
         <div class="searchInfo"></div>
         <button><i class="iconSearch"></i></button>
       </div>
-      <a href="javascript:;" class="userPic" v-if="isSuccess">
+      <!-- <a href="javascript:;" class="userPic" v-if="isSuccess">
         <img :src="userInfo.avatarUrl" class="userPicImg" alt="" />
-      </a>
+      </a> -->
+      <a-dropdown v-if="isSuccess">
+        <a class="ant-dropdown-link">
+          <img :src="userInfo.avatarUrl" class="userPicImg" alt="" />
+        </a>
+        <div class="backLogin" slot="overlay">
+          <div class="userHead_backLogin">
+            <a href="javascript:;"
+              ><a href="javascript:;"
+                ><img
+                  :src="userInfo.avatarUrl"
+                  class="userPicImg_backLogin"
+                  alt=""
+                  @click="goMyMusic"
+                />
+              </a>
+            </a>
+            <div class="userInfo_backLogin">
+              <a
+                href="javascript:;"
+                class="userName_backLogin"
+                @click="goMyMusic"
+                >{{ userInfo.nickname }}</a
+              >
+              <div class="userLevel_backLogin">Lv.7</div>
+            </div>
+          </div>
+          <div class="backLoginButtonBox">
+            <a href="javascript:;" class="backLoginButton" @click="backLogin"
+              >退出登录</a
+            >
+          </div>
+        </div>
+      </a-dropdown>
       <!-- 登录组件 -->
-      <GoLogin v-else />
+      <GoLogin :isButton="this.isButton" v-else />
       <button class="openVip selectChoose isSelect">开通VIP</button>
       <button class="topUp selectChoose">充值</button>
     </div>
@@ -73,10 +106,11 @@ export default {
   data() {
     return {
       searchInfo: "", //搜索框内容
-      isActive: true,
-      isShow: true, //音乐馆nav是否显示
+      isShow: this.$route.path, //音乐馆nav是否显示
       isSuccess: false, //是否处于登录状态（是否有cookie）
       userInfo: [], //用户信息
+      cookie: localStorage.getItem("cookie"),
+      isButton: false,
     };
   },
   components: {
@@ -85,27 +119,31 @@ export default {
   methods: {
     //跳转到首页（音乐馆）
     goMusicPavilion() {
-      this.$router.replace({ path: "/" });
-      this.isActive = true;
       this.isShow = true;
+      this.$router.replace({ path: "/" });
     },
     //跳转到我的音乐
     goMyMusic() {
-      this.$router.replace({ path: "/mymusic" });
-      this.isActive = false;
       this.isShow = false;
+      this.$router.replace({ path: "/mymusic" });
     },
     async getUserInfo() {
       const result = await reqUserInfo(localStorage.getItem("cookie"));
       this.userInfo = result.profile;
     },
+    //退出登录
+    backLogin() {
+      localStorage.removeItem("cookie");
+      this.$message.success("已退出登录!");
+      setTimeout(() => {
+        location.reload();
+      }, 500);
+    },
   },
   async mounted() {
-    console.log(this.$route.path.indexOf("mymusic"));
     //active样式是否渲染
     if (this.$route.path.indexOf("mymusic") === 1) {
-      this.isActive = false;
-      this.getUserInfo();
+      this.isShow = false;
     }
 
     if (localStorage.getItem("cookie")) {
@@ -113,7 +151,6 @@ export default {
       const result = await reqUserInfo(localStorage.getItem("cookie"));
       //判断是否获取成功
       if (result.code === 200) {
-        console.log(result);
         this.userInfo = result.profile;
         this.isSuccess = true;
       } else {
@@ -125,6 +162,50 @@ export default {
 </script>
 
 <style scoped>
+.backLogin {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid #f2f2f2;
+}
+.userPicImg_backLogin {
+  width: 50px;
+  height: 50px;
+  border-radius: 90px;
+  vertical-align: -14px;
+}
+.userHead_backLogin {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.userLevel_backLogin {
+  font-style: italic;
+  font-size: 10px;
+}
+.userInfo_backLogin {
+  margin: 20px 0 20px 20px;
+  text-align: center;
+}
+.backLoginButtonBox {
+  width: 100%;
+}
+
+.backLoginButtonBox:hover {
+  background-color: #c9c9c9;
+}
+
+.backLoginButton {
+  display: block;
+  width: 100%;
+  border-top: 1px solid #f2f2f2;
+  text-align: center;
+  height: 50px;
+  line-height: 50px;
+  font-size: 20px;
+  color: #fc5152 !important;
+}
 ul {
   padding: 0;
   margin: 0;

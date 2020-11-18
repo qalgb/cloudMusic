@@ -1,24 +1,24 @@
 <template>
   <div>
     <!-- <AudioPlay /> -->
-    <Header />
+    <Header v-if="!this.$route.meta.isHide" />
     <router-view></router-view>
-    <Footer />
+    <Footer v-if="!this.$route.meta.isHide" />
   </div>
 </template>
 <script>
-import Header from './components/Header'
-import Footer from './components/Footer'
+import Header from "./components/Header";
+import Footer from "./components/Footer";
 // import AudioPlay from './components/AudioPlay'
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     // AudioPlay,
     Header,
-    Footer
+    Footer,
   },
-}
+};
 </script>
 
 <style scoped>
