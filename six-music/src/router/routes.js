@@ -11,11 +11,11 @@ export default [
     component: Home,
   },
   {
-    path: "/home/mymusic",
+    path: "/mymusic",
     component: MyMusic,
   },
   {
-    path: "/home/rank",
+    path: "/rank",
     component: Rank,
   },
   {
@@ -23,7 +23,7 @@ export default [
     component: Mv,
   },
   {
-    path: "/musicplay",
+    path: "/audioplay/:id?",
     component: AudioPlay,
   },
   {

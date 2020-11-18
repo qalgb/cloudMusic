@@ -277,6 +277,9 @@ export default {
   float: left;
   padding: 22px 0;
 }
+.songInfo a{
+  color: #000 !important;
+}
 .songInfo .songlist_song {
   font-size: 14px;
   display: inline-block;

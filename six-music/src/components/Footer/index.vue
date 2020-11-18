@@ -232,7 +232,7 @@ export default {
 <style scoped>
 h3,
 a {
-  color: #999;
+  color: #999 !important;
 }
 .footerOuter {
   width: 100%;

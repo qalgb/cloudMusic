@@ -55,7 +55,7 @@
       </li>
       <li><a href="javascript:;">分类歌单</a></li>
       <li><a href="javascript:;">电台</a></li>
-      <li><a href="javascript:;" @click="gotoMv">MV</a></li>
+      <li><router-link href="javascript:;">MV</router-link></li>
       <li><a href="javascript:;">数字专辑</a></li>
       <li><a href="javascript:;">票务</a></li>
     </ul>
