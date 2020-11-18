@@ -369,7 +369,7 @@ html,
 body,
 .player {
   height: 100%;
-  overflow: hidden;
+  /* overflow: hidden; */
 }
 .player .bgimg {
   height: 300%;
