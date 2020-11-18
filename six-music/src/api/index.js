@@ -1,6 +1,7 @@
 // 封装每个接口的api函数
 import ajax from "./ajax";
 
+/* Home页面请求 */
 // 获取歌单分类标签
 export const reqSongListTag = () => ajax.get(`/playlist/hot`);
 // 获取歌单推荐
@@ -16,7 +17,14 @@ export const reqBanners = () => ajax.get("/homepage/block/page");
 export const reqDiscList = (area) =>
   ajax.get(`/album/new?area=${area}&limit=20`);
 // 获取排行榜摘要
-export const reqTopList = () => ajax.get('/toplist/detail')
+export const reqTopList = () => ajax.get("/toplist/detail");
+// 获取MV
+export const reqMvList = (location) => ajax.get(`/mv/all?area=${location}`)
+
+/* 歌单详情页请求 */
+// 获取歌单详情
+export const reqPlayListDetail = (id) => ajax.get(`/playlist/detail?id=${id}`)
+
 
 // 请求所有榜单数据
 export const reqRankInfo = () =>

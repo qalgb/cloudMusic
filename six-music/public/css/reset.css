@@ -69,6 +69,8 @@ ul,
 ol,
 li {
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 /* 重置文本格式元素 */

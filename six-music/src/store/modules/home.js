@@ -1,6 +1,6 @@
 // 管理首页所有数据
 // 引入api接口函数
-import { reqSongRecommend, reqSongListTag, reqSongHotList, reqNewSongList,reqBanners,reqDiscList,reqTopList } from '@/api'
+import { reqSongRecommend, reqSongListTag, reqSongHotList, reqNewSongList, reqBanners, reqDiscList, reqTopList, reqMvList } from '@/api'
 export default {
   state: {
     // 歌单分类标签
@@ -16,12 +16,14 @@ export default {
     // 新碟
     discList: [],
     // 排行榜摘要
-    topList: []
+    topList: [],
+    // mv
+    mvList: []
   },
   mutations: {
     // 直接修改歌单分类标签
     RECEIVE_SONG_LIST (state, songListTag) {
-      state.songListTag = songListTag.slice(0,5)
+      state.songListTag = songListTag.slice(0, 5)
     },
     // 直接修改歌单推荐数组
     RECEIVE_SONG_RECOMMEND_LIST (state, songRecommendList) {
@@ -29,11 +31,11 @@ export default {
     },
     // 精品歌单
     RECEIVE_HOT_SONG_LIST (state, hotSongList) {
-      state.hotSongList = hotSongList.slice(0,15)
+      state.hotSongList = hotSongList.slice(0, 15)
     },
     // 新歌列表
     RECEIVE_NEW_SONG_LIST (state, newSongList) {
-      state.newSongList = newSongList.slice(0,27)
+      state.newSongList = newSongList.slice(0, 27)
     },
     // banners
     RECEIVE_BANNERS_LIST (state, bannerList) {
@@ -45,7 +47,11 @@ export default {
     },
     // 排行榜
     RECEIVE_TOP_LIST (state, topList) {
-      state.topList = topList.slice(0,5)
+      state.topList = topList.slice(0, 5)
+    },
+    // mv
+    RECEIVE_MV_LIST (state, mvList) {
+      state.mvList = mvList.slice(0, 20)
     }
   },
   actions: {
@@ -64,7 +70,7 @@ export default {
       }
     },
     // 获取精品歌单数据
-    async getHotSongList ({ commit },tag) {
+    async getHotSongList ({ commit }, tag) {
       const result = await reqSongHotList(tag)
       if (result.code === 200) {
         commit('RECEIVE_HOT_SONG_LIST', result.playlists)
@@ -81,14 +87,14 @@ export default {
     async getBannerList ({ commit }) {
       const result = await reqBanners()
       if (result.code === 200) {
-        commit ('RECEIVE_BANNERS_LIST', result.data.blocks[0].extInfo.banners)
+        commit('RECEIVE_BANNERS_LIST', result.data.blocks[0].extInfo.banners)
       }
     },
     // 新碟
     async getDiscList ({ commit }, area) {
       const result = await reqDiscList(area)
       if (result.code === 200) {
-        commit ('RECEIVE_DISC_LIST', result.albums)
+        commit('RECEIVE_DISC_LIST', result.albums)
       }
     },
     // 排行榜
@@ -97,7 +103,16 @@ export default {
       if (result.code === 200) {
         commit('RECEIVE_TOP_LIST', result.list)
       }
+    },
+    // mv
+    async getMvList ({ commit }, location) {
+      const result = await reqMvList(location)
+      if (result.code === 200) {
+        commit('RECEIVE_MV_LIST', result.data)
+      }
     }
   },
-  getters: {}
+  getters: {
+    
+  }
 }

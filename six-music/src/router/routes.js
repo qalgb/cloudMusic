@@ -7,6 +7,8 @@ import AudioPlay from '../components/AudioPlay'
 import Mv from "../pages/Mv";
 import Playlist from "@/pages/Playlist";
 import MvVideo from "../pages/MvVideo"
+// 歌单详情
+import playListDetail from '@/pages/playListDetail'
 export default [
   {
     path: "/",
@@ -27,6 +29,11 @@ export default [
   {
     path: "/mv",
     component: Mv,
+  },
+  // 歌单详情
+  {
+    path: "/playlist:keyword?",
+    component: playListDetail
   },
   {
     path: "/register",

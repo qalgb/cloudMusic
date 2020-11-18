@@ -1,36 +1,39 @@
 <template>
-  <div class="launchContainer">
+  <div class="mvContainer">
     <div class="section_inner">
+      <!-- 导航 -->
       <div class="index_hd">
         <h2 class="index_tit">
-          <i class="icon_txt">歌单推荐</i>
+          <i class="icon_txt">MV</i>
         </h2>
       </div>
-      <a href="javascript:;" class="mod_btn">
-        <i class="mod_btn_icon_play"></i>播放全部
-      </a>
       <!-- 切换 -->
       <div class="mod_index_tab">
-        <a href="javascript:;" v-for="(item,index) in location" :key="index" :class="(currentIndex === index)? 'index_tab_item_current' : 'index_tab_item'" @click="handleSelect(index)"
-          >{{item.title}}</a
-        >
+        <a href="javascript:;" class="index_tab_item" v-for="(item,index) in area" :key="index" @click="handleSlide(index)" :class="
+            currentIndex === index ? 'index_tab_item_current' : 'index_tab_item'
+          ">{{item}}</a>
       </div>
-      <!-- 点击滑动 -->
+      <!-- 图片滑动 -->
       <div class="swiper-container" ref="sw1">
         <div class="swiper-wrapper">
-          <div class="swiper-slide" v-for="item in newSongList" :key="item.id">
+          <div class="swiper-slide" v-for="item in mvList" :key="item.id">
             <div class="song_cover">
-              <img v-lazy="item.album.picUrl" />
+              <img v-lazy="item.cover" />
               <i class="mod_cover__mask"></i>
               <i class="mod_cover__icon_play"></i>
             </div>
             <div class="songInfo">
-              <a href="javascript:;" class="songlist_song">{{ item.name }}</a>
+              <a href="javascript:;">{{item.name}}</a>
               <p>
-                <a href="javascript:;">{{ item.artists[0].name }}</a>
+                <a href="javascript:;">{{item.artistName}}</a>
               </p>
+              <div class="mvlist_listen">
+                <span>
+                  <i></i>
+                  {{item.playCount > 9999 ? (item.playCount / 10000).toFixed(1) + '万' : item.playCount}}
+                </span>
+              </div>
             </div>
-            <div class="songlist_time">播放量：{{item.bMusic.playTime>9999 ? (item.bMusic.playTime/10000).toFixed(1)+'万':item.bMusic.playTime}}</div>
           </div>
         </div>
         <div class="swiper-button-next"></div>
@@ -43,42 +46,30 @@
 
 <script>
 import Swiper from 'swiper'
-import { mapState } from 'vuex'
+import {mapState, mapGetters} from 'vuex'
 
 export default {
-  name: 'Launch',
-  data() {
+  name: 'Mv',
+  data () {
     return {
-      location: [
-        {title: '最新', type: 0},
-        {title: '华语', type: 7},
-        {title: '欧美', type: 96},
-        {title: '韩国', type: 16},
-        {title: '日本', type: 8}
-      ],
+      area: ['精选','内地','港台','欧美','日本','韩国'],
       currentIndex: 0
     }
   },
-  computed: {
-    ...mapState({
-      newSongList: (state) => state.home.newSongList,
-    }),
-  },
   watch: {
-    newSongList: {
-      // 该回调将会在侦听开始之后被立即调用
+    mvList:{
       handler: function () {
-        if (this.newSongList.length === 0) return
+        if (this.mvList.length === 0) return
         this.$nextTick(() => {
           var mySwiper = new Swiper(this.$refs.sw1, {
-            slidesPerView: 3, // 每一行显示图片的数量
-            slidesPerColumn: 3, //显示三行
-            slidesPerGroup: 9, // 每次移动的图片数量
+            slidesPerView: 5, // 每一行显示图片的数量
+            slidesPerColumn: 2,
+            slidesPerGroup: 10, // 每次移动的图片数量
             spaceBetween: 20,
+            // loop: true,
+            // loopedSlides: 5,
             observer: true,
             observeParents: true,
-            // loopedSlides: 5,
-            // loop: true,
             speed: '1000ms',
             // 如果需要分页器
             pagination: {
@@ -88,47 +79,55 @@ export default {
             navigation: {
               nextEl: '.swiper-button-next',
               prevEl: '.swiper-button-prev',
-            }
+            },
           })
         })
       },
-      immediate: true,
-    },
-  },
-  mounted() {
-    this.getNewSongList(0)
-  },
-  methods: {
-    // 获取新歌列表
-    getNewSongList(type) {
-      this.$store.dispatch('getNewSongList',type)
-    },
-    // 点击导航栏
-    handleSelect (index) {
-      let type = this.location[index].type
-      // 更新下标
-      this.currentIndex = index
-      // 获取数据
-      this.getNewSongList(type)
+      immediate: true
     }
   },
+  computed: {
+    ...mapState({
+      mvList: state => state.home.mvList
+    }),
+    ...mapGetters(['getTopList'])
+  },
+  mounted () {
+    this.getMvList()
+  },
+  methods: {
+    getMvList (location) {
+      this.$store.dispatch('getMvList', location)
+    },
+    // 点击切换
+    handleSlide (index) {
+      // 更新下标
+      this.currentIndex = index
+      let area = this.area[index]
+      // 请求数据
+      this.getMvList(area)
+    }
+  }
 }
 </script>
 
 <style scoped>
-.launchContainer {
+a{
+  color: #000!important;
+}
+.mvContainer {
   position: relative;
   background: url('../images/bg_detail.jpg') 50% 0 repeat-x;
 }
-.launchContainer .section_inner {
+.mvContainer .section_inner {
   z-index: 2;
   overflow: hidden;
 }
-.launchContainer:hover .swiper-button-prev {
+.mvContainer:hover .swiper-button-prev {
   opacity: 1;
   left: 0;
 }
-.launchContainer:hover .swiper-button-next {
+.mvContainer:hover .swiper-button-next {
   opacity: 1;
   right: 0;
 }
@@ -148,37 +147,7 @@ export default {
   width: 196px;
   height: 40px;
   background-image: url('../images/index_tit.png');
-  background-position: 0 -50px;
-}
-.mod_btn {
-  position: absolute;
-  left: 0;
-  top: initial;
-  margin-top: -10px;
-  border: 1px solid #c9c9c9;
-  border-radius: 2px;
-  font-size: 14px;
-  margin-right: 6px;
-  padding: 0 23px;
-  height: 38px;
-  line-height: 38px;
-  white-space: nowrap;
-  box-sizing: border-box;
-  overflow: hidden;
-}
-.mod_btn:hover {
-  background-color: #ededed;
-  color: #333 !important;
-}
-.mod_btn_icon_play {
-  width: 13px;
-  height: 16px;
-  background-position: -60px -220px;
-  display: inline-block;
-  margin-right: 6px;
-  background-image: url('../images/icon_sprite.png');
-  background-repeat: no-repeat;
-  vertical-align: -3px;
+  background-position: 0 -250px;
 }
 .icon_txt {
   font: 0/0 a;
@@ -200,34 +169,20 @@ export default {
   color: #31c27c !important;
 }
 .swiper-container {
-  margin-bottom: 20px;
-  height: 370px;
-}
-.swiper-slide {
-  position: relative;
-  height: 86px;
-  overflow: hidden;
-  border-top: 1px solid #f2f2f2;
-  padding-top: 12px;
-  font-size: 14px;
-}
-.swiper-slide .song_cover {
-  position: relative;
-  float: left;
-  width: 86px;
-  height: 86px;
-  margin-right: 14px;
+  height: 502px;
+  width: 1200px;
   overflow: hidden;
 }
-.swiper-container .swiper-slide img {
-  width: 86px;
-  height: 86px;
-  transform: scale(1) translateZ(0);
-  transition: transform 0.75s;
+.swiper-container .swiper-wrapper .swiper-slide {
+  width: 224px !important;
+  height: 231.66px;
 }
-.swiper-container .swiper-slide .song_cover:hover img {
-  transform: scale(1.07) translateZ(0);
-  transition: transform 0.75s cubic-bezier(0, 1, 0.75, 1);
+.swiper-container .swiper-slide .song_cover {
+  position: relative;
+  width: 224px;
+  overflow: hidden;
+  margin-bottom: 15px;
+  cursor: pointer;
 }
 .swiper-container .swiper-slide .song_cover .mod_cover__mask {
   position: absolute;
@@ -257,10 +212,6 @@ export default {
   transition-property: opacity, transform;
   transition-duration: 0.5s;
   zoom: 1;
-  background-size: 68%;
-  background-repeat: no-repeat;
-  background-position: 50%;
-  cursor: pointer;
 }
 .swiper-container .swiper-slide .song_cover:hover .mod_cover__icon_play {
   background-image: url('../images/cover_play.png');
@@ -268,39 +219,42 @@ export default {
   transition-property: opacity, transform;
   transition-duration: 0.5s;
   opacity: 1;
-  background-size: 68%;
-  background-repeat: no-repeat;
-  background-position: 50%;
 }
-.songInfo {
-  float: left;
-  padding: 22px 0;
+.swiper-container .swiper-slide img {
+  width: 224px;
+  height: 126.66px;
+  transform: scale(1) translateZ(0);
+  transition: transform 0.75s;
 }
-.songInfo a{
-  color: #000 !important;
+.swiper-container .swiper-slide .song_cover:hover img {
+  transform: scale(1.07) translateZ(0);
+  transition: transform 0.75s cubic-bezier(0, 1, 0.75, 1);
 }
-.songInfo .songlist_song {
-  font-size: 14px;
+.swiper-slide .songInfo {
+  width: 224px;
+}
+.songInfo .mvlist_listen{
+  line-height: 18px;
+    height: 20px;
+}
+.songInfo .mvlist_listen i{
   display: inline-block;
-  max-width: 150px;
+    width: 19px;
+    height: 12px;
+    background-position: -180px -20px;
+    margin-right: 5px;
+    vertical-align: -1px;
+    background-image: url('../images/icon_sprite.png');
+}
+.swiper-slide p {
+  white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
-  font-weight: 400;
+  height: 24px;
+  margin-bottom: 0;
 }
-.songInfo p a {
-  max-width: 50%;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: #999;
-}
-.songlist_time {
-  position: absolute;
-  right: 30px;
-  bottom: 0;
-  line-height: 86px;
-  color: #999;
+.swiper-slide p a{
+  color: #999 !important;
 }
 .swiper-button-next {
   left: auto;
@@ -318,7 +272,7 @@ export default {
   transition: all 0.5s;
   position: absolute;
   top: 50%;
-  margin-top: -84px;
+  margin-top: -125px;
   width: 79px;
   height: 108px;
   background: rgba(0, 0, 0, 0.1);

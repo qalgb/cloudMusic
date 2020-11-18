@@ -33,8 +33,8 @@
             :key="item.id"
           >
             <div class="song_cover">
-              <img :src="item.picUrl" />
-              <i class="mod_cover__mask"></i>
+              <img v-lazy="item.picUrl" />
+              <i class="mod_cover__mask" @click="sendPlayListId(item.id)"></i>
               <i class="mod_cover__icon_play"></i>
             </div>
             <div class="songInfo">
@@ -90,7 +90,8 @@ export default {
   data() {
     return {
       isShow: true,
-      currentIndex: -1
+      currentIndex: -1,
+      songId: '' // 点击歌曲的Id
     }
   },
   computed: {
@@ -190,6 +191,13 @@ export default {
         this.isShow = false
       }
     },
+    // 点击获取歌单id
+    sendPlayListId (id) {
+      // 更新歌曲id
+      this.songId = id
+      // 跳转
+      this.$router.push({path:'/playlist',query:{id:this.songId}})
+    }
   },
 }
 </script>

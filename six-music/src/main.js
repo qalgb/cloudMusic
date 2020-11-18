@@ -24,6 +24,14 @@ import moment from "moment";
 Vue.prototype.$moment = moment;
 moment.locale("zh-cn");
 
+// 引入图片懒加载
+import VueLazyload from 'vue-lazyload'
+// 引入懒加载图片
+import loading from './assets/images/loading.gif'
+Vue.use(VueLazyload, {
+  loading
+})
+
 // 设置浏览器提示信息
 Vue.config.productionTip = false;
 // 设置需要引入的atnd组件
