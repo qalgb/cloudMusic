@@ -108,7 +108,6 @@ export default {
       isButton: 3, //登录按钮是否显示
       level: "", //用户等级
       cookie: localStorage.getItem("cookie"),
-      isButton: false,
       current: '' // 点击导航栏初始值
     };
   },

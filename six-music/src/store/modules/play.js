@@ -34,7 +34,9 @@ export default{
       if (result.code === 200) {
         commit('RECEIVE_SONGDETAIL')
       }
-    }
+    },
+    // 获取音乐的url
+    
   },
 
   getters: {

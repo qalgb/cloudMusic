@@ -33,7 +33,7 @@ export const reqRankInfo = () =>
   });
 // 请求所有榜单歌曲列表
 export const reqRankSongList = (id) => ajax({
-  url:`/playlist/detail?${id}`,
+  url:`/playlist/detail?id=${id}`,
   method: 'GET',
 })
 //请求电台的分类标签

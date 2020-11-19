@@ -10,8 +10,7 @@ import MvVideo from "@/pages/MvVideo"
 // 歌单详情
 import playListDetail from "@/pages/playListDetail";
 import NewDisc from '../pages/NewDisc';
-
-import Mv from "../pages/Mv";
+import Radio from '@/pages/Radio'
 export default [
   {
     path: "/",
@@ -56,12 +55,12 @@ export default [
     component: Playlist,
 
   },
-  {path: "/audioplay",
+  {
+    path: "/audioplay",
     component: AudioPlay,
     meta:{isHide:true},
     name:'audioplay'
   },
-  { path: "/audioplay/:id?", component: AudioPlay },
   {
     path: "/",
     redirect: "/",

@@ -279,7 +279,7 @@ export default {
       songId: 0,
       // 是否显示退出链接
       isShowOut: false,
-      isButton:false,
+      isButton:3,
       isShowLogin:false,
     };
   },
@@ -292,15 +292,19 @@ export default {
     })
   },
   async mounted() {
+    if (this.$route.fullPath.indexOf("audioplay") !== -1) {
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+    }
     this.isLogin()
     
     // 获取audio对象
     this.audio = this.$refs.audio;
     await this.$store.dispatch('getUserInfo',localStorage.cookie)
+    
     // 通过用户id获取用户详细信息
-    await this.$store.dispatch('getUserDetInfo',this.userInfo.id)
-    console.log(this.userInfo.id)
-    console.log(this.userDetInfo)
+    await this.$store.dispatch('getUserDetInfo',this.userInfo.userId)
+    console.log('11',this.userInfo.userId)
     // currentTime属性变化时触发，每秒可能触发4到60次 
     this.audio.addEventListener("timeupdate", () => {
       this.currentTime = this.audio.currentTime;
@@ -308,18 +312,17 @@ export default {
       console.log(this.currentTime);
       this.duration = (this.currentTime / this.durationTime) * 100 + "%";
     });
-    if (this.$route.fullPath.indexOf("audioplay") !== -1) {
-      document.documentElement.style.overflow = "hidden";
-      document.body.style.overflow = "hidden";
-    }
+    
     
     // 获取params传过来的ID
-    this.songId = this.$route.params.id;
+    this.songId = this.$route.query.id;
+    console.log('111',this.$route.query)
     // 根据id获取歌曲url
     const result = await reqSongUrl(this.songId);
     if (result.code === 200) {
       this.songUrl = result.data[0].url;
     }
+    console.log(this.songUrl)
   },
   methods: {
 

@@ -201,7 +201,7 @@ export default {
     },
     // 点击播放按钮
     toPlay (id) {
-      this.$router.push({name:'audioplay',params:{id}})
+      this.$router.push({path:'/audioplay',query:{id}})
     }
   },
 }
