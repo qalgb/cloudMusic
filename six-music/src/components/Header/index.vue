@@ -60,7 +60,7 @@
                 @click="goMyMusic"
                 >{{ userInfo.nickname }}</a
               >
-              <div class="userLevel_backLogin">Lv.7</div>
+              <div class="userLevel_backLogin">Lv.{{level}}</div>
             </div>
           </div>
           <div class="backLoginButtonBox">
@@ -96,7 +96,7 @@
 
 <script>
 import GoLogin from "../GoLogin";
-import { reqUserInfo } from "../../api";
+import { reqUserInfo, reqUserLevel } from "../../api";
 export default {
   name: "Header",
   data() {
@@ -106,6 +106,7 @@ export default {
       isSuccess: false, //是否处于登录状态（是否有cookie）
       userInfo: [], //用户信息
       isButton: 3, //登录按钮是否显示
+      level: "", //用户等级
     };
   },
   components: {
@@ -147,6 +148,10 @@ export default {
     if (localStorage.getItem("cookie")) {
       //获取用户信息
       const result = await reqUserInfo(localStorage.getItem("cookie"));
+      //获取用户等级
+      const level = (await reqUserLevel(localStorage.getItem("cookie"))).data
+        .level;
+      this.level = level;
       //判断是否获取成功
       if (result.code === 200) {
         this.userInfo = result.profile;
@@ -158,7 +163,7 @@ export default {
   },
   watch: {
     "$route.path"() {
-      return this.getPath();
+       this.getPath();
     },
   },
 };

@@ -105,3 +105,7 @@ export const reqRegister = (phone, password, captcha, nickname) =>
   ajax.get(
     `/register/cellphone?phone=${phone}&password=${password}&captcha=${captcha}&nickname=${nickname}`
   );
+
+//获取用户等级信息
+export const reqUserLevel = (cookie) =>
+  ajax.get(`/user/level?cookie=${cookie}`);

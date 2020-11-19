@@ -22,7 +22,7 @@
         <div class="inputOut">
           <input
             type="text"
-            placeholder="请输入网易云账号"
+            placeholder="请输入网易账号"
             class="account"
             v-model="phoneNum"
           />
@@ -91,6 +91,7 @@ export default {
     showModal() {
       this.visible = true;
     },
+    //是否勾选同意协议
     onChange() {
       this.isAgree = !this.isAgree;
     },
