@@ -67,7 +67,7 @@ export default {
     // 发表评论
     async sendComment(){
       const { curId } = this
-      console.log(curId)
+      // console.log(curId)
       // 获取父级传递过来的歌单id
       const cookie = localStorage.getItem('cookie')
       // 获取评论框内容

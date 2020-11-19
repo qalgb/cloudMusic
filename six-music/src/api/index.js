@@ -33,7 +33,7 @@ export const reqRankInfo = () =>
   });
 // 请求所有榜单歌曲列表
 export const reqRankSongList = (id) => ajax({
-  url:`/playlist/detail?${id}`,
+  url:`/playlist/detail?id=${id}`,
   method: 'GET',
 })
 //请求电台的分类标签
@@ -123,3 +123,8 @@ export const reqMyLikeInfo = (ids) => ajax.get(`/song/detail?ids=${ids}`)
 //获取用户等级信息
 export const reqUserLevel = (cookie) =>
   ajax.get(`/user/level?cookie=${cookie}`);
+// 获取评论数据
+export const reqCommentList = (id,type,pageNo,PageSize,sortType,cursor) => ajax({
+  method: 'GET',
+  url: `/comment/new?type=${type}&id=${id}&sortType=${sortType}&cursor=${cursor}&pageSize=${PageSize}&pageNo=${pageNo}`
+})

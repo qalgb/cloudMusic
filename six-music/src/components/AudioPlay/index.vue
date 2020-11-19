@@ -279,7 +279,7 @@ export default {
       songId: 0,
       // 是否显示退出链接
       isShowOut: false,
-      isButton:false,
+      isButton:2,
       isShowLogin:false,
     };
   },
@@ -298,8 +298,8 @@ export default {
     this.audio = this.$refs.audio;
     await this.$store.dispatch('getUserInfo',localStorage.cookie)
     // 通过用户id获取用户详细信息
-    await this.$store.dispatch('getUserDetInfo',this.userInfo.id)
-    console.log(this.userInfo.id)
+    await this.$store.dispatch('getUserDetInfo',this.userInfo.usrid)
+    console.log(this.userInfo);
     console.log(this.userDetInfo)
     // currentTime属性变化时触发，每秒可能触发4到60次 
     this.audio.addEventListener("timeupdate", () => {
