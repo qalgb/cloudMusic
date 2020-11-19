@@ -3,12 +3,12 @@
     <div class="pagesHeadInner">
       <!-- 头部logo -->
       <h1 class="headLogo">
-        <a href="##">
+        <router-link to="/">
           <img
             src="https://y.gtimg.cn/mediastyle/yqq/img/logo.png?nowebp=1"
             alt=""
           />
-        </a>
+        </router-link>
       </h1>
       <!-- 头部导航栏 -->
       <ul class="headNav">
@@ -76,8 +76,8 @@
       <button class="topUp selectChoose">充值</button>
     </div>
     <!-- 音乐馆导航栏 -->
-    <ul class="musicPavilionNav" :style="{ display: isShow ? '' : 'none' }">
-      <li><a href="javascript:;" class="smallActive">首页</a></li>
+    <ul class="musicPavilionNav" :style="{ display: isShow ? '' : 'none' }" @click="handleClick">
+      <li><router-link to="/">首页</router-link></li>
       <li><a href="javascript:;">歌手</a></li>
       <li><router-link to="/newdisc">新碟</router-link></li>
       <li>
@@ -107,12 +107,25 @@ export default {
       userInfo: [], //用户信息
       isButton: 3, //登录按钮是否显示
       level: "", //用户等级
+      cookie: localStorage.getItem("cookie"),
+      isButton: false,
+      current: '' // 点击导航栏初始值
     };
   },
   components: {
     GoLogin,
   },
   methods: {
+    // 点击导航栏高亮
+    handleClick(e) {
+      // 判断current
+      this.current ? (this.current.className = '') : ''
+      if (e.target.nodeName === 'A') {
+        e.target.className = 'samllActive'
+        // 更新current
+        this.current = e.target
+      }
+    },
     //跳转到首页（音乐馆）
     goMusicPavilion() {
       this.isShow = true;
@@ -385,7 +398,7 @@ a {
   text-decoration: none;
 }
 
-.smallActive {
+.samllActive {
   color: #31c27c !important;
 }
 </style>

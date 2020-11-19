@@ -43,8 +43,8 @@ export default [
   },
   // 歌单详情
   {
-    path: "/playlist:keyword?",
-    component: playListDetail,
+    path: "/playlistdetail:keyword?",
+    component: playListDetail
   },
   {
     path: "/register",
@@ -56,9 +56,10 @@ export default [
     component: Playlist,
 
   },
-  {path: "/audioplay/:id?",
+  {path: "/audioplay",
     component: AudioPlay,
-    meta:{isHide:true}
+    meta:{isHide:true},
+    name:'audioplay'
   },
   { path: "/audioplay/:id?", component: AudioPlay },
   {
