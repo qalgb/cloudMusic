@@ -47,6 +47,7 @@ export default [
   },
   {path: "/audioplay/:id?",
     component: AudioPlay,
+    meta:{isHide:true}
   },
   {
     path: "/",
