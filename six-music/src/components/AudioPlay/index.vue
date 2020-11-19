@@ -292,6 +292,10 @@ export default {
     })
   },
   async mounted() {
+    if (this.$route.fullPath.indexOf("audioplay") !== -1) {
+      document.documentElement.style.overflow = "hidden";
+      document.body.style.overflow = "hidden";
+    }
     this.isLogin()
     
     // 获取audio对象
@@ -308,10 +312,7 @@ export default {
       console.log(this.currentTime);
       this.duration = (this.currentTime / this.durationTime) * 100 + "%";
     });
-    if (this.$route.fullPath.indexOf("audioplay") !== -1) {
-      document.documentElement.style.overflow = "hidden";
-      document.body.style.overflow = "hidden";
-    }
+    
     
     // 获取params传过来的ID
     this.songId = this.$route.params.id;
