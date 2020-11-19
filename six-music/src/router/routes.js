@@ -7,10 +7,10 @@ import AudioPlay from '../components/AudioPlay'
 import Mv from "@/pages/Mv";
 import Playlist from "@/pages/Playlist";
 import MvVideo from "@/pages/MvVideo"
+import Radio from "@/pages/Radio"
 // 歌单详情
 import playListDetail from "@/pages/playListDetail";
 import NewDisc from '../pages/NewDisc';
-import Radio from '@/pages/Radio'
 export default [
   {
     path: "/",

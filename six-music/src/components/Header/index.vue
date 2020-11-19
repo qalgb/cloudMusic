@@ -77,7 +77,7 @@
     </div>
     <!-- 音乐馆导航栏 -->
     <ul class="musicPavilionNav" :style="{ display: isShow ? '' : 'none' }" @click="handleClick">
-      <li><router-link to="/">首页</router-link></li>
+      <li><router-link to="/" class="samllActive">首页</router-link></li>
       <li><a href="javascript:;">歌手</a></li>
       <li><router-link to="/newdisc">新碟</router-link></li>
       <li>

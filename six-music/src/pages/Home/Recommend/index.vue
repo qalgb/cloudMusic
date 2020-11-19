@@ -183,7 +183,6 @@ export default {
     // 点击精品歌单标签
     slideChange(index,event) {
       const { cat } = event.target.dataset
-      console.log(cat)
       this.currentIndex = index
       this.$router.replace({ path: '/', query: { cat } })
       // 获取精品歌单
