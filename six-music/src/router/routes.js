@@ -43,6 +43,11 @@ export default [
   {
     path: "/playlist",
     component: Playlist,
+
+  },
+  {path: "/audioplay/:id?",
+    component: AudioPlay,
+    meta:{isHide:true}
   },
   { path: "/audioplay/:id?", component: AudioPlay },
   {

@@ -63,9 +63,14 @@ export const reqSendOrReqOrDelComment = (
 */
 export const reqSongUrl = (id) =>
   ajax({
-    url: `/song/url?${id}`,
+    url: `/song/url?id=${id}`,
     method: "GET",
   });
+// 获取歌曲详细信息
+export const reqSongInfo = (ids) => ajax({
+  url: `/song/detail?ids=${ids}`,
+  method:"GET",
+})
 // 获取全部mv
 export const reqAllMv = () => ajax.get(`/mv/all`);
 //请求登录信息
