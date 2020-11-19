@@ -1,4 +1,4 @@
-/* 清除内外边距 */
+ /* 清除内外边距 */
 body, h1, h2, h3, h4, h5, h6, hr, p, blockquote,
 dl, dt, dd, ul, ol, li,
 pre,
@@ -69,6 +69,8 @@ ul,
 ol,
 li {
   list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 /* 重置文本格式元素 */

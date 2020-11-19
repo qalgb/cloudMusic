@@ -28,7 +28,7 @@
         <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="item in discList" :key="item.id">
             <div class="song_cover">
-              <img :src="item.picUrl" />
+              <img v-lazy="item.picUrl" />
               <i class="mod_cover__mask"></i>
               <i class="mod_cover__icon_play"></i>
             </div>
@@ -79,9 +79,10 @@ export default {
           var mySwiper = new Swiper(this.$refs.sw1, {
             slidesPerView: 5, // 每一行显示图片的数量
             slidesPerColumn: 2,
+            spaceBetween: 20,
             // loopedSlides: 5,
             slidesPerGroup: 10, // 每次移动的图片数量
-            loop: true,
+            // loop: true,
             observer: true,
             observeParents: true,
             speed: '1000ms',
@@ -203,7 +204,7 @@ a{
   overflow: hidden;
 }
 .swiper-container .swiper-wrapper .swiper-slide {
-  width: 244px !important;
+  width: 224px !important;
   height: 310px;
 }
 .swiper-container .swiper-slide .song_cover {
