@@ -1,6 +1,6 @@
 <template>
   <div class="player">
-    <img class="bgimg" src="./img/test.png" alt />
+    <img class="bgimg" :src="picUrl" alt />
     <header class="playHeader">
       <h1 class="playertitle">
         <router-link to="/">
@@ -11,7 +11,11 @@
         <div class="playerPro">
           <span class="playerSlogan">QQ音乐，千万高品质曲库尽享</span>
         </div>
-        <div class="userInfo" @mouseenter="isHideOut(true)" @mouseleave="isHideOut(false)">
+        <div
+          class="userInfo"
+          @mouseenter="isHideOut(true)"
+          @mouseleave="isHideOut(false)"
+        >
           <a href="###" v-show="!isShowLogin">
             <span class="fontSet">
               <GoLogin class="login" :isButton="this.isButton" />
@@ -19,13 +23,20 @@
           </a>
           <a v-show="isShowLogin" class="user" href="###">
             <img class="userImg" :src="this.userDetInfo.avatarUrl" alt />
-            <span class="userName fontSet">{{this.userDetInfo.nickname}}</span>
+            <span class="userName fontSet">{{
+              this.userDetInfo.nickname
+            }}</span>
           </a>
           <a href="##">
             <span class="fontSet playSet">设置</span>
           </a>
-          <a href="##" >
-            <span class="fontSet loginOut" :style="{visibility: isShowOut ? 'visible' : 'hidden'}" @click="backLogin()" >退出</span>
+          <a href="##">
+            <span
+              class="fontSet loginOut"
+              :style="{ visibility: isShowOut ? 'visible' : 'hidden' }"
+              @click="backLogin()"
+              >退出</span
+            >
           </a>
         </div>
       </div>
@@ -67,113 +78,25 @@
               </ul>
               <i class="songListLine"></i>
               <ul class="songsList">
-                <li>
+                <li v-for="(item,index) in songListAudio" :key="item.id">
                   <input type="checkbox" class="songListEdit" />
-                  <span class="songListItem">1</span>
+                  <span class="songListItem">{{index+1}}</span>
                   <span class="songListSongName">
-                    <span>感谢你曾经来过</span>
+                    <span>{{item.name}}</span>
                     <span class="songListMod">
-                      <i class="iconfont icon-bofang1"></i>
+                      <i @click="playMusic(item.id)">
+                          <i v-if="!isPlayItem" class="iconfont icon-bofang1" ></i>
+                          <i v-else><a-icon type="pause-circle" /></i>
+                      </i>
                       <i class="iconfont icon--tainjia"></i>
                       <i class="iconfont icon-fenxiang"></i>
                     </span>
                   </span>
-                  <span class="songListAuthor">Ayo97</span>
+                  <span class="songListAuthor">{{getSongAr(index)}}</span>
                   <span class="songListTime">
-                    <span>04:10</span>
+                    <span>{{getSongTime(item.dt)}}</span>
                     <i class="iconfont icon-shanchu_A"></i>
                   </span>
-                </li>
-                <li>
-                  <input type="checkbox" class="songListEdit" />
-                  <span class="songListItem">2</span>
-                  <span class="songListSongName">感谢你曾经来过</span>
-                  <span class="songListAuthor">Ayo97</span>
-                  <span class="songListTime">04:10</span>
-                </li>
-                <li>
-                  <input type="checkbox" class="songListEdit" />
-                  <span class="songListItem">3</span>
-                  <span class="songListSongName">感谢你曾经来过</span>
-                  <span class="songListAuthor">Ayo97</span>
-                  <span class="songListTime">04:10</span>
-                </li>
-                <li>
-                  <input type="checkbox" class="songListEdit" />
-                  <span class="songListItem">3</span>
-                  <span class="songListSongName">感谢你曾经来过</span>
-                  <span class="songListAuthor">Ayo97</span>
-                  <span class="songListTime">04:10</span>
-                </li>
-                <li>
-                  <input type="checkbox" class="songListEdit" />
-                  <span class="songListItem">3</span>
-                  <span class="songListSongName">感谢你曾经来过</span>
-                  <span class="songListAuthor">Ayo97</span>
-                  <span class="songListTime">04:10</span>
-                </li>
-                <li>
-                  <input type="checkbox" class="songListEdit" />
-                  <span class="songListItem">3</span>
-                  <span class="songListSongName">感谢你曾经来过</span>
-                  <span class="songListAuthor">Ayo97</span>
-                  <span class="songListTime">04:10</span>
-                </li>
-                <li>
-                  <input type="checkbox" class="songListEdit" />
-                  <span class="songListItem">3</span>
-                  <span class="songListSongName">感谢你曾经来过</span>
-                  <span class="songListAuthor">Ayo97</span>
-                  <span class="songListTime">04:10</span>
-                </li>
-                <li>
-                  <input type="checkbox" class="songListEdit" />
-                  <span class="songListItem">3</span>
-                  <span class="songListSongName">感谢你曾经来过</span>
-                  <span class="songListAuthor">Ayo97</span>
-                  <span class="songListTime">04:10</span>
-                </li>
-                <li>
-                  <input type="checkbox" class="songListEdit" />
-                  <span class="songListItem">3</span>
-                  <span class="songListSongName">感谢你曾经来过</span>
-                  <span class="songListAuthor">Ayo97</span>
-                  <span class="songListTime">04:10</span>
-                </li>
-                <li>
-                  <input type="checkbox" class="songListEdit" />
-                  <span class="songListItem">3</span>
-                  <span class="songListSongName">感谢你曾经来过</span>
-                  <span class="songListAuthor">Ayo97</span>
-                  <span class="songListTime">04:10</span>
-                </li>
-                <li>
-                  <input type="checkbox" class="songListEdit" />
-                  <span class="songListItem">3</span>
-                  <span class="songListSongName">感谢你曾经来过</span>
-                  <span class="songListAuthor">Ayo97</span>
-                  <span class="songListTime">04:10</span>
-                </li>
-                <li>
-                  <input type="checkbox" class="songListEdit" />
-                  <span class="songListItem">3</span>
-                  <span class="songListSongName">感谢你曾经来过</span>
-                  <span class="songListAuthor">Ayo97</span>
-                  <span class="songListTime">04:10</span>
-                </li>
-                <li>
-                  <input type="checkbox" class="songListEdit" />
-                  <span class="songListItem">3</span>
-                  <span class="songListSongName">感谢你曾经来过</span>
-                  <span class="songListAuthor">Ayo97</span>
-                  <span class="songListTime">04:10</span>
-                </li>
-                <li>
-                  <input type="checkbox" class="songListEdit" />
-                  <span class="songListItem">3</span>
-                  <span class="songListSongName">感谢你曾经来过</span>
-                  <span class="songListAuthor">Ayo97</span>
-                  <span class="songListTime">04:10</span>
                 </li>
               </ul>
             </div>
@@ -184,15 +107,15 @@
             </a>
             <div class="songName">
               歌曲名：
-              <a href="####">Free</a>
+              <a href="####">{{songListAudio[0].name}}</a>
             </div>
             <div class="songSinger">
               歌手名：
-              <a href="####">RISE刘也</a>
+              <a href="####">{{getSongAr(0)}}</a>
             </div>
             <div class="songAlbum">
               专辑名：
-              <a href="####">广播剧《FOG电竞》</a>
+              <a href="####">{{songListAudio[0].al.name}}</a>
             </div>
           </div>
         </div>
@@ -214,8 +137,8 @@
           <!-- 当前歌曲名字和时长 -->
           <div class="progressBarText">
             <div class="nameAndAuthor">
-              <a href="##">今生爱的就是你</a>-
-              <a href="##">祁隆</a>
+              <a href="##">{{songListAudio[0].name}}</a>-
+              <a href="##">{{getSongAr(0)}}</a>
             </div>
             <div class="songTime">
               <a href="##">00：00</a>/
@@ -224,7 +147,7 @@
           </div>
           <!-- 进度条 -->
           <div class="progressBarLine">
-            <div class="bootmLine" :style="{width:duration}">
+            <div class="bootmLine" :style="{ width: duration }">
               <div class="linePoint" @mousedown="mousedown"></div>
             </div>
           </div>
@@ -249,18 +172,21 @@
   </div>
 </template>
 <script>
-import GoLogin from "../GoLogin";
-import {reqSongUrl} from "@/api";
+import GoLogin from '../GoLogin'
+import { reqSongUrl } from '@/api'
 import { mapState } from 'vuex'
+import moment from 'moment'
+import { reqSongInfo } from '@/api'
 export default {
-  name: "AudioPlay",
+  name: 'AudioPlay',
   components: {
-    GoLogin
+    GoLogin,
   },
   data() {
     return {
       // audio: 'none',
       isPlay: false,
+      isPlayItem: false,
       // 总时长
       durationTime: 0,
       // 当前时间
@@ -275,166 +201,207 @@ export default {
       moveX: 0,
       // 是否允许拖动
       isClickSlider: false,
-      songUrl: "",
+      // songUrl: '',
       songId: 0,
       // 是否显示退出链接
       isShowOut: false,
-      isButton:2,
-      isShowLogin:false,
-    };
+      isButton: 3,
+      isShowLogin: false,
+      songListAudio: [],
+      picUrl: '' //歌曲图片
+    }
   },
   computed: {
     ...mapState({
       // 获取用户id
       userInfo: (state) => state.play.userInfo,
       // 获取用户详细信息
-      userDetInfo: (state) => state.play.userDetInfo
+      userDetInfo: (state) => state.play.userDetInfo,
+      // 获取歌曲url
+      songUrl: (state) => state.play.songUrl,
+      // 获取歌曲详细信息
+      // songListAudio: (state) => state.play.songListAudio,
+      // songListAudio: {
+      //   get: function (state) {
+      //     return state.play.songListAudio
+      //   },
+        // set: function (value) {
+        //   this.songListAudio = value
+        // }
+      // }
+    }),
+    //统计歌曲歌手数量
+    getSongAr(index){
+      return (index) => {
+        return this.songListAudio[index].ar.reduce((pre,item,index) => {
+            return index > 0 ? pre + ' / ' + item.name : pre + item.name
+        }, '')
+      }
+    }, 
+    //获取歌曲时长
+    getSongTime(){
+      return (time) => {
+        return moment(time).format('mm:ss');
+      }
+    },
+  },
+  // watch: {
+  //   songListAudio(value){
+  //     this.songListAudio = value
+  //   }
+  // },
+  async mounted() {
+    // 获取query传过来的ID 默认图片 和歌曲列表数据
+    const { id, picUrl, songListAudio } = this.$route.query
+    this.songId = id
+    this.picUrl = picUrl
+    this.songListAudio = songListAudio
+    // 判断当前歌曲列表数据是否为空
+    if (!this.songListAudio) {
+      // 如果为空则值穿一个歌曲数据
+      const result = await reqSongInfo(this.songId)
+      if (result.code === 200) {
+        this.songListAudio = result.songs
+      }
+    }else {
+      // 如果不是全部载入
+      this.songListAudio = songListAudio
+    }
+    if (this.$route.fullPath.indexOf('audioplay') !== -1) {
+      document.documentElement.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden'
+    }
+    this.isLogin()
+
+    // 获取audio对象
+    this.audio = this.$refs.audio
+    await this.$store.dispatch('getUserInfo', localStorage.cookie)
+
+    // 通过用户id获取用户详细信息
+    await this.$store.dispatch('getUserDetInfo', this.userInfo.userId)
+    // currentTime属性变化时触发，每秒可能触发4到60次
+    this.audio.addEventListener('timeupdate', () => {
+      this.currentTime = this.audio.currentTime
+      this.durationTime = this.audio.duration
+      this.duration = (this.currentTime / this.durationTime) * 100 + '%'
     })
   },
-  async mounted() {
-    this.isLogin()
-    
-    // 获取audio对象
-    this.audio = this.$refs.audio;
-    await this.$store.dispatch('getUserInfo',localStorage.cookie)
-    // 通过用户id获取用户详细信息
-    await this.$store.dispatch('getUserDetInfo',this.userInfo.usrid)
-    console.log(this.userInfo);
-    console.log(this.userDetInfo)
-    // currentTime属性变化时触发，每秒可能触发4到60次 
-    this.audio.addEventListener("timeupdate", () => {
-      this.currentTime = this.audio.currentTime;
-      this.durationTime = this.audio.duration;
-      console.log(this.currentTime);
-      this.duration = (this.currentTime / this.durationTime) * 100 + "%";
-    });
-    if (this.$route.fullPath.indexOf("audioplay") !== -1) {
-      document.documentElement.style.overflow = "hidden";
-      document.body.style.overflow = "hidden";
-    }
-    
-    // 获取params传过来的ID
-    this.songId = this.$route.params.id;
-    // 根据id获取歌曲url
-    const result = await reqSongUrl(this.songId);
-    if (result.code === 200) {
-      this.songUrl = result.data[0].url;
-    }
-  },
   methods: {
-
     // 播放与暂停
     async handlePlay() {
       if (!this.isPlay) {
-        this.$refs.audio.play();
-        this.isPlay = true;
+        await this.getSongUrl(this.songId)
+        this.$refs.audio.play()
+        this.isPlay = true
+        
       } else {
-        this.$refs.audio.pause();
-        this.isPlay = false;
+        this.$refs.audio.pause()
+        this.isPlay = false
       }
     },
-
-
+    // 获取歌曲url
+    async getSongUrl(id){
+        await this.$store.dispatch('getSongUrl',id)
+    },
     // 进度条
     mousedown(e) {
-      this.isClickSlider = true;
+      this.isClickSlider = true
       if (this.moveDistance) {
-        this.startX = this.nextStart;
+        this.startX = this.nextStart
       } else {
-        this.startX = e.clientX;
+        this.startX = e.clientX
       }
-      console.log("111", this.moveDistance);
+      console.log('111', this.moveDistance)
     },
     mousemove(e) {
-      // console.log(e)
-      this.moveX = e.clientX;
+      this.moveX = e.clientX
       if (this.startX) {
-        this.moveDistance = this.moveX - this.startX;
+        this.moveDistance = this.moveX - this.startX
       }
       if (this.moveDistance < 0) {
-        this.moveDistance = 0;
+        this.moveDistance = 0
       }
       if (this.moveDistance > 970) {
-        this.moveDistance = 970;
-        return;
+        this.moveDistance = 970
+        return
       }
       // 移动的百分比
       if (this.isClickSlider) {
         // this.duration =
         this.audio.currentTime =
-          (this.moveDistance / 970) * 100 * this.duration + "%";
+          (this.moveDistance / 970) * 100 * this.duration + '%'
       }
-      console.log("移动的距离", this.moveDistance);
+      console.log('移动的距离', this.moveDistance)
     },
     mouseup(e) {
-      this.isClickSlider = false;
+      this.isClickSlider = false
       // 重置
-      this.nextStart = this.startX;
-      this.startX = 0;
-      console.log("22", this.moveDistance);
+      this.nextStart = this.startX
+      this.startX = 0
+      console.log('22', this.moveDistance)
     },
 
-
     // 判断是否登陆
-    isLogin () {
+    isLogin() {
       if (localStorage.cookie) {
         this.isShowLogin = true
-      }else{
+      } else {
         this.isShowLogin = false
         // this.isShowOut = false
       }
     },
     //退出登录
     backLogin() {
-      localStorage.removeItem("cookie");
-      this.$message.success("已退出登录!");
+      localStorage.removeItem('cookie')
+      this.$message.success('已退出登录!')
       setTimeout(() => {
-        location.reload();
-      }, 500);
+        location.reload()
+      }, 500)
     },
     // 是否显示退出
-    isHideOut (flag) {
+    isHideOut(flag) {
       if (this.isShowLogin) {
         if (flag) {
           this.isShowOut = true
-        }else{
+        } else {
           this.isShowOut = false
         }
       }
     },
-    // 页面渲染完毕之后发送获取uid的请求
-    // getUserId () {
-    //   this.$nextTick(async function () {
-    //     // 通过cookie请求用户基本信息,分发
-    //     await this.$store.dispatch('getUserInfo',localStorage.cookie)
-    //   })
-    // },
 
     // 秒值转字符串
     timeToString(param) {
-      param = parseInt(param);
-      let hh = "",
-        mm = "",
-        ss = "";
+      param = parseInt(param)
+      let hh = '',
+        mm = '',
+        ss = ''
       if (param >= 0 && param < 60) {
-        param < 10 ? (ss = "0" + param) : (ss = param);
-        return "00:" + ss;
+        param < 10 ? (ss = '0' + param) : (ss = param)
+        return '00:' + ss
       } else if (param >= 60 && param < 3600) {
-        mm = parseInt(param / 60);
-        mm < 10 ? (mm = "0" + mm) : mm;
+        mm = parseInt(param / 60)
+        mm < 10 ? (mm = '0' + mm) : mm
         param - parseInt(mm * 60) < 10
-          ? (ss = "0" + String(param - parseInt(mm * 60)))
-          : (ss = param - parseInt(mm * 60));
-        return mm + ":" + ss;
+          ? (ss = '0' + String(param - parseInt(mm * 60)))
+          : (ss = param - parseInt(mm * 60))
+        return mm + ':' + ss
+      }
+    },
+    // 点击播放与暂停
+    async playMusic(id) {
+      if (!this.isPlayItem) {
+        await this.getSongUrl(id)
+        this.$refs.audio.play()
+        this.isPlay = true
+        this.isPlayItem = true
+      }else {
+        this.$refs.audio.pause()
+        this.isPlay = false
+        this.isPlayItem = false
       }
     }
   },
-  // watch: {
-  //   userId () {
-  //     this.getUserId()
-  //   }
-  // },
-};
+}
 </script>
 <style>
 html,
@@ -491,7 +458,7 @@ body {
   color: white !important;
   padding-right: 15px;
 }
-.playerLogin .userInfo .login{
+.playerLogin .userInfo .login {
   color: white !important;
 }
 .playerLogin .userInfo .user {
@@ -564,13 +531,18 @@ body {
   display: flex;
   justify-content: space-between;
 }
+.songsList li:hover .songListSongName .songListMod{
+  visibility:visible;
+}
 .songListMod {
   width: 138px;
   display: flex;
   justify-content: space-between;
+  visibility: hidden;
 }
 .songListMod i {
   font-size: 36px;
+  color: #fff;
 }
 .songListAuthor {
   display: block;
@@ -580,7 +552,7 @@ body {
   display: block;
   width: 50px;
 }
-.playMain .songsListHeader input[type="checkbox"] {
+.playMain .songsListHeader input[type='checkbox'] {
   width: 14px;
   height: 14px;
   border: 1px solid #fff;
@@ -594,6 +566,12 @@ body {
   display: inline-block;
   border-bottom: 1px solid rgba(255, 255, 255, 0.02);
   display: flex;
+}
+input{
+  color: -internal-light-dark(black, white);
+  opacity: 0.3;
+  width: 15px;
+  height: 15px;
 }
 .songsList input,
 .songsList span {

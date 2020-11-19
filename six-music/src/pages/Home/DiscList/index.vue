@@ -117,9 +117,9 @@ export default {
       this.getDiscList(area)
     },
     // 跳转详情(待修改)
-    toDetail (id) {
+    /* toDetail (id) {
       this.$router.push({path:'/playlistdetail',query:{id}})
-    }
+    } */
   },
 }
 </script>

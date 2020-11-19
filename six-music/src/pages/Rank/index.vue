@@ -20,7 +20,7 @@
       </div>
       <!-- 按钮列表 -->
       <div class="con_toolbar">
-        <a href="javascript:;" class="active">
+        <a href="javascript:;" class="active" @click="toAudio(rankSongList,rankSongList[0].id,rankSongList[0].al.picUrl)">
           <a-icon type="caret-right"/>
           播放全部
         </a>
@@ -86,7 +86,7 @@ export default {
     ...mapGetters(['rankInfo','rankSongList']),
   },
   async mounted () {
-    // 分发action
+    // 分发action 获取榜单数据
     await this.$store.dispatch('getRankInfo')
     this.curId = this.rankInfo[1].id
     this.rankTime = this.rankInfo[1].trackNumberUpdateTime
@@ -107,8 +107,11 @@ export default {
     // 获取歌单评论
     async getCommentList(id){
       await this.$store.dispatch('getSongListComment', id)
+    },
+    toAudio(songListAudio,id,picUrl){
+      this.$router.push({path: '/audioplay', query:{ songListAudio,id, picUrl }})
     }
-  }
+  },
 }
 </script>
 

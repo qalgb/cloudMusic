@@ -3,7 +3,7 @@
     <button @click="showModal" class="loginButton" v-if="isButton === 1">
       立即登录
     </button>
-    <a @click="showModal" class="audioText" v-else-if="isButton === 2">
+    <a @click="showModal" class="audioText" v-else-if="isButton === 3">
       登录
     </a>
     <a @click="showModal" class="loginText" v-else-if="isButton === 3"> 登录 </a>
