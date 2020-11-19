@@ -13,24 +13,28 @@
         </div>
         <div class="userInfo">
           <a href="###">
-            <span class=" fontSet"><GoLogin /></span>
+            <span class="fontSet"><GoLogin /></span>
           </a>
           <!-- <a class="user" href="###">
             <img class="userImg" src="./img/photo.jpg" alt />
             <span class="userName fontSet">9A91</span>
           </a> -->
           <a href="##">
-            <span class=" fontSet">设置</span>
+            <span class="fontSet">设置</span>
           </a>
           <a href="##">
-            <span class=" fontSet">退出</span>
+            <span class="fontSet">退出</span>
           </a>
         </div>
       </div>
     </header>
     <div class="playMain">
       <!-- 浏览器原生播放器 -->
-      <audio id="audio" src="http://m7.music.126.net/20201117214835/ffc692db34aea37aad298aae1257dea6/ymusic/23aa/2cb5/dd30/92f3e0711d39209cc6055b5905d0f362.mp3" ref="audio" ></audio>
+      <audio
+        id="audio"
+        src="http://m7.music.126.net/20201117214835/ffc692db34aea37aad298aae1257dea6/ymusic/23aa/2cb5/dd30/92f3e0711d39209cc6055b5905d0f362.mp3"
+        ref="audio"
+      ></audio>
       <div class="playerForm">
         <div class="playInfo">
           <div class="songsListInfo">
@@ -197,7 +201,7 @@
       </div>
     </div>
     <footer class="playFoot">
-      <ul class="playSet" >
+      <ul class="playSet">
         <li class="pre">
           <i class="iconfont icon-shangyishou"></i>
         </li>
@@ -208,7 +212,7 @@
         <li class="next">
           <i class="iconfont icon-xiayishou"></i>
         </li>
-        <li class="progressBar" @mouseup="mouseup" @mousemove="mousemove" >
+        <li class="progressBar" @mouseup="mouseup" @mousemove="mousemove">
           <!-- 当前歌曲名字和时长 -->
           <div class="progressBarText">
             <div class="nameAndAuthor">
@@ -221,8 +225,8 @@
             </div>
           </div>
           <!-- 进度条 -->
-          <div class="progressBarLine" >
-            <div class="bootmLine" :style="{width:duration}" >
+          <div class="progressBarLine">
+            <div class="bootmLine" :style="{ width: duration }">
               <div class="linePoint" @mousedown="mousedown"></div>
             </div>
           </div>
@@ -247,11 +251,11 @@
   </div>
 </template>
 <script>
-import GoLogin from '../GoLogin'
-import reqSongUrl from '@/api'
+import GoLogin from "../GoLogin";
+import reqSongUrl from "@/api";
 export default {
   name: "AudioPlay",
-  components:{
+  components: {
     GoLogin,
   },
   data() {
@@ -272,26 +276,25 @@ export default {
       moveX: 0,
       // 是否允许拖动
       isClickSlider: false,
-      songUrl: ''
+      songUrl: "",
     };
   },
-  
+
   mounted() {
     this.audio = this.$refs.audio;
     // currentTime属性变化时触发，每秒可能触发4到60次
-    this.audio.addEventListener('timeupdate',() => {
-      this.currentTime = this.audio.currentTime
-      this.durationTime = this.audio.duration
-      console.log(this.currentTime)
-      this.duration = ((this.currentTime/this.durationTime)*100) + '%'
-    })
+    this.audio.addEventListener("timeupdate", () => {
+      this.currentTime = this.audio.currentTime;
+      this.durationTime = this.audio.duration;
+      console.log(this.currentTime);
+      this.duration = (this.currentTime / this.durationTime) * 100 + "%";
+    });
   },
   methods: {
     // 播放与暂停
     handlePlay() {
-      
       if (!this.isPlay) {
-        const songId = this.$route.query.id
+        const songId = this.$route.query.id;
         // const result = await reqSongUrl(songId)
         // if (result.code === 200) {
         //   this.songUrl = result.data[0].url
@@ -304,44 +307,43 @@ export default {
       }
     },
     // 进度条
-    mousedown (e) {
-      this.isClickSlider = true
+    mousedown(e) {
+      this.isClickSlider = true;
       if (this.moveDistance) {
-        this.startX = this.nextStart
-      }else{
-        this.startX = e.clientX
+        this.startX = this.nextStart;
+      } else {
+        this.startX = e.clientX;
       }
-      console.log('111',this.moveDistance)
+      console.log("111", this.moveDistance);
     },
-    mousemove (e) {
+    mousemove(e) {
       // console.log(e)
-      this.moveX = e.clientX
+      this.moveX = e.clientX;
       if (this.startX) {
-        this.moveDistance = this.moveX - this.startX
+        this.moveDistance = this.moveX - this.startX;
       }
-      if(this.moveDistance<0){
-        this.moveDistance = 0
+      if (this.moveDistance < 0) {
+        this.moveDistance = 0;
       }
       if (this.moveDistance > 970) {
-         this.moveDistance = 970
-         return
+        this.moveDistance = 970;
+        return;
       }
       // 移动的百分比
       if (this.isClickSlider) {
-        // this.duration = 
-        this.audio.currentTime = (((this.moveDistance /970)*100)*this.duration)+'%'
+        // this.duration =
+        this.audio.currentTime =
+          (this.moveDistance / 970) * 100 * this.duration + "%";
       }
-      console.log('移动的距离',this.moveDistance)
-
+      console.log("移动的距离", this.moveDistance);
     },
-    mouseup (e) {
-      this.isClickSlider = false
+    mouseup(e) {
+      this.isClickSlider = false;
       // 重置
-      this.nextStart = this.startX
-      this.startX = 0
-      console.log('22',this.moveDistance)
+      this.nextStart = this.startX;
+      this.startX = 0;
+      console.log("22", this.moveDistance);
     },
-
 
     // 秒值转字符串
     timeToString(param) {
@@ -360,7 +362,7 @@ export default {
           : (ss = param - parseInt(mm * 60));
         return mm + ":" + ss;
       }
-    }
+    },
   },
 };
 </script>
