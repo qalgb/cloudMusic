@@ -35,7 +35,7 @@
             <div class="song_cover">
               <img v-lazy="item.picUrl" />
               <i class="mod_cover__mask" @click="sendPlayListId(item.id)"></i>
-              <i class="mod_cover__icon_play"></i>
+              <i class="mod_cover__icon_play" @click="toPlay(item.id)"></i>
             </div>
             <div class="songInfo">
               <a href="javascript:;">{{ item.name }}</a>
@@ -49,7 +49,7 @@
             </div>
           </div>
         </div>
-        <div class="swiper-button-next"></div>
+        <div class="swiper-button-njext"></div>
         <div class="swiper-button-prev"></div>
         <div class="swiper-pagination"></div>
       </div>
@@ -183,6 +183,7 @@ export default {
     // 点击精品歌单标签
     slideChange(index,event) {
       const { cat } = event.target.dataset
+      console.log(cat)
       this.currentIndex = index
       this.$router.replace({ path: '/', query: { cat } })
       // 获取精品歌单
@@ -196,7 +197,11 @@ export default {
       // 更新歌曲id
       this.songId = id
       // 跳转
-      this.$router.push({path:'/playlist',query:{id:this.songId}})
+      this.$router.push({path:'/playlistdetail',query:{id:this.songId}})
+    },
+    // 点击播放按钮
+    toPlay (id) {
+      this.$router.push({name:'audioplay',params:{id}})
     }
   },
 }

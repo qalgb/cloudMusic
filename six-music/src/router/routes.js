@@ -8,7 +8,10 @@ import Mv from "@/pages/Mv";
 import Playlist from "@/pages/Playlist";
 import MvVideo from "@/pages/MvVideo"
 // 歌单详情
-import playListDetail from '@/pages/playListDetail'
+import playListDetail from "@/pages/playListDetail";
+import NewDisc from '../pages/NewDisc';
+
+import Radio from "@/pages/Radio"
 export default [
   {
     path: "/",
@@ -17,6 +20,14 @@ export default [
   {
     path: "/mymusic",
     component: MyMusic,
+  },
+  {
+    path:"/newdisc",
+    component:NewDisc,
+  }, 
+  {
+    path:"/radio",
+    component:Radio,
   },
   {
     path: "/rank",
@@ -32,7 +43,7 @@ export default [
   },
   // 歌单详情
   {
-    path: "/playlist:keyword?",
+    path: "/playlistdetail:keyword?",
     component: playListDetail
   },
   {
@@ -45,9 +56,12 @@ export default [
     component: Playlist,
 
   },
-  {path: "/audioplay/:id?",
+  {path: "/audioplay",
     component: AudioPlay,
+    meta:{isHide:true},
+    name:'audioplay'
   },
+  { path: "/audioplay/:id?", component: AudioPlay },
   {
     path: "/",
     redirect: "/",

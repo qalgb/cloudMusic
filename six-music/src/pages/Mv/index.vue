@@ -43,7 +43,7 @@
                   <img
                     class="box_a_img"
                     v-lazy="item.cover"
-                    @click="goMvVideo(item.id)"
+                    @click="goMvVideo(item)"
                   />
                   <i class="box_a_i"></i>
                 </a>
@@ -138,6 +138,7 @@ export default {
   mounted() {
     // 获取MV数据
     this.getMvList(this.area, this.order);
+    
   },
   methods: {
     // 分发
@@ -167,6 +168,7 @@ export default {
       const order = this.newMv[index];
       this.newMvData = index;
 
+      this.order = order;
       const query = {
         area: this.area,
         order,
@@ -177,9 +179,8 @@ export default {
       this.getMvList(this.area, order);
     },
     // 跳转到MvVideo页面
-    goMvVideo(id) {
-      console.log(id);
-      this.$router.replace({ path: "/mvvideo",query:{id} });
+    goMvVideo(data) {
+      this.$router.replace({ path: "/mvvideo",query:{data} });
     },
   },
 };
@@ -224,7 +225,6 @@ a:hover {
   text-decoration: none;
 }
 .tag_item {
-  float: left;
   padding: 0 8px;
   margin: 0 24px 15px 0;
 }

@@ -5,7 +5,6 @@ export default {
   state: {
     // 全部mv
     allMv: [],
-    mvData:[],
   },
   // 修改数据
   mutations: {

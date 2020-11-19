@@ -1,81 +1,27 @@
 <template>
   <div class="mod_mv">
     <!-- 视频区 -->
+
     <div class="section_inner">
       <div class="mv_player">
         <div class="mvvideo">
-          <div class="video_player">
-            <!-- 视频状态栏 -->
-            <div class="video_player_tool">
-              <!-- 进度条 -->
-              <div class="video_player_tool_state">
-                <div class="video_player_tool_state_bg"></div>
-                <div
-                  class="video_player_tool_state_load "
-                  style="width: 33.7781%;"
-                ></div>
-                <div
-                  class="video_player_tool_state_progress"
-                  style="width: 33.7781%;"
-                >
-                  <div class="video_player_tool_state_progress_bg"></div>
-                  <a
-                    href="javascript:;"
-                    class="video_player_tool_state_btn "
-                    style="z-index:4;"
-                  >
-                  </a>
-                </div>
-              </div>
-              <div class="btn">
-                <!-- 操作 播放 play 暂停 pause -->
-                <div class="left_btn">
-                  <a href="javascript:;" title="暂停" class="video_player_icon"
-                    ><i class="iconfont icon-bofang"></i>
-
-                    <!-- 播放 用video_player_play这个id 暂停 用video_player_pause 这个id -->
-                  </a>
-
-                  <!-- 时长 -->
-                  <div class="video_player_time">
-                    <span class="js_qv_time_current">00:00</span>/
-                    <span class="js_qv_time_total">00:00</span>
-                  </div>
-                </div>
-
-                <!-- 操作 音量 选中 加current -->
-                <div class="right_btn">
-                  <a href="javascript:;" title="音量" class="video_player_btn">
-                    <i class="iconfont icon-shengyin"></i>
-                  </a>
-
-                  <!-- 操作 播放模式 点击切换 -->
-                  <a
-                    href="javascript:;"
-                    title="循环播放"
-                    class="video_player_btn"
-                  >
-                    <i class="iconfont icon-xunhuan"></i>
-                  </a>
-                  <!-- 操作 全屏 -->
-                  <a href="javascript:;" title="全屏" class="video_player_btn">
-                    <i class="iconfont icon-quanping"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
-          </div>
+          <video-player
+            class="video-player vjs-custom-skin"
+            ref="videoPlayer"
+            :playsinline="true"
+            :options="playerOptions"
+          ></video-player>
         </div>
       </div>
-      <div class="mv_info">
+      <div class="mv_info" v-for="item in mvData" :key="item.id">
         <h1 class="mv_title">
-          <span class="mv_name" title="Honey (舞蹈版)">Honey (舞蹈版)</span>
+          <span class="mv_name" title="Honey (舞蹈版)">{{item.id}}</span>
 
           <span class="mv_line">-</span>
 
-          <span class="mv_singer ">张艺兴</span>
+          <span class="mv_singer ">{{item.artistName}}</span>
         </h1>
-        <span class="mv_listen">播放量：68.2万</span>
+        <span class="mv_listen">播放量：{{item.playCount}}</span>
         <div class="mv_toolbar">
           <a href="javascript:;" class="mv_toolbar_item ">举报</a>
           <i class="mv_toolbar_line"></i>
@@ -90,12 +36,72 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex';
 export default {
-  name:"MvVideo",
-}
+  name: "MvVideo",
+  data() {
+    return {
+      mvData: "", // mvid
+      playerOptions: {
+        playbackRates: [0.7, 1.0, 1.5, 2.0], //播放速度
+        autoplay: false, //如果true,浏览器准备好时开始回放。
+        muted: false, // 默认情况下将会消除任何音频。
+        loop: false, // 导致视频一结束就重新开始。
+        preload: "auto", // 建议浏览器在<video>加载元素后是否应该开始下载视频数据。auto浏览器选择最佳行为,立即开始加载视频（如果浏览器支持）
+        language: "zh-CN",
+        aspectRatio: "16:9", // 将播放器置于流畅模式，并在计算播放器的动态大小时使用该值。值应该代表一个比例 - 用冒号分隔的两个数字（例如"16:9"或"4:3"）
+        fluid: true, // 当true时，Video.js player将拥有流体大小。换句话说，它将按比例缩放以适应其容器。
+        sources: [
+          {
+            src: "", // 路径
+            type: "video/mp4", // 类型
+          },
+        ],
+        poster:
+          "http://p1.music.126.net/ijUg7s_2S8GMbTNsYiepJA==/18676304511774727.jpg", //你的封面地址
+        // width: document.documentElement.clientWidth,
+        notSupportedMessage: "此视频暂无法播放，请稍后再试", //允许覆盖Video.js无法播放媒体源时显示的默认信息。
+        controlBar: {
+          timeDivider: true,
+          durationDisplay: true,
+          remainingTimeDisplay: true,
+          fullscreenToggle: true, //全屏按钮
+        },
+      },
+    };
+  },
+  // 计算属性
+  computed: {
+    // 通过vuex的辅助函数获取数据
+    ...mapState({
+      // 获取全部的mv
+      mvUrl: (state) => state.mvvideo.mvUrl,
+    }),
+  },
+
+  mounted() {
+    // 更新mvId
+    this.mvData = this.$route.query;
+    const { id , cover} = this.mvData.data
+    // 更新视频封面图片
+    this.playerOptions.poster = cover
+    
+    this.getVideoList(id) 
+    this.playerOptions.sources.src = this.mvUrl.url
+    console.log(this.mvUrl)
+  },
+  methods: {
+    getVideoList(id) {
+      this.$store.dispatch("getMvVideo", {
+        id
+      });
+    }
+
+  },
+
+};
 </script>
 <style scoped>
-
 .mod_mv {
   padding-top: 80px;
   width: 100%;
@@ -115,52 +121,6 @@ export default {
 .mvvideo {
   width: 1200px;
   height: 674px;
-}
-/* 功能按钮 */
-.btn {
-  display: flex;
-  justify-content: space-between;
-}
-/* 左功能按钮 */
-.video_player {
-  height: 100%;
-  background-color: #000;
-  color: #fff;
-}
-.video_player_icon:hover i{
-  color: rgb(12, 241, 115);
-}
-/* 时长 */
-.video_player_time {
-  margin-top: 3px;
-  margin-left: 20px;
-  line-height: 30px;
-}
-.right_btn{
-  margin-right: 40px;
-  width: 130px;
-  display: flex;
-  justify-content: space-between;
-}
-/* 右边功能按钮 */
-/* 音量 */
-.video_player_btn:hover i {
-  color: rgb(12, 241, 115);
-}
-.video_player_btn {
-  fill: currentColor;
-}
-.video_player i {
-  color: #fff;
-  font-size: 20px;
-}
-/* 暂停 */
-.video_player_icon {
-  float: left;
-  margin: 12px 0 0 25px;
-  width: 30px;
-  height: 30px;
-  fill: currentColor;
 }
 /* 视频数据 */
 .mv_info {

@@ -121,3 +121,14 @@ html {
   clear: both;
   visibility: hidden;
 }
+
+
+
+img[lazy = 'loading']  {
+  width: 100% !important;
+  height: 100%!important;
+}
+img[lazy = 'loaded']  {
+    background-color: #ffffff !important;
+    width: 100%;
+}

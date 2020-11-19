@@ -15,7 +15,8 @@ import {
   message,
   Dropdown,
   Menu,
-  Pagination
+  Pagination,
+  Checkbox
 } from "ant-design-vue";
 // 引入swiper的样式
 import "swiper/css/swiper.css";
@@ -32,6 +33,13 @@ Vue.use(VueLazyload, {
   loading
 })
 
+// 引入视频播放插件
+import VideoPlayer from 'vue-video-player'
+import 'video.js/dist/video-js.css'
+
+Vue.use(VideoPlayer)
+
+
 // 设置浏览器提示信息
 Vue.config.productionTip = false;
 // 设置需要引入的atnd组件
@@ -42,6 +50,7 @@ Vue.component(Dropdown.name, Dropdown);
 Vue.component(Pagination.name, Pagination);
 Vue.use(Modal);
 Vue.use(Menu);
+Vue.use(Checkbox);
 Vue.prototype.$message = message;
 
 new Vue({

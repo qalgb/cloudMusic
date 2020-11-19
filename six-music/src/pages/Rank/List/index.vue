@@ -12,7 +12,7 @@
     <span>{{item.name}}</span>
   </div>
   <div class="list_menu" :style="{visibility: isShowMenu ? 'hidden' : 'visible' }">
-    <router-link to="/musicplay" title="播放">
+    <router-link :to="`/audioplay/${item.id}`" title="播放">
       <a-icon type="play-circle" />
     </router-link>
     <a href="javascript:;" title="添加到歌单">
@@ -75,7 +75,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .songlist_list li{
   height: 80px;
   width: 100%;
