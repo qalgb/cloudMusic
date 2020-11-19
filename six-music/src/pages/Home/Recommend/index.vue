@@ -29,7 +29,6 @@
         <div class="swiper-wrapper">
           <div
             class="swiper-slide"
-            v-show="item.picUrl"
             v-for="item in songRecommendList"
             :key="item.id"
           >
@@ -249,7 +248,7 @@ export default {
 .index_tab_item_current {
   display: inline-block;
   font-size: 15px;
-  color: #31c27c;
+  color: #31c27c !important;
   margin: 0 24px;
 }
 .swiper-container {
@@ -316,6 +315,9 @@ export default {
 }
 .swiper-slide .songInfo {
   width: 224px;
+}
+.swiper-slide .songInfo a{
+  color: #000 !important;
 }
 .swiper-slide p {
   color: #999;

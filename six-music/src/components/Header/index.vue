@@ -1,6 +1,7 @@
 <template>
   <div class="pagesHead">
     <div class="pagesHeadInner">
+      <!-- 头部logo -->
       <h1 class="headLogo">
         <a href="##">
           <img
@@ -9,9 +10,18 @@
           />
         </a>
       </h1>
+      <!-- 头部导航栏 -->
       <ul class="headNav">
-        <li class="musicPavilion">音乐馆</li>
-        <li class="myMusic active">我的音乐</li>
+        <li
+          class="musicPavilion"
+          :class="{ active: isActive }"
+          @click="goMusicPavilion"
+        >
+          音乐馆
+        </li>
+        <li class="myMusic" :class="{ active: !isActive }" @click="goMyMusic">
+          我的音乐
+        </li>
         <li class="client">客户端</li>
         <li class="openPlatform">开放平台</li>
         <li class="vip">VIP</li>
@@ -27,42 +37,99 @@
         <div class="searchInfo"></div>
         <button><i class="iconSearch"></i></button>
       </div>
-      <a href="##" class="userPic">
-        <img
-          src="https://thirdqq.qlogo.cn/g?b=sdk&k=1YbOrqzCA3SE8j6F2n6KMw&s=140&t=1596873891"
-          class="userPicImg"
-          alt=""
-        />
+      <a href="javascript:;" class="userPic" v-if="isSuccess">
+        <img :src="userInfo.avatarUrl" class="userPicImg" alt="" />
       </a>
+      <!-- 登录组件 -->
+      <GoLogin v-else />
       <button class="openVip selectChoose isSelect">开通VIP</button>
       <button class="topUp selectChoose">充值</button>
     </div>
-    <ul class="musicPavilionNav">
-      <li><a href="javascript:;">首页</a></li>
+    <!-- 音乐馆导航栏 -->
+    <ul class="musicPavilionNav" :style="{ display: isShow ? '' : 'none' }">
+      <li><a href="javascript:;" class="smallActive">首页</a></li>
       <li><a href="javascript:;">歌手</a></li>
-      <li><a href="javascript:;">新碟</a></li>
-      <li><a href="javascript:;">排行榜</a></li>
+      <li><router-link to="/newdisc">新碟</router-link></li>
+      <li>
+        <router-link to="home/rank">排行榜</router-link>
+      </li>
       <li><a href="javascript:;">分类歌单</a></li>
-      <li><a href="javascript:;">电台</a></li>
-      <li><a href="javascript:;">MV</a></li>
+      <li><router-link to="/radio">电台</router-link></li>
+      <li><router-link to="/mv">MV</router-link></li>
       <li><a href="javascript:;">数字专辑</a></li>
       <li><a href="javascript:;">票务</a></li>
     </ul>
+    <!-- 登录弹窗 -->
   </div>
 </template>
 
 <script>
+import GoLogin from "../GoLogin";
+import { reqUserInfo } from "../../api";
 export default {
   name: "Header",
   data() {
     return {
-      searchInfo: "",
+      searchInfo: "", //搜索框内容
+      isActive: true,
+      isShow: true, //音乐馆nav是否显示
+      isSuccess: false, //是否处于登录状态（是否有cookie）
+      userInfo: [], //用户信息
     };
+  },
+  components: {
+    GoLogin,
+  },
+  methods: {
+    //跳转到首页（音乐馆）
+    goMusicPavilion() {
+      this.$router.replace({ path: "/" });
+      this.isActive = true;
+      this.isShow = true;
+    },
+    //跳转到我的音乐
+    goMyMusic() {
+      this.$router.replace({ path: "/mymusic" });
+      this.isActive = false;
+      this.isShow = false;
+    },
+    async getUserInfo() {
+      const result = await reqUserInfo(localStorage.getItem("cookie"));
+      this.userInfo = result.profile;
+    },
+  },
+  async mounted() {
+    console.log(this.$route.path.indexOf("mymusic"));
+    //active样式是否渲染
+    if (this.$route.path.indexOf("mymusic") === 1) {
+      this.isActive = false;
+      this.getUserInfo();
+    }
+
+    if (localStorage.getItem("cookie")) {
+      //获取用户信息
+      const result = await reqUserInfo(localStorage.getItem("cookie"));
+      //判断是否获取成功
+      if (result.code === 200) {
+        console.log(result);
+        this.userInfo = result.profile;
+        this.isSuccess = true;
+      } else {
+        this.isSuccess = false;
+      }
+    }
   },
 };
 </script>
 
 <style scoped>
+ul {
+  padding: 0;
+  margin: 0;
+}
+a {
+  color: #000;
+}
 .headLogo {
   width: 170px;
   height: 46px;
@@ -74,6 +141,7 @@ export default {
 }
 
 .pagesHeadInner {
+  min-width: 1200px;
   max-width: 1200px;
   height: 90px;
   margin: 0 auto;
@@ -93,14 +161,15 @@ export default {
   padding: 0 20px;
   font-size: 18px;
   cursor: pointer;
+  color: #000;
 }
 
 .headNav li:hover {
-  color: #31C27C;
+  color: #31c27c;
 }
 
 .active {
-  background-color: #31C27C;
+  background-color: #31c27c;
   color: #fff !important;
 }
 
@@ -147,7 +216,8 @@ export default {
   cursor: pointer;
 }
 
-.userPic {
+.userPic,
+.loginMag {
   position: relative;
   z-index: 12;
   font-size: 16px;
@@ -200,6 +270,7 @@ export default {
   height: 51px;
   line-height: 51px;
   border-top: 1px solid #f2f2f2;
+  min-width: 1200px;
   max-width: 1200px;
   margin: 0 auto;
   display: flex;
@@ -223,5 +294,9 @@ export default {
   text-decoration: none;
 }
 
+.smallActive {
+  color: #31c27c;
+}
 
+/* 登录弹窗样式 */
 </style>

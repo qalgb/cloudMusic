@@ -1,7 +1,7 @@
 // 引入Vue
-import Vue from 'vue'
+import Vue from "vue";
 // 引入VueRouter
-import VueRouter from 'vue-router'
+import VueRouter from "vue-router";
 // 引入routes
 import routes from './routes'
 // 重新修改push和replace
@@ -15,13 +15,14 @@ VueRouter.prototype.replace = function (location, onComplete, onAbort = () => { 
 }
 
 // 声明使用路由器
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 // 实例化路由器并暴露
 const router = new VueRouter({
+  mode: 'hash',
   routes,
   // 解决路由跳转到滚动的位置
-  scrollBehavior (to, from, savedPosition) {
-    return { x: 0, y: 0 }
-  }
-})
+  scrollBehavior(to, from, savedPosition) {
+    return { x: 0, y: 0 };
+  },
+});
 export default router;
