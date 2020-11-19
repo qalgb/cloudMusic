@@ -11,7 +11,11 @@
         <div class="playerPro">
           <span class="playerSlogan">QQ音乐，千万高品质曲库尽享</span>
         </div>
-        <div class="userInfo" @mouseenter="isHideOut(true)" @mouseleave="isHideOut(false)">
+        <div
+          class="userInfo"
+          @mouseenter="isHideOut(true)"
+          @mouseleave="isHideOut(false)"
+        >
           <a href="###" v-show="!isShowLogin">
             <span class="fontSet">
               <GoLogin class="login" :isButton="this.isButton" />
@@ -19,13 +23,20 @@
           </a>
           <a v-show="isShowLogin" class="user" href="###">
             <img class="userImg" :src="this.userDetInfo.avatarUrl" alt />
-            <span class="userName fontSet">{{this.userDetInfo.nickname}}</span>
+            <span class="userName fontSet">{{
+              this.userDetInfo.nickname
+            }}</span>
           </a>
           <a href="##">
             <span class="fontSet playSet">设置</span>
           </a>
-          <a href="##" >
-            <span class="fontSet loginOut" :style="{visibility: isShowOut ? 'visible' : 'hidden'}" @click="backLogin()" >退出</span>
+          <a href="##">
+            <span
+              class="fontSet loginOut"
+              :style="{ visibility: isShowOut ? 'visible' : 'hidden' }"
+              @click="backLogin()"
+              >退出</span
+            >
           </a>
         </div>
       </div>
@@ -224,7 +235,7 @@
           </div>
           <!-- 进度条 -->
           <div class="progressBarLine">
-            <div class="bootmLine" :style="{width:duration}">
+            <div class="bootmLine" :style="{ width: duration }">
               <div class="linePoint" @mousedown="mousedown"></div>
             </div>
           </div>
@@ -249,13 +260,13 @@
   </div>
 </template>
 <script>
-import GoLogin from "../GoLogin";
-import {reqSongUrl} from "@/api";
+import GoLogin from '../GoLogin'
+import { reqSongUrl } from '@/api'
 import { mapState } from 'vuex'
 export default {
-  name: "AudioPlay",
+  name: 'AudioPlay',
   components: {
-    GoLogin
+    GoLogin,
   },
   data() {
     return {
@@ -275,129 +286,127 @@ export default {
       moveX: 0,
       // 是否允许拖动
       isClickSlider: false,
-      songUrl: "",
+      songUrl: '',
       songId: 0,
       // 是否显示退出链接
       isShowOut: false,
-      isButton:3,
-      isShowLogin:false,
-    };
+      isButton: 3,
+      isShowLogin: false,
+    }
   },
   computed: {
     ...mapState({
       // 获取用户id
       userInfo: (state) => state.play.userInfo,
       // 获取用户详细信息
-      userDetInfo: (state) => state.play.userDetInfo
-    })
+      userDetInfo: (state) => state.play.userDetInfo,
+    }),
   },
   async mounted() {
-    if (this.$route.fullPath.indexOf("audioplay") !== -1) {
-      document.documentElement.style.overflow = "hidden";
-      document.body.style.overflow = "hidden";
+    if (this.$route.fullPath.indexOf('audioplay') !== -1) {
+      document.documentElement.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden'
     }
     this.isLogin()
-    
+
     // 获取audio对象
-    this.audio = this.$refs.audio;
-    await this.$store.dispatch('getUserInfo',localStorage.cookie)
-    
+    this.audio = this.$refs.audio
+    await this.$store.dispatch('getUserInfo', localStorage.cookie)
+
     // 通过用户id获取用户详细信息
-    await this.$store.dispatch('getUserDetInfo',this.userInfo.userId)
-    console.log('11',this.userInfo.userId)
-    // currentTime属性变化时触发，每秒可能触发4到60次 
-    this.audio.addEventListener("timeupdate", () => {
-      this.currentTime = this.audio.currentTime;
-      this.durationTime = this.audio.duration;
-      console.log(this.currentTime);
-      this.duration = (this.currentTime / this.durationTime) * 100 + "%";
-    });
-    
-    
+    await this.$store.dispatch('getUserDetInfo', this.userInfo.userId)
+    console.log('11', this.userInfo.userId)
+    // currentTime属性变化时触发，每秒可能触发4到60次
+    this.audio.addEventListener('timeupdate', () => {
+      this.currentTime = this.audio.currentTime
+      this.durationTime = this.audio.duration
+      console.log(this.currentTime)
+      this.duration = (this.currentTime / this.durationTime) * 100 + '%'
+    })
+
     // 获取params传过来的ID
-    this.songId = this.$route.query.id;
-    console.log('111',this.$route.query)
+    this.songId = this.$route.query.id
+    console.log('111', this.$route.query)
     // 根据id获取歌曲url
-    const result = await reqSongUrl(this.songId);
+    const result = await reqSongUrl(this.songId)
     if (result.code === 200) {
-      this.songUrl = result.data[0].url;
+      this.songUrl = result.data[0].url
     }
     console.log(this.songUrl)
   },
   methods: {
-
     // 播放与暂停
     async handlePlay() {
       if (!this.isPlay) {
-        this.$refs.audio.play();
-        this.isPlay = true;
+        this.$refs.audio.play()
+        this.isPlay = true
       } else {
-        this.$refs.audio.pause();
-        this.isPlay = false;
+        this.$refs.audio.pause()
+        this.isPlay = false
       }
     },
 
     // 进度条
     mousedown(e) {
-      this.isClickSlider = true;
+      this.isClickSlider = true
       if (this.moveDistance) {
-        this.startX = this.nextStart;
+        this.startX = this.nextStart
       } else {
-        this.startX = e.clientX;
+        this.startX = e.clientX
       }
-      console.log("111", this.moveDistance);
+      console.log('111', this.moveDistance)
     },
     mousemove(e) {
-      this.moveX = e.clientX;
+      this.moveX = e.clientX
       if (this.startX) {
-        this.moveDistance = this.moveX - this.startX;
+        this.moveDistance = this.moveX - this.startX
       }
       if (this.moveDistance < 0) {
-        this.moveDistance = 0;
+        this.moveDistance = 0
       }
       if (this.moveDistance > 970) {
-        this.moveDistance = 970;
-        return;
+        this.moveDistance = 970
+        return
       }
       // 移动的百分比
       if (this.isClickSlider) {
         // this.duration =
-        this.audio.currentTime =((this.moveDistance / 970) * 100 * this.duration) + "%";
+        this.audio.currentTime =
+          (this.moveDistance / 970) * 100 * this.duration + '%'
       }
-      console.log("移动的距离", this.moveDistance);
+      console.log('移动的距离', this.moveDistance)
     },
     mouseup(e) {
-      this.isClickSlider = false;
+      this.isClickSlider = false
       // 重置
-      this.nextStart = this.startX;
-      this.startX = 0;
-      console.log("22", this.moveDistance);
+      this.nextStart = this.startX
+      this.startX = 0
+      console.log('22', this.moveDistance)
     },
 
-
     // 判断是否登陆
-    isLogin () {
+    isLogin() {
       if (localStorage.cookie) {
         this.isShowLogin = true
-      }else{
+      } else {
         this.isShowLogin = false
         // this.isShowOut = false
       }
     },
     //退出登录
     backLogin() {
-      localStorage.removeItem("cookie");
-      this.$message.success("已退出登录!");
+      localStorage.removeItem('cookie')
+      this.$message.success('已退出登录!')
       setTimeout(() => {
-        location.reload();
-      }, 500);
+        location.reload()
+      }, 500)
     },
     // 是否显示退出
-    isHideOut (flag) {
+    isHideOut(flag) {
       if (this.isShowLogin) {
         if (flag) {
           this.isShowOut = true
-        }else{
+        } else {
           this.isShowOut = false
         }
       }
@@ -405,25 +414,24 @@ export default {
 
     // 秒值转字符串
     timeToString(param) {
-      param = parseInt(param);
-      let hh = "",
-        mm = "",
-        ss = "";
+      param = parseInt(param)
+      let hh = '',
+        mm = '',
+        ss = ''
       if (param >= 0 && param < 60) {
-        param < 10 ? (ss = "0" + param) : (ss = param);
-        return "00:" + ss;
+        param < 10 ? (ss = '0' + param) : (ss = param)
+        return '00:' + ss
       } else if (param >= 60 && param < 3600) {
-        mm = parseInt(param / 60);
-        mm < 10 ? (mm = "0" + mm) : mm;
+        mm = parseInt(param / 60)
+        mm < 10 ? (mm = '0' + mm) : mm
         param - parseInt(mm * 60) < 10
-          ? (ss = "0" + String(param - parseInt(mm * 60)))
-          : (ss = param - parseInt(mm * 60));
-        return mm + ":" + ss;
+          ? (ss = '0' + String(param - parseInt(mm * 60)))
+          : (ss = param - parseInt(mm * 60))
+        return mm + ':' + ss
       }
-    }
+    },
   },
-
-};
+}
 </script>
 <style>
 html,
@@ -480,7 +488,7 @@ body {
   color: white !important;
   padding-right: 15px;
 }
-.playerLogin .userInfo .login{
+.playerLogin .userInfo .login {
   color: white !important;
 }
 .playerLogin .userInfo .user {
@@ -569,7 +577,7 @@ body {
   display: block;
   width: 50px;
 }
-.playMain .songsListHeader input[type="checkbox"] {
+.playMain .songsListHeader input[type='checkbox'] {
   width: 14px;
   height: 14px;
   border: 1px solid #fff;
