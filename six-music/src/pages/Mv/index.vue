@@ -18,7 +18,7 @@
             >
           </div>
         </div>
-        <!-- 内容头部 -->
+        <!-- 顶部地区筛选 -->
         <div class="mv_top">
           <h2 class="mv_top_left">全部MV</h2>
           <div class="mv_top_right">
@@ -38,23 +38,26 @@
           <ul class="mv_content_ul">
             <li class="content_ul_li" v-for="item in allMv" :key="item.id">
               <div class="ul_li_box">
+                <!-- 图片 -->
                 <a href="javascript:;" class="li_box_a">
                   <img
                     class="box_a_img"
                     v-lazy="item.cover"
-                    @click="goMvVideo"
+                    @click="goMvVideo(item.id)"
                   />
                   <i class="box_a_i"></i>
                 </a>
+                <!-- mv名 -->
                 <h3 class="li_box_h3">
                   <a href="javascript;:" class="box_h3_a">{{ item.name }}</a>
                 </h3>
-
+                <!-- 发布者 -->
                 <div class="li_box_div" title="Keano">
                   <a href="javascript:;">
                     {{ item.artistName }}
                   </a>
                 </div>
+                <!-- 播放量 -->
                 <div class="li_box_info">
                   <span class="box_info_span"
                     ><i class="box_info_span_i"></i>{{ item.playCount }}</span
@@ -174,8 +177,9 @@ export default {
       this.getMvList(this.area, order);
     },
     // 跳转到MvVideo页面
-    goMvVideo() {
-      this.$router.replace({ path: "/mv/mvvideo" });
+    goMvVideo(id) {
+      console.log(id);
+      this.$router.replace({ path: "/mvvideo",query:{id} });
     },
   },
 };
@@ -215,7 +219,6 @@ export default {
   font-weight: 400;
   width: 65px;
 }
-
 a:hover {
   color: green;
   text-decoration: none;
@@ -229,6 +232,7 @@ a:hover {
   background-color: #31c27c;
   color: #fff !important;
 }
+/* 内容顶部筛选 */
 .mv_top {
   overflow: hidden;
   height: 60px;
@@ -268,6 +272,7 @@ a:hover {
   color: #fff !important;
   border-color: #31c27c;
 }
+/* 内容详情 */
 .mv_content_ul {
   margin-right: -20px;
   zoom: 1;
@@ -294,6 +299,7 @@ a:hover {
   opacity: 1;
   transition: all 2s;
 }
+/* 图片 */
 .box_a_img {
   position: absolute;
   top: 0;
@@ -317,6 +323,7 @@ a:hover {
   height: 70px;
   transition: all 2s;
 }
+/* mv名 */
 .li_box_h3 {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -329,6 +336,7 @@ a:hover {
 .li_box_info {
   color: #999 !important;
 }
+/* 发布者 */
 .li_box_div {
   height: 24px;
   overflow: hidden;
@@ -338,6 +346,7 @@ a:hover {
 .li_box_div a {
   font-size: 14px;
 }
+/* 播放量 */
 .li_box_info {
   line-height: 18px;
   height: 20px;
@@ -354,6 +363,7 @@ a:hover {
   vertical-align: -1px;
   background: url("./images/icon_sprite.png") -180px -20px no-repeat;
 }
+/* 分页 */
 .paging {
   clear: both;
   text-align: center;

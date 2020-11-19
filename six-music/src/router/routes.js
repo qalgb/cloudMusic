@@ -23,7 +23,7 @@ export default [
     component: Rank,
   },
   {
-    path: "/mv/mvvideo",
+    path: "/mvvideo",
     component: MvVideo,
   },
   {
