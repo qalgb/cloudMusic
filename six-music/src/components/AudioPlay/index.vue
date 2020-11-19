@@ -320,9 +320,6 @@ export default {
     if (result.code === 200) {
       this.songUrl = result.data[0].url;
     }
-    
-    // 通过uid请求用户详细信息
-    // this.$store.dispatch('getUserDetInfo',this.userInfo.id)
   },
   methods: {
 
@@ -337,7 +334,6 @@ export default {
       }
     },
 
-
     // 进度条
     mousedown(e) {
       this.isClickSlider = true;
@@ -349,7 +345,6 @@ export default {
       console.log("111", this.moveDistance);
     },
     mousemove(e) {
-      // console.log(e)
       this.moveX = e.clientX;
       if (this.startX) {
         this.moveDistance = this.moveX - this.startX;
@@ -364,8 +359,7 @@ export default {
       // 移动的百分比
       if (this.isClickSlider) {
         // this.duration =
-        this.audio.currentTime =
-          (this.moveDistance / 970) * 100 * this.duration + "%";
+        this.audio.currentTime =((this.moveDistance / 970) * 100 * this.duration) + "%";
       }
       console.log("移动的距离", this.moveDistance);
     },
@@ -405,13 +399,6 @@ export default {
         }
       }
     },
-    // 页面渲染完毕之后发送获取uid的请求
-    // getUserId () {
-    //   this.$nextTick(async function () {
-    //     // 通过cookie请求用户基本信息,分发
-    //     await this.$store.dispatch('getUserInfo',localStorage.cookie)
-    //   })
-    // },
 
     // 秒值转字符串
     timeToString(param) {
@@ -432,11 +419,7 @@ export default {
       }
     }
   },
-  // watch: {
-  //   userId () {
-  //     this.getUserId()
-  //   }
-  // },
+
 };
 </script>
 <style>
