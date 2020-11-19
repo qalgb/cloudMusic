@@ -75,7 +75,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
   .songlist_list li{
   height: 80px;
   width: 100%;

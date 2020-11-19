@@ -27,7 +27,7 @@
       <div class="swiper-container" ref="sw1">
         <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="item in discList" :key="item.id">
-            <div class="song_cover">
+            <div class="song_cover" @click="toDetail(item.id)">
               <img v-lazy="item.picUrl" />
               <i class="mod_cover__mask"></i>
               <i class="mod_cover__icon_play"></i>
@@ -116,6 +116,10 @@ export default {
       // 获取数据
       this.getDiscList(area)
     },
+    // 跳转详情(待修改)
+    toDetail (id) {
+      this.$router.push({path:'/playlistdetail',query:{id}})
+    }
   },
 }
 </script>

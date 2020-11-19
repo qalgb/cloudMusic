@@ -3,12 +3,12 @@
     <div class="pagesHeadInner">
       <!-- 头部logo -->
       <h1 class="headLogo">
-        <a href="##">
+        <router-link to="/">
           <img
             src="https://y.gtimg.cn/mediastyle/yqq/img/logo.png?nowebp=1"
             alt=""
           />
-        </a>
+        </router-link>
       </h1>
       <!-- 头部导航栏 -->
       <ul class="headNav">
@@ -37,9 +37,6 @@
         <div class="searchInfo"></div>
         <button><i class="iconSearch"></i></button>
       </div>
-      <!-- <a href="javascript:;" class="userPic" v-if="isSuccess">
-        <img :src="userInfo.avatarUrl" class="userPicImg" alt="" />
-      </a> -->
       <a-dropdown v-if="isSuccess">
         <a class="ant-dropdown-link">
           <img :src="userInfo.avatarUrl" class="userPicImg" alt="" />
@@ -63,7 +60,7 @@
                 @click="goMyMusic"
                 >{{ userInfo.nickname }}</a
               >
-              <div class="userLevel_backLogin">Lv.7</div>
+              <div class="userLevel_backLogin">Lv.{{level}}</div>
             </div>
           </div>
           <div class="backLoginButtonBox">
@@ -79,44 +76,56 @@
       <button class="topUp selectChoose">充值</button>
     </div>
     <!-- 音乐馆导航栏 -->
-    <ul class="musicPavilionNav" :style="{ display: isShow ? '' : 'none' }">
-      <li><a href="javascript:;" class="smallActive">首页</a></li>
+    <ul class="musicPavilionNav" :style="{ display: isShow ? '' : 'none' }" @click="handleClick">
+      <li><router-link to="/">首页</router-link></li>
       <li><a href="javascript:;">歌手</a></li>
-      <li><a href="javascript:;">新碟</a></li>
+      <li><router-link to="/newdisc">新碟</router-link></li>
       <li>
         <router-link to="/rank">排行榜</router-link>
       </li>
       <li>
         <router-link to="/playlist">分类歌单</router-link>
       </li>
-      <li><a href="javascript:;">电台</a></li>
+      <li><router-link to="/radio">电台</router-link></li>
       <li><router-link to="/mv">MV</router-link></li>
       <li><a href="javascript:;">数字专辑</a></li>
       <li><a href="javascript:;">票务</a></li>
     </ul>
-    <!-- 登录弹窗 -->
   </div>
 </template>
 
 <script>
 import GoLogin from "../GoLogin";
-import { reqUserInfo } from "../../api";
+import { reqUserInfo, reqUserLevel } from "../../api";
 export default {
   name: "Header",
   data() {
     return {
       searchInfo: "", //搜索框内容
-      isShow: this.$route.path, //音乐馆nav是否显示
+      isShow: true, //音乐馆nav是否显示
       isSuccess: false, //是否处于登录状态（是否有cookie）
       userInfo: [], //用户信息
+      isButton: 3, //登录按钮是否显示
+      level: "", //用户等级
       cookie: localStorage.getItem("cookie"),
       isButton: false,
+      current: '' // 点击导航栏初始值
     };
   },
   components: {
     GoLogin,
   },
   methods: {
+    // 点击导航栏高亮
+    handleClick(e) {
+      // 判断current
+      this.current ? (this.current.className = '') : ''
+      if (e.target.nodeName === 'A') {
+        e.target.className = 'samllActive'
+        // 更新current
+        this.current = e.target
+      }
+    },
     //跳转到首页（音乐馆）
     goMusicPavilion() {
       this.isShow = true;
@@ -139,16 +148,23 @@ export default {
         location.reload();
       }, 500);
     },
+    getPath() {
+      if (this.$route.fullPath === "/mymusic") {
+        this.isShow = false;
+      } else if (this.$route.fullPath === "/") {
+        this.isShow = true;
+      }
+    },
   },
   async mounted() {
-    //active样式是否渲染
-    if (this.$route.path.indexOf("mymusic") === 1) {
-      this.isShow = false;
-    }
-
+    //判断cookie是否存在
     if (localStorage.getItem("cookie")) {
       //获取用户信息
       const result = await reqUserInfo(localStorage.getItem("cookie"));
+      //获取用户等级
+      const level = (await reqUserLevel(localStorage.getItem("cookie"))).data
+        .level;
+      this.level = level;
       //判断是否获取成功
       if (result.code === 200) {
         this.userInfo = result.profile;
@@ -157,6 +173,11 @@ export default {
         this.isSuccess = false;
       }
     }
+  },
+  watch: {
+    "$route.path"() {
+       this.getPath();
+    },
   },
 };
 </script>
@@ -377,9 +398,7 @@ a {
   text-decoration: none;
 }
 
-.smallActive {
-  color: #31c27c;
+.samllActive {
+  color: #31c27c !important;
 }
-
-/* 登录弹窗样式 */
 </style>

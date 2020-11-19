@@ -3,20 +3,16 @@ import Vue from "vue";
 // 引入VueRouter
 import VueRouter from "vue-router";
 // 引入routes
-import routes from "./routes";
+import routes from './routes'
 // 重新修改push和replace
-const pushOrigin = VueRouter.prototype.push;
-VueRouter.prototype.push = function(location, onComplete = () => {}, onAbort) {
-  return pushOrigin.call(this, location, onComplete, onAbort);
-};
-const replaceOrigin = VueRouter.prototype.replace;
-VueRouter.prototype.replace = function(
-  location,
-  onComplete,
-  onAbort = () => {}
-) {
-  return replaceOrigin.call(this, location, onComplete, onAbort);
-};
+const pushOrigin = VueRouter.prototype.push
+VueRouter.prototype.push = function (location, onComplete = () => { }, onAbort) {
+  return pushOrigin.call(this, location, onComplete, onAbort)
+}
+const replaceOrigin = VueRouter.prototype.replace
+VueRouter.prototype.replace = function (location, onComplete, onAbort = () => { }) {
+  return replaceOrigin.call(this, location, onComplete, onAbort)
+}
 
 // 声明使用路由器
 Vue.use(VueRouter);
