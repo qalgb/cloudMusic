@@ -72,7 +72,7 @@ export const reqSongInfo = (ids) => ajax({
   method:"GET",
 })
 // 获取全部mv
-export const reqAllMv = () => ajax.get(`/mv/all`);
+export const reqAllMv = (area,order) => ajax.get(`/mv/all?area=${area}&order=${order}&limit=32`);
 //请求登录信息
 export const reqLoginInfo = (phoneNum, password) =>
   ajax.get(`/login/cellphone?phone=${phoneNum}&password=${password}`);

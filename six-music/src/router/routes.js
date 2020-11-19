@@ -3,10 +3,10 @@ import Home from "../pages/Home";
 import MyMusic from "../pages/MyMusic";
 import Rank from "../pages/Rank";
 import Register from "../pages/Register";
-import AudioPlay from "../components/AudioPlay";
-import Mv from "../pages/Mv";
+import AudioPlay from '../components/AudioPlay'
+import Mv from "@/pages/Mv";
 import Playlist from "@/pages/Playlist";
-import MvVideo from "../pages/MvVideo";
+import MvVideo from "@/pages/MvVideo"
 // 歌单详情
 import playListDetail from "@/pages/playListDetail";
 export default [
