@@ -17,6 +17,7 @@
             :data-value="item.name"
           >
             {{ item.name }}
+            <div></div>
           </li>
           <!-- :class="
               myFlage ? 'playlist_tag__itembox avtive' : 'playlist_tag__itembox'
