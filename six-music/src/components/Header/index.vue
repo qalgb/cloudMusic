@@ -79,14 +79,14 @@
     <ul class="musicPavilionNav" :style="{ display: isShow ? '' : 'none' }">
       <li><a href="javascript:;" class="smallActive">首页</a></li>
       <li><a href="javascript:;">歌手</a></li>
-      <li><a href="javascript:;">新碟</a></li>
+      <li><router-link to="/newdisc">新碟</router-link></li>
       <li>
         <router-link to="/rank">排行榜</router-link>
       </li>
       <li>
         <router-link to="/playlist">分类歌单</router-link>
       </li>
-      <li><a href="javascript:;">电台</a></li>
+      <li><router-link to="/radio">电台</router-link></li>
       <li><router-link to="/mv">MV</router-link></li>
       <li><a href="javascript:;">数字专辑</a></li>
       <li><a href="javascript:;">票务</a></li>

@@ -32,11 +32,16 @@ export const reqRankInfo = () =>
     method: "GET",
   });
 // 请求所有榜单歌曲列表
-export const reqRankSongList = (id) =>
-  ajax({
-    url: `/playlist/detail?id=${id}`,
-    method: "GET",
-  });
+export const reqRankSongList = (id) => ajax({
+  url:`/playlist/detail?${id}`,
+  method: 'GET',
+})
+//请求电台的分类标签
+export const reqRadioList=()=>ajax.get(`/dj/catelist`)
+//请求分类后的电台
+export const reqRadioName=(rid)=>ajax.get(`/dj/recommend/type?type=${rid}`)
+//请求新专辑的列表
+export const reqNewDiscList=(area)=>ajax.get(`/album/new?area=${area}&limit=20`)
 // 请求歌单评论
 export const reqSongListComment = (id) =>
   ajax({
