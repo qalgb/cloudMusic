@@ -30,11 +30,11 @@ export default [
     path: "/mv",
     component: Mv,
   },
-  // 歌单详情
-  {
-    path: "/playlist:keyword?",
-    component: playListDetail
-  },
+  // // 歌单详情
+  // {
+  //   path: "/playlist:keyword?",
+  //   component: playListDetail
+  // },
   {
     path: "/register",
     component: Register,

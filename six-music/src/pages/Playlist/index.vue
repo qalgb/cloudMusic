@@ -17,7 +17,6 @@
             :data-value="item.name"
           >
             {{ item.name }}
-            <div></div>
           </li>
           <!-- :class="
               myFlage ? 'playlist_tag__itembox avtive' : 'playlist_tag__itembox'
@@ -91,8 +90,14 @@
             <p class="playlist__title_txt">{{ item.name }}</p>
             <p class="playlist__author">{{ item.creator.nickname }}</p>
             <p class="playlist__other">
-              播放量 : <span>{{ item.playCount }}</span>
+              播放量 :
+              <span>{{
+                item.playCount > 9999
+                  ? (item.playCount / 10000).toFixed(1) + " 万"
+                  : item.playCount
+              }}</span>
             </p>
+            <!-- item.bMusic.playTime>9999 ? (item.bMusic.playTime/10000).toFixed(1)+'万':item.bMusic.playTime -->
           </div>
         </div>
       </div>
