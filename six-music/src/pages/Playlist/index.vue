@@ -187,7 +187,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 * {
   margin: 0;
   padding: 0;
@@ -207,7 +207,7 @@ export default {
 .mod_playlist_tag {
   display: flex;
   margin-bottom: 20px;
-  background-image: url("");
+  /* background-image: url(""); */
   margin-top: 30px;
   position: relative;
   /* background-color: #ddd; */

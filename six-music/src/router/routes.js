@@ -32,7 +32,7 @@ export default [
   },
   // 歌单详情
   {
-    path: "/playlist:keyword?",
+    path: "/playlistdetail:keyword?",
     component: playListDetail
   },
   {
@@ -45,8 +45,9 @@ export default [
     component: Playlist,
 
   },
-  {path: "/audioplay/:id?",
+  {path: "/audioplay",
     component: AudioPlay,
+    name:'audioplay'
   },
   {
     path: "/",
