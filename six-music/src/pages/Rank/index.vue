@@ -109,7 +109,7 @@ export default {
       await this.$store.dispatch('getSongListComment', id)
     },
     toAudio(songListAudio,id,picUrl){
-      this.$router.push({path: '/audioplay', query:{ songListAudio,id, picUrl }})
+      this.$router.push({path: '/audioplay', query:{ songListAudio:JSON.stringify(songListAudio),id, picUrl }})
     }
   },
 }

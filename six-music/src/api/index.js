@@ -128,3 +128,5 @@ export const reqCommentList = (id,type,pageNo,PageSize,sortType,cursor) => ajax(
   method: 'GET',
   url: `/comment/new?type=${type}&id=${id}&sortType=${sortType}&cursor=${cursor}&pageSize=${PageSize}&pageNo=${pageNo}`
 })
+// 获取歌词
+export const reqLyric = (id) => ajax.get(`/lyric?id=${id}`)
