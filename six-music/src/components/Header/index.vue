@@ -60,7 +60,7 @@
                 @click="goMyMusic"
                 >{{ userInfo.nickname }}</a
               >
-              <div class="userLevel_backLogin">Lv.{{level}}</div>
+              <div class="userLevel_backLogin">Lv.{{ level }}</div>
             </div>
           </div>
           <div class="backLoginButtonBox">
@@ -122,7 +122,7 @@ export default {
       if (e.target.nodeName === 'A') {
         e.target.className = 'smallActive'
         // 更新current
-        this.current = e.target
+        this.current = e.target;
       }
     },
     //跳转到首页（音乐馆）
@@ -175,7 +175,7 @@ export default {
   },
   watch: {
     "$route.path"() {
-       this.getPath();
+      this.getPath();
     },
   },
 };
