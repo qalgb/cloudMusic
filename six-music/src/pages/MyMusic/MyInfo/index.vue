@@ -32,7 +32,7 @@
         <a href="javascript:;" class="myFans">粉丝</a>
         <a href="javascript:;" class="myVideo">我上传的视频</a>
       </div>
-      <MyLike />
+      <MyLike :userId="userId"/>  
     </div>
   </div>
 </template>
@@ -40,24 +40,36 @@
 <script>
 import { reqUserInfo, reqUserDetail } from "../../../api";
 import MyLike from "./MyLike";
+import { mapState } from 'vuex'
 export default {
   name: "MyInfo",
   data() {
     return {
-      userDetail: [],
-      accountInfo: [],
+      // userDetail: [],
+      // accountInfo: [],
+      userId: ''
     };
+  },
+  computed: {
+    ...mapState({
+      userInfo: state => state.mymusic.userInfo,
+      userDetail: state => state.mymusic.userDetail
+    })
   },
   components: {
     MyLike,
   },
   async mounted() {
     //获取userid
-    let res = await reqUserInfo(localStorage.cookie);
-    let { userId } = res.profile;
+    // let res = await reqUserInfo(localStorage.cookie);
+    // let { userId } = res.profile;
+    await this.$store.dispatch('getUserInfo', localStorage.cookie)
+    let { userId } = this.userInfo
+    this.userId = userId
     //获取粉丝，等级，关注数
-    let result = await reqUserDetail(userId);
-    this.userDetail = result.profile;
+    await this.$store.dispatch('getUserDetail', userId)
+    // let result = await reqUserDetail(userId);
+    // this.userDetail = result.profile;
   },
 };
 </script>

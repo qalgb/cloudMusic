@@ -25,7 +25,7 @@
             class="playlist_tag__itembox"
             ref="more"
             @click="pupUp(indexs)"
-            v-if="dataList[indexs].length >= 6"
+            v-show="dataList[indexs].length >= 6"
           >
             更多∨
           </p>
@@ -83,11 +83,15 @@
             class="playlist__item"
           >
             <div class="mod_playlist__img__box">
-              <img class="mod_playlist__img" :src="item.coverImgUrl" />
+              <img class="mod_playlist__img" v-lazy="item.coverImgUrl" />
               <img class="mod_playlist__bg_img" src="./image/p5.png" />
             </div>
 
-            <p class="playlist__title_txt">{{ item.name }}</p>
+            <!-- 点击跳转到playlistDetail -->
+            <p class="playlist__title_txt" @click="goToplaylistDetail(item.id)">
+              {{ item.name }}
+            </p>
+
             <p class="playlist__author">{{ item.creator.nickname }}</p>
             <p class="playlist__other">
               播放量 :
@@ -221,9 +225,7 @@ export default {
       // 清除歌单active样式
       this.test ? (this.test.className = "playlist_tag__itembox") : "";
 
-      this.myIndex
-        ? (this.$refs.more[this.myIndex * 1].innerText = "更多∨")
-        : "";
+      this.myIndex ? (this.$refs.more[this.myIndex].innerText = "更多∨") : "";
       this.myIndex
         ? (this.$refs.more[this.myIndex].className = "playlist_tag__itembox")
         : "";
@@ -233,6 +235,13 @@ export default {
       // console.log(1);
       // console.log(this.$refs.more[this.myIndex]);
       // this.$refs.more[this.index].className = "playlist_tag__itembox";
+    },
+
+    //点击跳转到goToplaylistDetail
+    goToplaylistDetail(id) {
+      //获取歌单的id进行路由跳转，通过Query传参
+
+      this.$router.push({ path: "/playlistdetail", query: { id: id } });
     },
   },
   // 界面渲染之后的生命周期回调
@@ -299,7 +308,7 @@ export default {
 .mod_playlist_tag {
   display: flex;
   margin-bottom: 20px;
-  background-image: url("");
+  /* background-image: url(""); */
   margin-top: 30px;
   position: relative;
   /* background-color: #ddd; */

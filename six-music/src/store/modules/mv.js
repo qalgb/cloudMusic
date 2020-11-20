@@ -17,8 +17,8 @@ export default {
   //异步请求
   actions: {
     // 获取mv数据
-    async getAllMv({ commit }) {
-      const result = await reqAllMv();
+    async getAllMv({ commit },{area,order}) {
+      const result = await reqAllMv(area,order);
       if (result.code === 200) {
         commit("RECEIV_ALL_MV", result.data);
       }

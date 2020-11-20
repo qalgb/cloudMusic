@@ -19,10 +19,10 @@
       <div class="swiper-container" ref="sw1">
         <div class="swiper-wrapper">
           <div class="swiper-slide" v-for="item in newSongList" :key="item.id">
-            <div class="song_cover">
+            <div class="song_cover" @click="toPlay(item.id)">
               <img v-lazy="item.album.picUrl" />
               <i class="mod_cover__mask"></i>
-              <i class="mod_cover__icon_play"></i>
+              <i class="mod_cover__icon_play" @click="toPlay(item.id)"></i>
             </div>
             <div class="songInfo">
               <a href="javascript:;" class="songlist_song">{{ item.name }}</a>
@@ -110,6 +110,10 @@ export default {
       this.currentIndex = index
       // 获取数据
       this.getNewSongList(type)
+    },
+    // 点击播放按钮
+    toPlay (id) {
+      this.$router.push({name:'audioplay',params:{id}})
     }
   },
 }

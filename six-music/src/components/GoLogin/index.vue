@@ -1,15 +1,18 @@
 <template>
   <div>
-    <button @click="showModal" class="loginButton" v-if="isButton">
+    <button @click="showModal" class="loginButton" v-if="isButton === 1">
       立即登录
     </button>
-    <a @click="showModal" class="loginText" v-else> 登录 </a>
+    <a @click="showModal" class="audioText" v-else-if="isButton === 2">
+      登录
+    </a>
+    <a @click="showModal" class="loginText" v-else-if="isButton === 3"> 登录 </a>
     <a-modal v-model="visible" title="安全登录">
       <template slot="footer">
         <div class="goLoginFooter">
           <a href="javascript:;">忘了密码？</a>
           <span>|</span>
-          <a href="javascript:;">注册新账号</a>
+          <router-link to="/register">注册新账号</router-link>
           <span>|</span>
           <a href="javascript:;">意见反馈</a>
         </div>
@@ -19,7 +22,7 @@
         <div class="inputOut">
           <input
             type="text"
-            placeholder="请输入网易云账号"
+            placeholder="请输入网易账号"
             class="account"
             v-model="phoneNum"
           />
@@ -32,49 +35,40 @@
             v-model="password"
           />
         </div>
+        <a-checkbox class="agreenList" @change="onChange">
+          <a-dropdown>
+            <a class="agreen" @click="(e) => e.preventDefault()">
+              我已阅读并同意相关服务条款和隐私政策 <a-icon type="down" />
+            </a>
+            <a-menu slot="overlay">
+              <a-menu-item>
+                <a
+                  href="https://st.music.163.com/official-terms/service"
+                  target="_blank"
+                  >《服务条款》</a
+                >
+              </a-menu-item>
+              <a-menu-item>
+                <a
+                  href="https://st.music.163.com/official-terms/privacy"
+                  target="_blank"
+                  >《隐私政策》</a
+                >
+              </a-menu-item>
+              <a-menu-item>
+                <a
+                  href="https://st.music.163.com/official-terms/children"
+                  target="_blank"
+                  >《儿童隐私政策》</a
+                >
+              </a-menu-item>
+            </a-menu>
+          </a-dropdown>
+        </a-checkbox>
         <button class="submit" @click="logining">授权并登录</button>
       </div>
     </a-modal>
   </div>
-  <!-- 勿删 -->
-  <!--  <div :style="{ display: isDisplay ? 'block' : 'none' }">
-    <div class="goLoginBg"></div>
-    <div class="goLogin">
-      <div class="goLoginHeader">
-        <h2 class="goLoginTit">安全登录</h2>
-      </div>
-      <a href="javascript:;" class="close"
-        ><i class="closeImg" @click="closeLogin"></i
-      ></a>
-      <div class="goLoginMid">
-        <div class="Logintit">账号密码登录</div>
-        <div class="inputOut">
-          <input
-            type="text"
-            placeholder="请输入网易云账号"
-            class="account"
-            v-model="phoneNum"
-          />
-        </div>
-        <div class="inputOut">
-          <input
-            type="password"
-            placeholder="密码"
-            class="account"
-            v-model="password"
-          />
-        </div>
-        <button class="submit" @click="logining">授权并登录</button>
-      </div>
-      <div class="goLoginFooter">
-        <a href="javascript:;">忘了密码？</a>
-        <span>|</span>
-        <a href="javascript:;">注册新账号</a>
-        <span>|</span>
-        <a href="javascript:;">意见反馈</a>
-      </div>
-    </div>
-  </div> -->
 </template>
 
 <script>
@@ -82,13 +76,14 @@ import { reqLoginInfo, reqUserInfo } from "../../api";
 export default {
   name: "GoLogin",
   props: {
-    isButton: Boolean,
+    isButton: Number,
   },
   data() {
     return {
       visible: false,
       phoneNum: "13970028131",
       password: "",
+      isAgree: "",
     };
   },
   methods: {
@@ -96,9 +91,13 @@ export default {
     showModal() {
       this.visible = true;
     },
+    //是否勾选同意协议
+    onChange() {
+      this.isAgree = !this.isAgree;
+    },
     //点击授权登录
     async logining() {
-      if (this.phoneNum.trim() && this.password.trim()) {
+      if (this.phoneNum.trim() && this.password.trim() && this.isAgree) {
         const result = await reqLoginInfo(this.phoneNum, this.password);
         if (result.code === 200) {
           localStorage.setItem("cookie", result.cookie);
@@ -111,6 +110,8 @@ export default {
           this.$message.error("账号或密码错误，请重新登录");
           this.password = "";
         }
+      } else if (!this.isAgree) {
+        this.$message.warn("请阅读并勾选相关协议");
       } else {
         this.$message.warn("账号和密码不能为空");
       }
@@ -282,5 +283,23 @@ export default {
   color: #fff;
   outline: none;
   cursor: pointer;
+}
+
+.agreenList {
+  width: 272px;
+}
+
+.agreenList a {
+  color: #666;
+  font-size: 12px;
+}
+
+.audioText {
+  font-size: 14px;
+  line-height: 30px;
+  vertical-align: top;
+  opacity: 0.3;
+  color: white !important;
+  padding-right: 15px;
 }
 </style>

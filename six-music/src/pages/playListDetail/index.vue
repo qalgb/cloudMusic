@@ -2,30 +2,51 @@
   <div class="main">
     <div class="mod_data">
       <span class="data_cover">
-        <img src="../../image/300.jpg" alt="" />
+        <img :src="playList.coverImgUrl" alt="" />
       </span>
       <div class="data_cont">
         <div class="data_name">
-          <h1 class="data_name_txt" title="无限狂热！动漫中の摇滚音乐">
-            无限狂热！动漫中の摇滚音乐
+          <h1 class="data_name_txt" :title="playList.name">
+            {{ playList.name }}
           </h1>
         </div>
         <div class="data_singer">
           <i class="icon_singer"></i>
-          <a href="javascript:;" title="私に闻いて风i">私に闻いて风i</a>
+          <a
+            v-if="playList.creator"
+            href="javascript:;"
+            :title="playList.creator.nickname"
+            >{{ playList.creator.nickname }}</a
+          >
         </div>
         <ul class="data_info">
           <li class="data_info_item">
             <div class="data_tag_box">
+              标签：
               <span>
-                <a href="javascript:;">日语</a>
-                <a href="javascript:;">摇滚</a>
-                <a href="javascript:;">ACG</a>
+                <a
+                  href="javascript:;"
+                  v-for="(item, index) in playList.tags"
+                  :key="index"
+                  >{{ item }}</a
+                >
               </span>
             </div>
           </li>
-          <li class="data_info_item">播放量：814.9万</li>
-          <li class="data_info_item">收藏量：8.3万</li>
+          <li class="data_info_item">
+            播放量：{{
+              playList.playCount > 9999
+                ? (playList.playCount / 10000).toFixed(1) + '万'
+                : playList.playCount
+            }}
+          </li>
+          <li class="data_info_item">
+            收藏量：{{
+              playList.subscribedCount > 9999
+                ? (playList.subscribedCount / 10000).toFixed(1) + '万'
+                : playList.subscribedCount
+            }}
+          </li>
         </ul>
         <div class="data_actions">
           <a href="javascript:;" class="btn_green">
@@ -38,7 +59,11 @@
           </a>
           <a href="javascript:;" class="mod_btn">
             <i class="btn_icon_comment"></i>
-            评论(292)
+            评论({{
+              playList.commentCount > 9999
+                ? (playList.commentCount / 10000).toFixed(1) + '万'
+                : playList.commentCount
+            }})
           </a>
           <a href="javascript:;" class="mod_btn">
             <i class="btn_icon_menu"></i>
@@ -57,40 +82,87 @@
             <li class="songlist_header_time">时长</li>
           </ul>
           <ul class="songlist_list">
-            <li v-for="(item,index) in playList.tracks" :key="item.id">
+            <li v-for="(item, index) in playList.tracks" :key="item.id">
               <div class="songlist_item">
-                <div class="songlist_number">{{index+1}}</div>
+                <div class="songlist_number">{{ index + 1 }}</div>
                 <div class="songlist_songname">
-                  <i class="songlist_icon songlist_icon_exclusive" title="独家"></i>
-                  <span class="songlist_songname_txt"><a href="https://y.qq.com/n/yqq/song/001pKbCe3RyfuY.html" title="chAngE 《死神》TV动画第266-291集片头曲">{{item.name}}<span class="songlist_song_txt">{{item.ar[0].name}}</span></a></span>
+                  <a href="javascript:;" class="songlist_icon_mv" title="Mv" v-if="item.mv !== 0"></a>
+                  <i
+                    v-if="item.copyright === 1"
+                    class="songlist_icon songlist_icon_exclusive"
+                    title="独家"
+                  ></i>
+                  <span class="songlist_songname_txt"
+                    ><a href="https://y.qq.com/n/yqq/song/001pKbCe3RyfuY.html">
+                      {{ item.name }}
+                      <!-- <span class="songlist_song_txt">
+                      {{item.ar[0].name}}
+                    </span> -->
+                    </a>
+                  </span>
                   <div class="list_menu">
-                    <a href="javascript:;" class="list_menu_item list_menu_play" title="播放">
-                      <i class="list_menu_icon_play"></i>
+                    <a
+                      href="javascript:;"
+                      class="list_menu_item list_menu_play"
+                      title="播放"
+                    >
+                      <i
+                        class="list_menu_icon_play"
+                        @click="toPlay(item.id)"
+                      ></i>
                       <span class="icon_txt">播放</span>
                     </a>
-                    <a href="javascript:;" class="list_menu_item list_menu_add" title="添加到歌单">
+                    <a
+                      href="javascript:;"
+                      class="list_menu_item list_menu_add"
+                      title="添加到歌单"
+                    >
                       <i class="list_menu_icon_add"></i>
                       <span class="icon_txt">添加到歌单</span>
                     </a>
-                    <a href="javascript:;" class="list_menu_item list_menu_down" title="VIP下载">
+                    <a
+                      href="javascript:;"
+                      class="list_menu_item list_menu_down"
+                      title="VIP下载"
+                    >
                       <i class="list_menu_icon_down_vip"></i>
                       <span class="icon_txt">VIP下载</span>
                     </a>
-                    <a href="javascript:;" class="list_menu_item list_menu_share" title="分享">
+                    <a
+                      href="javascript:;"
+                      class="list_menu_item list_menu_share"
+                      title="分享"
+                    >
                       <i class="list_menu_icon_share"></i>
                       <span class="icon_txt">分享</span>
                     </a>
                   </div>
                 </div>
                 <div class="songlist_artist" title="miwa (みわ)">
-                  <a href="https://y.qq.com/n/yqq/singer/001lPoTb47MkB1.html" title="miwa (みわ)" class="singer_name">{{item.ar[0].name}}</a>
+                  <a
+                    href="https://y.qq.com/n/yqq/singer/001lPoTb47MkB1.html"
+                    title="miwa (みわ)"
+                    class="singer_name"
+                    >{{ item.ar[0].name }}</a
+                  >
                 </div>
                 <div class="songlist_album">
-                  <a href="https://y.qq.com/n/yqq/album/004TXeJO3hEABr.html" title="guitarissimo" class="album_name">{{item.al.name}}</a>
+                  <a
+                    href="https://y.qq.com/n/yqq/album/004TXeJO3hEABr.html"
+                    title="guitarissimo"
+                    class="album_name"
+                    >{{ item.al.name }}</a
+                  >
                 </div>
-                <div class="songlist_time">{{item.dt}}</div>
+                <div class="songlist_time">{{ getTime(item.dt) }}</div>
                 <div class="songlist_other"></div>
-                <a href="javascript:;" class="songlist_delete" data-confirm="1" title="删除"><span class="icon_txt">删除</span></a>
+                <a
+                  href="javascript:;"
+                  class="songlist_delete"
+                  data-confirm="1"
+                  title="删除"
+                  ><span class="icon_txt">删除</span></a
+                >
               </div>
             </li>
           </ul>
@@ -106,27 +178,38 @@
         <div class="mod_about">
           <h3 class="about_tit">简介</h3>
           <div class="about_cont">
-            <p>第97期： 首先给你们说下，这张歌单是官方约的歌单， 这一期给大家分享一下ACG中的摇滚音乐，希望大家喜欢，阿里嘎多~  封面原图p站：67994735 画师：ASK  by：听风ing  ACG代表的是动画（Anime）、漫画（Comics）与游戏（Games），为华人地区常用的文化词汇，爱好者们喜欢把ACG称为“二次元”。从字面意思上理解的二次元，是指“二维空间”、“二维世界”，亦即平面。我们现在所说的二次元也指ACGN次文化中对动漫、游戏等作品中虚构世界的一种称呼用语，与“三次元”（现实世界）相对。 谈到ACG的音乐，爱好者习惯称之为“ACG音乐“或“动漫音乐“，指的是与动画、漫画和游戏作品相关的音乐。   岁月悄无声息燃烬了青春依然憧憬逝去的单色心语栖息在风清朗月下的枝头叶上早已写满了红尘花间往事最后一缕暗香也留在了这里致那逝去的青春 常在心间祭祀那时那刻的率真那时那刻的豁然撼动着心迹简单至情再也无法抹灭那时那刻感性超越着理性稚嫩的嫣然随着风渐渐的飘落拿什么拯救逝去的青春 一笺不规则的寻梦卡静静地贴在留言墙上昭然等待你的读取嘶嗓嚎叫的摇滚从门缝挤出歌颂着一个时代的狂躁回眸弥留在红尘中的懵懂讶然了 走过岁月掠过青春那顷刻间的美丽就如三千烟水朦胧渺渺而逝遗憾有时会纠葛会悲情一生短暂而又漫长此去经年记住该珍惜的</p>
+            <p>
+              {{playList.description}}
+            </p>
           </div>
-          <a href="javascript:;" class="about_more">[更多]</a>
+          <a href="javascript:;" class="about_more" @click="handleMore">[更多]</a>
         </div>
+      </div>
+      <div class="data_detail" v-if="isShow">
+        <div class="data_detail_cont">
+          <h3 class="data_detail_tit">简介</h3>
+          <p>{{playList.description}}</p>
+        </div>
+        <i class="data_detail_arrow"></i>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import {reqPlayListDetail} from '@/api'
+import { reqPlayListDetail } from '@/api'
+import moment from 'moment'
 
 export default {
   name: 'playListDetail',
-  data () {
+  data() {
     return {
       playListId: '', // 歌单id
       playList: {}, // 歌单详情数据
+      isShow: false //默认不显示专辑简介
     }
   },
-  async mounted () {
+  async mounted() {
     // 更新歌单id
     this.playListId = this.$route.query.id
     // 请求数据
@@ -134,8 +217,24 @@ export default {
     if (result.code === 200) {
       this.playList = result.playlist
     }
-    // console.log(this.playList)
-  }
+  },
+  methods: {
+    // 更改时间格式
+    getTime(time) {
+      return moment(time).format('mm:ss')
+    },
+    // 传递歌曲id
+    toPlay(id) {
+      // 获取歌单id
+      this.playListId = id
+      // 路由跳转
+      this.$router.push({ name: 'audioplay', params: { id: this.playListId } })
+    },
+    // 点击更多
+    handleMore () {
+      this.isShow = !this.isShow
+    }
+  },
 }
 </script>
 
@@ -218,6 +317,7 @@ export default {
 }
 .data_tag_box span a {
   margin-right: 12px;
+  color: rgba(0, 0, 0, 0.65) !important;
 }
 .data_actions {
   position: absolute;
@@ -296,243 +396,311 @@ export default {
 }
 /* 歌曲列表 */
 .detail_layout {
-    padding-right: 343px;
-    /* display: flex; */
+  padding-right: 343px;
+  /* display: flex; */
 }
-.clearFix::after{
+.clearFix::after {
   content: '';
   height: 0;
   display: block;
   clear: both;
 }
 .detail_layout_main {
-    width: 100%;
-    padding-bottom: 20px;
-    float: left;
+  width: 100%;
+  padding-bottom: 20px;
+  float: left;
 }
 .songlist {
-    padding-bottom: 60px;
-    font-size: 14px;
-    overflow: hidden;
+  padding-bottom: 60px;
+  font-size: 14px;
+  overflow: hidden;
 }
-.songlist_header {
-    background-color: #fbfbfd;
-    height: 50px;
-    line-height: 50px;
-    color: #999;
-    margin: 0;
-}
-.songlist_header,.songlist_item {
-    position: relative;
-    padding-left: 46px;
-    padding-right: 95px;
-}
-.songlist_list {
-    overflow: hidden;
-    width: 857px;
-}
-.songlist_list li{
-  height: 50px;
-}
-.songlist_list li:nth-child(odd){
-  background-color: rgba(0, 0, 0, .01);
-}
-.songlist_item {
-    font-size: 0;
-    overflow: hidden;
-    display: flex;
-}
-.songlist_list li div{
-  float: none;
-}
-.songlist_number {
-    position: absolute;
-    top: 0;
-    left: 10px;
-    color: #999;
-    width: 36px;
-    line-height: 50px;
-    height: 50px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 14px;
-}
-.songlist_header_name, .songlist_songname {
-    width: 54%;
-    float: left;
-    position: relative;
-    white-space: normal;
-}
-.songlist_songname {
-    line-height: 50px;
-    height: 50px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-.songlist_icon_exclusive {
-    display: inline-block;
-    width: 34px;
+.songlist_icon_mv{
+  display: inline-block;
+    width: 33px;
     height: 16px;
-    background-position: -80px -280px;
+    background-position: -40px -280px;
     vertical-align: middle;
     margin-right: 6px;
     background-image: url('../Home/images/icon_sprite.png');
 }
-.songlist_item .songlist_icon:nth-child(1)+.songlist_songname_txt {
-    max-width: 72%;
-    box-sizing: border-box;
+.songlist_header {
+  background-color: #fbfbfd;
+  height: 50px;
+  line-height: 50px;
+  color: #999;
+  margin: 0;
+}
+.songlist_header,
+.songlist_item {
+  position: relative;
+  padding-left: 46px;
+  padding-right: 95px;
+}
+.songlist_list {
+  overflow: hidden;
+  width: 857px;
+}
+.songlist_list li {
+  height: 50px;
+}
+.songlist_list li:nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.03);
+}
+.songlist_item {
+  font-size: 0;
+  overflow: hidden;
+  display: flex;
+}
+.songlist_list li div {
+  float: none;
+}
+.songlist_number {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  color: #999;
+  width: 36px;
+  line-height: 50px;
+  height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
+}
+.songlist_header_name,
+.songlist_songname {
+  width: 54%;
+  float: left;
+  position: relative;
+  white-space: normal;
+}
+.songlist_songname {
+  line-height: 50px;
+  height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.songlist_icon_exclusive {
+  display: inline-block;
+  width: 34px;
+  height: 16px;
+  background-position: -80px -280px;
+  vertical-align: middle;
+  margin-right: 6px;
+  background-image: url('../Home/images/icon_sprite.png');
+}
+.songlist_item .songlist_icon:nth-child(1) + .songlist_songname_txt {
+  max-width: 72%;
+  box-sizing: border-box;
 }
 .songlist_item:hover .list_menu {
-    opacity: 1;
-    pointer-events: inherit;
-    right: -10px;
-    margin-top: -18px;
+  opacity: 1;
+  pointer-events: inherit;
+  right: -10px;
+  margin-top: -18px;
 }
-.songlist_item:hover .songlist_icon:nth-child(1)+.songlist_songname_txt {
-    max-width: 38%;
+.songlist_item:hover .songlist_icon:nth-child(1) + .songlist_songname_txt {
+  max-width: 38%;
 }
 .songlist_songname_txt {
-    float: left;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    margin-right: 8px;
-    white-space: nowrap;
-    font-size: 14px;
+  float: left;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-right: 8px;
+  white-space: nowrap;
+  font-size: 14px;
 }
-.songlist_song_txt, .songlist_time {
-    color: #999;
-    margin-right: 50px;
+.songlist_song_txt,
+.songlist_time {
+  color: #999;
+  margin-right: 50px;
 }
 .songlist_song_txt {
-    margin-left: 10px;
+  margin-left: 10px;
 }
 .songlist_item .list_menu {
-    position: absolute;
-    right: -10px;
-    top: 50%;
-    overflow: hidden;
-    opacity: 0;
-    pointer-events: none;
-    font-size: 0;
-    height: 36px;
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+  font-size: 0;
+  height: 36px;
 }
 .list_menu_item {
-    display: inline-block;
-    margin-right: 10px;
-    width: 36px;
-    vertical-align: top;
+  display: inline-block;
+  margin-right: 10px;
+  width: 36px;
+  vertical-align: top;
 }
 .icon_txt {
-    font: 0/0 a;
+  font: 0/0 a;
 }
-.list_menu a i{
-background-image: url('../Home/images/icon_list_menu.png');
-    display: block;
-    width: 36px;
-    height: 36px;
-    background-repeat: no-repeat;
+.list_menu a i {
+  background-image: url('../Home/images/icon_list_menu.png');
+  display: block;
+  width: 36px;
+  height: 36px;
+  background-repeat: no-repeat;
 }
 .list_menu_item:hover .list_menu_icon_play {
-    background-position: -40px 0;
+  background-position: -40px 0;
 }
 .list_menu_icon_play {
-    background-position: 0 0;
+  background-position: 0 0;
 }
 .list_menu_icon_add {
-    background-position: 0 -80px;
+  background-position: 0 -80px;
 }
 .list_menu_item:hover .list_menu_icon_add {
-    background-position: -40px -80px;
+  background-position: -40px -80px;
 }
 .list_menu_icon_down_vip {
-    background-position: 0 -280px;
+  background-position: 0 -280px;
 }
 .list_menu_item:hover .list_menu_icon_down_vip {
-    background-position: -40px -280px;
+  background-position: -40px -280px;
 }
 .list_menu_icon_share {
-    background-position: 0 -40px;
+  background-position: 0 -40px;
 }
 .list_menu_item:hover .list_menu_icon_share {
-    background-position: -40px -40px;
+  background-position: -40px -40px;
 }
-.songlist_album, .songlist_artist, .songlist_header_album, .songlist_header_author {
-    width: 20%;
-    float: left;
-    padding-left: 15px;
-    box-sizing: border-box;
+.songlist_album,
+.songlist_artist,
+.songlist_header_album,
+.songlist_header_author{
+  width: 20%;
+  float: left;
+  padding-left: 15px;
+  box-sizing: border-box;
 }
 .songlist_time {
-    color: #999;
-    position: absolute;
+  color: #999;
+  position: absolute;
+  top: 0;
+  right: 38px;
+  width: 50px;
+}
+.songlist_time,.songlist_header_time{
+  margin-right: 0;
+  position: absolute;
     top: 0;
     right: 38px;
     width: 50px;
 }
-.songlist_album, .songlist_artist, .songlist_number, .songlist_other, .songlist_time {
-    line-height: 50px;
-    height: 50px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    font-size: 14px;
+.songlist_album,
+.songlist_artist,
+.songlist_number,
+.songlist_other,
+.songlist_time {
+  line-height: 50px;
+  height: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 14px;
 }
-.songlist_header_other,.songlist_other {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 38px;
-    overflow: inherit;
+.songlist_header_other,
+.songlist_other {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 38px;
+  overflow: inherit;
 }
 .client_guide {
-    margin-bottom: 22px;
-    overflow: hidden;
+  margin-bottom: 22px;
+  overflow: hidden;
 }
 .client_guide_txt {
-    font-size: 18px;
-    color: #000;
-    text-align: center;
+  font-size: 18px;
+  color: #000;
+  text-align: center;
 }
 .client_guide_btn {
-    display: block;
-    margin: 20px auto 0;
-    width: 175px;
-    height: 41px;
-    line-height: 41px;
-    font-size: 16px;
-    color: #fff!important;
-    text-align: center;
-    border-radius: 41px;
-    background-color: #31c27c;
+  display: block;
+  margin: 20px auto 0;
+  width: 175px;
+  height: 41px;
+  line-height: 41px;
+  font-size: 16px;
+  color: #fff !important;
+  text-align: center;
+  border-radius: 41px;
+  background-color: #31c27c;
 }
 .client_guide_btn:hover {
-    color: #fff;
-    background-color: #2caf6f;
+  color: #fff;
+  background-color: #2caf6f;
 }
 .detail_layout_other {
-    position: relative;
-    width: 290px;
-    margin-right: -343px;
-    padding-bottom: 20px;
-    float: right;
+  position: relative;
+  width: 290px;
+  margin-right: -343px;
+  padding-bottom: 20px;
+  float: right;
 }
 .mod_about {
-    line-height: 22px;
-    margin-bottom: 25px;
-    margin-top: -8px;
+  line-height: 22px;
+  margin-bottom: 25px;
+  margin-top: -8px;
 }
 .about_tit {
-    font-size: 20px;
-    font-weight: 400;
-    line-height: 46px;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 46px;
 }
 .about_cont {
-    max-height: 88px;
-    overflow: hidden;
-    color: #000;
+  max-height: 88px;
+  overflow: hidden;
+  color: #000;
 }
 .about_more {
-    margin-right: 10px;
+  margin-right: 10px;
 }
+.data_detail{
+  /* display: none; */
+  position: absolute;
+  z-index: 1000000;
+  top: 376px;
+  right: 303px;
+    width: 580px;
+    background: #fff;
+    box-shadow: 0 0 4px rgba(0,0,0,.35);
+    border-radius: 4px;
+    /* border: 1px solid #ddd; */
+}
+.data_detail_cont{
+  max-height: 400px;
+  font-size: 14px;
+  line-height: 22px;
+  margin: 30px 5px 30px 10px;
+  overflow-y: auto;
+}
+.data_detail_tit{
+  line-height: 22px;
+    font-size: 20px;
+    font-weight: 400;
+    padding: 0 0 20px;
+    margin: 0 24px 0 19px;
+}
+.data_detail_cont p{
+      min-height: 22px;
+    text-align: justify;
+    word-break: break-all;
+    margin: 0 24px 0 19px;
+}
+.data_detail_arrow{
+  position: absolute;
+    top: 50px;
+    right: -11px;
+    width: 11px;
+    height: 17px;
+    background: url('../Home/images/popup_arrow.png') 0 -17px no-repeat;
+}
+
 </style>
