@@ -77,7 +77,7 @@
     </div>
     <!-- 音乐馆导航栏 -->
     <ul class="musicPavilionNav" :style="{ display: isShow ? '' : 'none' }" @click="handleClick">
-      <li><router-link to="/" class="samllActive">首页</router-link></li>
+      <li><router-link to="/" class="smallActive">首页</router-link></li>
       <li><a href="javascript:;">歌手</a></li>
       <li><router-link to="/newdisc">新碟</router-link></li>
       <li>
@@ -120,7 +120,7 @@ export default {
       // 判断current
       this.current ? (this.current.className = '') : ''
       if (e.target.nodeName === 'A') {
-        e.target.className = 'samllActive'
+        e.target.className = 'smallActive'
         // 更新current
         this.current = e.target
       }
@@ -397,7 +397,7 @@ a {
   text-decoration: none;
 }
 
-.samllActive {
+.smallActive {
   color: #31c27c !important;
 }
 </style>

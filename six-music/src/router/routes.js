@@ -5,35 +5,45 @@ import Rank from "../pages/Rank";
 import Register from "../pages/Register";
 import AudioPlay from '../components/AudioPlay'
 import Mv from "@/pages/Mv";
-import Playlist from "@/pages/Playlist";
 import MvVideo from "@/pages/MvVideo"
-import Radio from "@/pages/Radio"
+import Playlist from "@/pages/Playlist";
 // 歌单详情
 import playListDetail from "@/pages/playListDetail";
 import NewDisc from '../pages/NewDisc';
+
+import Radio from "@/pages/Radio"
+// 搜索
+import Search from '@/pages/Search'
+
 export default [
   {
     path: "/",
     component: Home,
+  },
+  //搜索
+  {
+    path: '/search',
+    component: Search,
+    name: 'search'
   },
   {
     path: "/mymusic",
     component: MyMusic,
   },
   {
-    path:"/newdisc",
-    component:NewDisc,
-  }, 
+    path: "/newdisc",
+    component: NewDisc,
+  },
   {
-    path:"/radio",
-    component:Radio,
+    path: "/radio",
+    component: Radio,
   },
   {
     path: "/rank",
     component: Rank,
   },
   {
-    path: "/mv/mvvideo",
+    path: "/mvvideo",
     component: MvVideo,
   },
   {
@@ -58,8 +68,12 @@ export default [
   {
     path: "/audioplay",
     component: AudioPlay,
-    meta:{isHide:true},
-    name:'audioplay'
+    meta: { isHide: true },
+    name: 'audioplay'
+  },
+  {
+    path: "/audioplay/:id?",
+    component: AudioPlay
   },
   {
     path: "/",
