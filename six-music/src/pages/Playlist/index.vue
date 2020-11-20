@@ -49,6 +49,7 @@
         </li>
       </ul>
     </div>
+    
     <!-- 下半部分 -->
     <div>
       <div class="mod_part_detail">
@@ -83,10 +84,13 @@
             class="playlist__item"
           >
             <div class="mod_playlist__img__box">
-              <img class="mod_playlist__img" v-lazy="item.coverImgUrl" />
+              <img
+                class="mod_playlist__img"
+                v-lazy="item.coverImgUrl"
+                @click="goToplaylistDetail(item.id)"
+              />
               <img class="mod_playlist__bg_img" src="./image/p5.png" />
             </div>
-
             <!-- 点击跳转到playlistDetail -->
             <p class="playlist__title_txt" @click="goToplaylistDetail(item.id)">
               {{ item.name }}
