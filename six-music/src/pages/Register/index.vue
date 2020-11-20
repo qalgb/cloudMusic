@@ -133,7 +133,7 @@
 
 <script>
 import Swiper from "swiper";
-import { reqIsHavePhoNum, reqCodeNum, reqRegister } from "../../api";
+import { reqIsHavePhoNum, reqCodeNum, reqRegister } from "@/api";
 export default {
   data() {
     return {
