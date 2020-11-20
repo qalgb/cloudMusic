@@ -1,6 +1,9 @@
 // 封装每个接口的api函数
 import ajax from "./ajax";
 
+/* 搜索 */
+export const reqSearchCon = (keyword) => ajax.get(`/search?keywords= ${keyword}`)
+
 /* Home页面请求 */
 // 获取歌单分类标签
 export const reqSongListTag = () => ajax.get(`/playlist/hot`);
@@ -76,8 +79,14 @@ export const reqSongInfo = (ids) => ajax({
   url: `/song/detail?ids=${ids}`,
   method:"GET",
 })
+
 // 获取全部mv
-export const reqAllMv = (area,order) => ajax.get(`/mv/all?area=${area}&order=${order}&limit=32`);
+export const reqAllMv = (area, order) => ajax.get(`/mv/all?area=${area}&order=${order}&limit=32`);
+// 获取mv视频路径
+export const reqMvVideo = (id) => ajax.get(`/mv/url?id=${id}`)
+// 获取mv详细信息
+export const reqMvDetail = (id) => ajax.get(`/mv/detail?mvid=${id}`)
+
 //请求登录信息
 export const reqLoginInfo = (phoneNum, password) =>
   ajax.get(`/login/cellphone?phone=${phoneNum}&password=${password}`);
@@ -123,3 +132,8 @@ export const reqMyLikeInfo = (ids) => ajax.get(`/song/detail?ids=${ids}`)
 //获取用户等级信息
 export const reqUserLevel = (cookie) =>
   ajax.get(`/user/level?cookie=${cookie}`);
+// 获取评论数据
+export const reqCommentList = (id,type,pageNo,PageSize,sortType,cursor) => ajax({
+  method: 'GET',
+  url: `/comment/new?type=${type}&id=${id}&sortType=${sortType}&cursor=${cursor}&pageSize=${PageSize}&pageNo=${pageNo}`
+})

@@ -60,7 +60,7 @@
                 @click="goMyMusic"
                 >{{ userInfo.nickname }}</a
               >
-              <div class="userLevel_backLogin">Lv.{{level}}</div>
+              <div class="userLevel_backLogin">Lv.{{ level }}</div>
             </div>
           </div>
           <div class="backLoginButtonBox">
@@ -77,7 +77,7 @@
     </div>
     <!-- 音乐馆导航栏 -->
     <ul class="musicPavilionNav" :style="{ display: isShow ? '' : 'none' }" @click="handleClick">
-      <li><router-link to="/">首页</router-link></li>
+      <li><router-link to="/" class="smallActive" ref="fis">首页</router-link></li>
       <li><a href="javascript:;">歌手</a></li>
       <li><router-link to="/newdisc">新碟</router-link></li>
       <li>
@@ -116,13 +116,14 @@ export default {
   },
   methods: {
     // 点击导航栏高亮
-    handleClick(e) {
+     handleClick(e) {
       // 判断current
-      this.current ? (this.current.className = '') : ''
-      if (e.target.nodeName === 'A') {
-        e.target.className = 'samllActive'
+      if (e.target.nodeName === "A") {
+        this.$refs.fis.$el.className ? (this.$refs.fis.$el.className = "") : "";
+        this.current ? (this.current.className = "") : "";
+        e.target.className = "smallActive";
         // 更新current
-        this.current = e.target
+        this.current = e.target;
       }
     },
     //跳转到首页（音乐馆）
@@ -175,7 +176,7 @@ export default {
   },
   watch: {
     "$route.path"() {
-       this.getPath();
+      this.getPath();
     },
   },
 };
@@ -397,7 +398,7 @@ a {
   text-decoration: none;
 }
 
-.samllActive {
+.smallActive {
   color: #31c27c !important;
 }
 </style>

@@ -37,7 +37,7 @@
               <i class="mod_cover__mask" @click="sendPlayListId(item.id)"></i>
               <i class="mod_cover__icon_play" @click="toPlay(item.id)"></i>
             </div>
-            <div class="songInfo">
+            <div class="song_info">
               <a href="javascript:;">{{ item.name }}</a>
               <p>
                 播放量：{{
@@ -61,7 +61,7 @@
               <i class="mod_cover__mask"></i>
               <i class="mod_cover__icon_play"></i>
             </div>
-            <div class="songInfo">
+            <div class="song_info">
               <a href="javascript:;">{{ item.name }}</a>
               <p>
                 播放量：{{
@@ -183,7 +183,6 @@ export default {
     // 点击精品歌单标签
     slideChange(index,event) {
       const { cat } = event.target.dataset
-      console.log(cat)
       this.currentIndex = index
       this.$router.replace({ path: '/', query: { cat } })
       // 获取精品歌单
@@ -325,10 +324,10 @@ export default {
   transform: scale(1.07) translateZ(0);
   transition: transform 0.75s cubic-bezier(0, 1, 0.75, 1);
 }
-.swiper-slide .songInfo {
+.swiper-slide .song_info {
   width: 224px;
 }
-.swiper-slide .songInfo a{
+.swiper-slide .song_info a{
   color: #000 !important;
 }
 .swiper-slide p {

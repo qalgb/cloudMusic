@@ -33,6 +33,13 @@ Vue.use(VueLazyload, {
   loading
 })
 
+// 引入视频播放插件
+import './assets/css/video.css'
+import VideoPlayer from 'vue-video-player'
+require('video.js/dist/video-js.css')
+require('vue-video-player/src/custom-theme.css')
+Vue.use(VideoPlayer)
+
 // 设置浏览器提示信息
 Vue.config.productionTip = false;
 // 设置需要引入的atnd组件

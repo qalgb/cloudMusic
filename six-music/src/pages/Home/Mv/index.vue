@@ -19,7 +19,7 @@
           <div class="swiper-slide" v-for="item in mvList" :key="item.id">
             <div class="song_cover">
               <img v-lazy="item.cover" />
-              <i class="mod_cover__mask"></i>
+              <i class="mod_cover__mask" @click="toMvPlay(item.id)"></i>
               <i class="mod_cover__icon_play"></i>
             </div>
             <div class="songInfo">
@@ -106,6 +106,10 @@ export default {
       let area = this.area[index]
       // 请求数据
       this.getMvList(area)
+    },
+    // 跳转mv播放
+    toMvPlay(id) {
+      this.$router.push({path:'/mvvideo',query:{id}})
     }
   }
 }

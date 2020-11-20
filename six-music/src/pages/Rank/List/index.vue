@@ -12,7 +12,7 @@
     <span>{{item.name}}</span>
   </div>
   <div class="list_menu" :style="{visibility: isShowMenu ? 'hidden' : 'visible' }">
-    <a @click="toaudio(item.id)" title="播放">
+    <a @click="toaudio(item.id,item.al.picUrl)" title="播放">
       <a-icon type="play-circle" />
     </a>
     <a href="javascript:;" title="添加到歌单">
@@ -71,8 +71,8 @@ export default {
         this.isShowMenu = true
       }
     },
-    toaudio(id){
-      this.$router.push({path:'/audioplay',query:{id}})
+    toaudio(id,picUrl){
+      this.$router.push({path:'/audioplay',query:{id,picUrl}})
     }
   }
 }

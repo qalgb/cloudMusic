@@ -9,7 +9,7 @@
             <h3 class="tag_tit">区域</h3>
             <a
               href="javascript:;"
-              class="tag_item "
+              class="tag_item"
               v-for="(item, index) in areamv"
               :key="index"
               :class="[ereaTag === index ? 'contentTag' : '']"
@@ -18,7 +18,7 @@
             >
           </div>
         </div>
-        <!-- 内容头部 -->
+        <!-- 顶部地区筛选 -->
         <div class="mv_top">
           <h2 class="mv_top_left">全部MV</h2>
           <div class="mv_top_right">
@@ -38,23 +38,26 @@
           <ul class="mv_content_ul">
             <li class="content_ul_li" v-for="item in allMv" :key="item.id">
               <div class="ul_li_box">
+                <!-- 图片 -->
                 <a href="javascript:;" class="li_box_a">
                   <img
                     class="box_a_img"
                     v-lazy="item.cover"
-                    @click="goMvVideo"
+                    @click="goMvVideo(item.id)"
                   />
-                  <i class="box_a_i"></i>
+                  <i class="box_a_i" @click="goMvVideo(item.id)"></i>
                 </a>
+                <!-- mv名 -->
                 <h3 class="li_box_h3">
                   <a href="javascript;:" class="box_h3_a">{{ item.name }}</a>
                 </h3>
-
+                <!-- 发布者 -->
                 <div class="li_box_div" title="Keano">
                   <a href="javascript:;">
                     {{ item.artistName }}
                   </a>
                 </div>
+                <!-- 播放量 -->
                 <div class="li_box_info">
                   <span class="box_info_span"
                     ><i class="box_info_span_i"></i>{{ item.playCount }}</span
@@ -105,23 +108,24 @@
             <span>&gt;</span>
           </a>
         </div>
+
       </div>
     </div>
   </div>
 </template>
 <script>
-import { mapState } from "vuex";
+import { mapState } from 'vuex'
 export default {
-  name: "Tag",
+  name: 'Tag',
   data() {
     return {
-      area: "全部",
-      order: "最新",
+      area: '全部',
+      order: '最新',
       newMvData: 0,
-      newMv: ["最新", "最热"],
-      areamv: ["全部", "内地", "港台", "欧美", "日本", "韩国"],
-      ereaTag: 0,
-    };
+      newMv: ['最新', '最热'],
+      areamv: ['全部', '内地', '港台', '欧美', '日本', '韩国'],
+      ereaTag: 0
+    }
   },
   // 计算属性
   computed: {
@@ -134,55 +138,57 @@ export default {
 
   mounted() {
     // 获取MV数据
-    this.getMvList(this.area, this.order);
+    this.getMvList(this.area, this.order)
+    this.total = this.allMv.length - 1
   },
   methods: {
     // 分发
     getMvList(area, order) {
-      this.$store.dispatch("getAllMv", {
+      this.$store.dispatch('getAllMv', {
         area,
-        order,
-      });
+        order
+      })
     },
     areaTitle(index) {
       // 获取当前点击的地区
-      const area = this.areamv[index];
-      this.area = area;
+      const area = this.areamv[index]
+      this.area = area
       // 给当前点击的元素样式
-      this.ereaTag = index;
+      this.ereaTag = index
       // 获取到数据
       const query = {
         area,
-        order: this.order,
-      };
-      this.$router.replace({ path: "/mv", query });
-      this.getMvList(area, this.order);
+        order: this.order
+      }
+      this.$router.push({ path: '/mv', query })
+      this.getMvList(area, this.order)
     },
     // 点击最新，最热
     isnewMv(index) {
       // 获取到参数
-      const order = this.newMv[index];
-      this.newMvData = index;
+      const order = this.newMv[index]
+      this.newMvData = index
 
+      this.order = order
       const query = {
         area: this.area,
-        order,
-      };
+        order
+      }
 
       //获取mv数据
-      this.$router.replace({ path: "/mv", query });
-      this.getMvList(this.area, order);
+      this.$router.replace({ path: '/mv', query })
+      this.getMvList(this.area, order)
     },
     // 跳转到MvVideo页面
-    goMvVideo() {
-      this.$router.replace({ path: "/mv/mvvideo" });
-    },
+    goMvVideo(id) {
+      this.$router.push({ path: '/mvvideo', query: { id } })
+    }
   },
-};
+}
 </script>
 <style scoped>
 .bg {
-  background: url("./images/bg_detail.jpg") 50% 0 repeat-x;
+  background: url('./images/bg_detail.jpg') 50% 0 repeat-x;
 }
 .main {
   max-width: 1200px;
@@ -215,13 +221,11 @@ export default {
   font-weight: 400;
   width: 65px;
 }
-
 a:hover {
   color: green;
   text-decoration: none;
 }
 .tag_item {
-  float: left;
   padding: 0 8px;
   margin: 0 24px 15px 0;
 }
@@ -229,6 +233,7 @@ a:hover {
   background-color: #31c27c;
   color: #fff !important;
 }
+/* 内容顶部筛选 */
 .mv_top {
   overflow: hidden;
   height: 60px;
@@ -268,6 +273,7 @@ a:hover {
   color: #fff !important;
   border-color: #31c27c;
 }
+/* 内容详情 */
 .mv_content_ul {
   margin-right: -20px;
   zoom: 1;
@@ -294,6 +300,7 @@ a:hover {
   opacity: 1;
   transition: all 2s;
 }
+/* 图片 */
 .box_a_img {
   position: absolute;
   top: 0;
@@ -311,12 +318,13 @@ a:hover {
   left: 50%;
   top: 50%;
   margin: -35px;
-  background: url("./images/2.png");
+  background: url('./images/2.png');
   opacity: 0;
   width: 70px;
   height: 70px;
   transition: all 2s;
 }
+/* mv名 */
 .li_box_h3 {
   overflow: hidden;
   text-overflow: ellipsis;
@@ -329,6 +337,7 @@ a:hover {
 .li_box_info {
   color: #999 !important;
 }
+/* 发布者 */
 .li_box_div {
   height: 24px;
   overflow: hidden;
@@ -338,6 +347,7 @@ a:hover {
 .li_box_div a {
   font-size: 14px;
 }
+/* 播放量 */
 .li_box_info {
   line-height: 18px;
   height: 20px;
@@ -352,8 +362,9 @@ a:hover {
   height: 12px;
   margin-right: 5px;
   vertical-align: -1px;
-  background: url("./images/icon_sprite.png") -180px -20px no-repeat;
+  background: url('./images/icon_sprite.png') -180px -20px no-repeat;
 }
+/* 分页 */
 .paging {
   clear: both;
   text-align: center;

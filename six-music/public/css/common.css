@@ -22,3 +22,9 @@ a:hover {
 img {
   display: block;
 }
+.clearFix:after{
+  content: '';
+  height: 0;
+  display: block;
+  clear: both;
+}
