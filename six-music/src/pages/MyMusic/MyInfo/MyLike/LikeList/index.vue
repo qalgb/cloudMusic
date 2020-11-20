@@ -161,7 +161,7 @@ ol,ul,dl{
   white-space: nowrap;
   padding-right: 10px;
   min-width: 250px;
-
+  max-width: 250px;
 }
 .songlist_list li .time{
   line-height: 50px;

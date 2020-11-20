@@ -6,7 +6,9 @@
     <a @click="showModal" class="audioText" v-else-if="isButton === 2">
       登录
     </a>
-    <a @click="showModal" class="loginText" v-else-if="isButton === 3"> 登录 </a>
+    <a @click="showModal" class="loginText" v-else-if="isButton === 3">
+      登录
+    </a>
     <a-modal v-model="visible" title="安全登录">
       <template slot="footer">
         <div class="goLoginFooter">
@@ -223,7 +225,6 @@ export default {
   display: inline-block;
   text-align: start;
   appearance: textfield;
-  -webkit-rtl-ordering: logical;
   cursor: text;
   margin: 0em;
   font: 400 13.3333px Arial;
@@ -301,5 +302,9 @@ export default {
   opacity: 0.3;
   color: white !important;
   padding-right: 15px;
+}
+
+.audioText:hover {
+  opacity: 1;
 }
 </style>

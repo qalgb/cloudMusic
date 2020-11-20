@@ -78,6 +78,11 @@ export default {
 .profileNav > a {
   color: #fff !important;
 }
+
+.profileNav > a:hover{
+  color: #31c27c !important;
+}
+
 .loginTop {
   height: 315px;
   padding-top: 65px;
