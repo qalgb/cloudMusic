@@ -76,14 +76,8 @@
       <button class="topUp selectChoose">充值</button>
     </div>
     <!-- 音乐馆导航栏 -->
-    <ul
-      class="musicPavilionNav"
-      :style="{ display: isShow ? '' : 'none' }"
-      @click="handleClick"
-    >
-      <li>
-        <router-link to="/" ref="fis" class="smallActive">首页</router-link>
-      </li>
+    <ul class="musicPavilionNav" :style="{ display: isShow ? '' : 'none' }" @click="handleClick">
+      <li><router-link to="/" class="smallActive" ref="fis">首页</router-link></li>
       <li><a href="javascript:;">歌手</a></li>
       <li><router-link to="/newdisc">新碟</router-link></li>
       <li>
@@ -114,7 +108,7 @@ export default {
       isButton: 3, //登录按钮是否显示
       level: "", //用户等级
       cookie: localStorage.getItem("cookie"),
-      current: "", // 点击导航栏初始值
+      current: '' // 点击导航栏初始值
     };
   },
   components: {

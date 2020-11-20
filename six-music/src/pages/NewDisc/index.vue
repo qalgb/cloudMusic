@@ -18,8 +18,8 @@
       <div class="song_list">
         <div class="song_box"  v-for="item in newDiscList" :key="item.id">
          <div class="song_img">
-          <img :src="item.picUrl" />
-          <i class="Img_mask"></i>
+          <img :src="item.picUrl"/>
+          <i class="Img_mask"  @click="sendPlayListId(item.id)"></i>
           <i class="Img_icon"></i>
           </div>
           <div class="song_name">
@@ -71,7 +71,19 @@ export default {
         let area=this.area[index].code
         //获取数据
         this.getNewDiscList(area)
+      },
+      // 点击精品歌单标签
+    slideChange(index,event) {
+      const { cat } = event.target.dataset
+      console.log(cat)
+      this.currentIndex = index
+      this.$router.replace({ path: '/', query: { cat } })
+      // 获取精品歌单
+      this.$store.dispatch('getHotSongList', cat)
+      if (this.$route.fullPath.indexOf('cat') !== -1) {
+        this.isShow = false
       }
+    },
     }
   
 };

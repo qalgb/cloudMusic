@@ -1,22 +1,23 @@
 <template>
   <div>
-    <!-- <AudioPlay /> -->
     <Header v-if="!this.$route.meta.isHide" />
     <router-view></router-view>
+    <!-- Pendant挂件 -->
+    <Pendant v-if="!this.$route.meta.isHide" />
     <Footer v-if="!this.$route.meta.isHide" />
   </div>
 </template>
 <script>
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-// import AudioPlay from './components/AudioPlay'
+import Pendant from "./components/Pendant";
 
 export default {
-  name: "App",
+  name: 'App',
   components: {
-    // AudioPlay,
     Header,
     Footer,
+    Pendant,
   },
   watch: {
     "$route.fullPath"() {

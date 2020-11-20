@@ -21,7 +21,7 @@ import {
   Slider,
   Row,
   Col,
-  InputNumber
+  InputNumber,
 } from "ant-design-vue";
 // 引入swiper的样式
 import "swiper/css/swiper.css";
@@ -31,12 +31,19 @@ Vue.prototype.$moment = moment;
 moment.locale("zh-cn");
 
 // 引入图片懒加载
-import VueLazyload from 'vue-lazyload'
+import VueLazyload from "vue-lazyload";
 // 引入懒加载图片
-import loading from './assets/images/loading.gif'
+import loading from "./assets/images/loading.gif";
 Vue.use(VueLazyload, {
-  loading
-})
+  loading,
+});
+
+// 引入视频播放插件
+import "./assets/css/video.css";
+import VideoPlayer from "vue-video-player";
+require("video.js/dist/video-js.css");
+require("vue-video-player/src/custom-theme.css");
+Vue.use(VideoPlayer);
 
 // 设置浏览器提示信息
 Vue.config.productionTip = false;

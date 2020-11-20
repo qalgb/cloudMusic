@@ -6,9 +6,7 @@
     <a @click="showModal" class="audioText" v-else-if="isButton === 2">
       登录
     </a>
-    <a @click="showModal" class="loginText" v-else-if="isButton === 3">
-      登录
-    </a>
+    <a @click="showModal" class="loginText" v-else-if="isButton === 3"> 登录 </a>
     <a-modal v-model="visible" title="安全登录">
       <template slot="footer">
         <div class="goLoginFooter">

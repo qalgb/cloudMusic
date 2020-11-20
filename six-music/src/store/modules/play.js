@@ -1,9 +1,11 @@
-import { reqUserInfo, reqUserDetail, reqPlayListDetail } from '@/api';
+import { reqUserInfo, reqUserDetail, reqPlayListDetail, reqSongUrl,reqSongInfo } from '@/api';
 
 export default{
   state: {
     userInfo:{},
     userDetInfo:{},
+    songUrl: {},
+    songListAudio: []
   },
   mutations: {
     RECEIVE_USERINFO (state, userInfo){
@@ -11,6 +13,12 @@ export default{
     },
     RECEIVE_USERDETINFO (state, userDetInfo) {
       state.userDetInfo = userDetInfo
+    },
+    RECEIVE_SONG_URL (state, songUrl) {
+      state.songUrl = songUrl[0].url
+    },
+    RECEIVE_SONGLIST_AUDIO (state, songListAudio) {
+      state.songListAudio = songListAudio
     }
   },
   actions: {
@@ -34,6 +42,21 @@ export default{
       if (result.code === 200) {
         commit('RECEIVE_SONGDETAIL')
       }
+    },
+    // 获取音乐的url
+    async getSongUrl ({ commit }, id ){
+      const result = await reqSongUrl(id)
+      if (result.code === 200) {
+        commit('RECEIVE_SONG_URL',result.data)
+      }
+    },
+    // 获取歌曲详细信息
+    async getSongListAudio({ commit }, ids) {
+      const result = await reqSongInfo(ids)
+      if (result.code === 200) {
+        commit('RECEIVE_SONGLIST_AUDIO', result.songs)
+      }
+      // console.log(result);
     }
   },
 
