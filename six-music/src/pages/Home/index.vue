@@ -32,7 +32,7 @@ export default {
     DiscList,
     RankList,
     Mv
-  }
+  },
 }
 </script>
 

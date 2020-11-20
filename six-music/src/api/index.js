@@ -32,16 +32,18 @@ export const reqRankInfo = () =>
     method: "GET",
   });
 // 请求所有榜单歌曲列表
-export const reqRankSongList = (id) => ajax({
-  url:`/playlist/detail?${id}`,
-  method: 'GET',
-})
+export const reqRankSongList = (id) =>
+  ajax({
+    url: `/playlist/detail?id=${id}`,
+    method: "GET",
+  });
 //请求电台的分类标签
-export const reqRadioList=()=>ajax.get(`/dj/catelist`)
+export const reqRadioList = () => ajax.get(`/dj/catelist`);
 //请求分类后的电台
-export const reqRadioName=(rid)=>ajax.get(`/dj/recommend/type?type=${rid}`)
+export const reqRadioName = (rid) => ajax.get(`/dj/recommend/type?type=${rid}`);
 //请求新专辑的列表
-export const reqNewDiscList=(area)=>ajax.get(`/album/new?area=${area}&limit=20`)
+export const reqNewDiscList = (area) =>
+  ajax.get(`/album/new?area=${area}&limit=20`);
 // 请求歌单评论
 export const reqSongListComment = (id) =>
   ajax({
@@ -72,12 +74,14 @@ export const reqSongUrl = (id) =>
     method: "GET",
   });
 // 获取歌曲详细信息
-export const reqSongInfo = (ids) => ajax({
-  url: `/song/detail?ids=${ids}`,
-  method:"GET",
-})
+export const reqSongInfo = (ids) =>
+  ajax({
+    url: `/song/detail?ids=${ids}`,
+    method: "GET",
+  });
 // 获取全部mv
-export const reqAllMv = (area,order) => ajax.get(`/mv/all?area=${area}&order=${order}&limit=32`);
+export const reqAllMv = (area, order) =>
+  ajax.get(`/mv/all?area=${area}&order=${order}&limit=32`);
 //请求登录信息
 export const reqLoginInfo = (phoneNum, password) =>
   ajax.get(`/login/cellphone?phone=${phoneNum}&password=${password}`);
@@ -117,9 +121,10 @@ export const reqRegister = (phone, password, captcha, nickname) =>
   );
 
 // 获取我的喜欢列表
-export const reqMyLikeCount = (uid,cookie) => ajax.get(`/likelist?uid=${uid}&cookie=${cookie}`)
+export const reqMyLikeCount = (uid, cookie) =>
+  ajax.get(`/likelist?uid=${uid}&cookie=${cookie}`);
 // 获取歌曲详细信息
-export const reqMyLikeInfo = (ids) => ajax.get(`/song/detail?ids=${ids}`)
+export const reqMyLikeInfo = (ids) => ajax.get(`/song/detail?ids=${ids}`);
 //获取用户等级信息
 export const reqUserLevel = (cookie) =>
   ajax.get(`/user/level?cookie=${cookie}`);

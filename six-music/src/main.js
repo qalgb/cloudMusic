@@ -16,7 +16,12 @@ import {
   Dropdown,
   Menu,
   Pagination,
-  Checkbox
+  Checkbox,
+  Layout,
+  Slider,
+  Row,
+  Col,
+  InputNumber
 } from "ant-design-vue";
 // 引入swiper的样式
 import "swiper/css/swiper.css";
@@ -42,8 +47,13 @@ Vue.component(Input.TextArea.name, Input.TextArea);
 Vue.component(Dropdown.name, Dropdown);
 Vue.component(Pagination.name, Pagination);
 Vue.use(Modal);
+Vue.use(Layout);
 Vue.use(Menu);
 Vue.use(Checkbox);
+Vue.use(Slider);
+Vue.use(Row);
+Vue.use(Col);
+Vue.use(InputNumber);
 Vue.prototype.$message = message;
 
 new Vue({

@@ -28,7 +28,7 @@
         <div class="registerInfo">
           <div class="registerTit">欢迎注册网易账号</div>
           <div class="tag_box">
-            <div class="registerTag">每一天，乐在听歌。</div>
+            <div class="registerTag">每一天，乐在音乐。</div>
             <router-link to="/" class="isHave">不注册了</router-link>
           </div>
           <div class="inputInfo">
@@ -143,7 +143,7 @@ export default {
         "https://cdn-go.cn/qq-web/zc.qq.com/latest/v3/img/01-3.jpg",
         "https://cdn-go.cn/qq-web/zc.qq.com/latest/v3/img/01-4.jpg",
       ],
-      nickname: "",
+      nickname: "",//昵称
       phoneNum: "", //手机号
       hasPhoneNum: false, //手机号是否合法
       password: "", //密码

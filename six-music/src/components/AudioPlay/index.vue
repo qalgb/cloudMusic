@@ -279,7 +279,7 @@ export default {
       songId: 0,
       // 是否显示退出链接
       isShowOut: false,
-      isButton:false,
+      isButton:2,
       isShowLogin:false,
     };
   },
@@ -293,7 +293,6 @@ export default {
   },
   async mounted() {
     this.isLogin()
-    
     // 获取audio对象
     this.audio = this.$refs.audio;
     await this.$store.dispatch('getUserInfo',localStorage.cookie)

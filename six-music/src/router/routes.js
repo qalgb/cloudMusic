@@ -3,15 +3,16 @@ import Home from "../pages/Home";
 import MyMusic from "../pages/MyMusic";
 import Rank from "../pages/Rank";
 import Register from "../pages/Register";
-import AudioPlay from '../components/AudioPlay'
+import AudioPlay from "../components/AudioPlay";
 import Mv from "@/pages/Mv";
 import Playlist from "@/pages/Playlist";
-import MvVideo from "@/pages/MvVideo"
+import MvVideo from "@/pages/MvVideo";
 // 歌单详情
 import playListDetail from "@/pages/playListDetail";
-import NewDisc from '../pages/NewDisc';
+import NewDisc from "../pages/NewDisc";
 
-import Mv from "../pages/Mv";
+import Radio from "../pages/Radio";
+import MusicPlay from "@/pages/MusicPlay";
 export default [
   {
     path: "/",
@@ -22,12 +23,12 @@ export default [
     component: MyMusic,
   },
   {
-    path:"/newdisc",
-    component:NewDisc,
-  }, 
+    path: "/newdisc",
+    component: NewDisc,
+  },
   {
-    path:"/radio",
-    component:Radio,
+    path: "/radio",
+    component: Radio,
   },
   {
     path: "/rank",
@@ -44,7 +45,7 @@ export default [
   // 歌单详情
   {
     path: "/playlistdetail:keyword?",
-    component: playListDetail
+    component: playListDetail,
   },
   {
     path: "/register",
@@ -54,14 +55,19 @@ export default [
   {
     path: "/playlist",
     component: Playlist,
-
   },
-  {path: "/audioplay",
+  {
+    path: "/audioplay",
     component: AudioPlay,
-    meta:{isHide:true},
-    name:'audioplay'
+    meta: { isHide: true },
+    name: "audioplay",
   },
-  { path: "/audioplay/:id?", component: AudioPlay },
+  { path: "/audioplay/?:id", component: AudioPlay },
+  {
+    path: "/musicplay",
+    component: MusicPlay,
+    meta: { isHide: true },
+  },
   {
     path: "/",
     redirect: "/",
