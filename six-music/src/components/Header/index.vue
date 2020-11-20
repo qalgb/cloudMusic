@@ -79,7 +79,7 @@
     <!-- 音乐馆导航栏 -->
     <ul class="musicPavilionNav" :style="{ display: isShow ? '' : 'none' }" @click="handleClick">
       <li><router-link to="/" class="smallActive" ref="fis">首页</router-link></li>
-      <li><a href="javascript:;">歌手</a></li>
+      <li><router-link to="/singerlist">歌手</router-link></li>
       <li><router-link to="/newdisc">新碟</router-link></li>
       <li>
         <router-link to="/rank">排行榜</router-link>

@@ -251,7 +251,7 @@ export default {
     toPlayAll(songListAudio, id, picUrl) {
       this.$router.push({
         path: '/audioplay',
-        query: { songListAudio, id, picUrl },
+        query: { songListAudio: JSON.stringify(songListAudio), id, picUrl },
       })
     },
     // 点击更多

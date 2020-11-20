@@ -83,7 +83,7 @@ export default {
   data() {
     return {
       visible: false,
-      phoneNum: "13970028131",
+      phoneNum: "",
       password: "",
       isAgree: "",
     };

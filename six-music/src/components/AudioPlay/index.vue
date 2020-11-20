@@ -141,14 +141,14 @@
     </div>
     <footer class="playFoot">
       <ul class="playSet">
-        <li class="pre">
+        <li class="pre" @click="toLogin">
           <i class="iconfont icon-shangyishou"></i>
         </li>
         <li class="playing" @click="handlePlay()">
           <i v-if="!isPlay" class="iconfont icon-bofang"></i>
           <i v-else class="iconfont icon-zantingtingzhi"></i>
         </li>
-        <li class="next">
+        <li class="next" @click="toLogin">
           <i class="iconfont icon-xiayishou"></i>
         </li>
         <li class="progressBar" @mouseup="mouseup" @mousemove="mousemove">
@@ -162,8 +162,9 @@
               <a href="##">{{ songAr }}</a>
             </div>
             <div class="songTime">
-              <a href="##">{{timeToString(currentTime)}}</a>/
-              <a href="##">{{timeToString(durationTime)}}</a>
+              <a href="##">{{ timeToString(currentTime) }}</a
+              >/
+              <a href="##">{{ timeToString(durationTime) }}</a>
             </div>
           </div>
           <!-- 进度条 -->
@@ -262,16 +263,7 @@ export default {
           return moment(time).format('mm:ss')
         }
       },
-      set: function (newVal) {
-        console.log(newVal)
-      },
     },
-  },
-  watch: {
-    // lyricsObjArr(newVal){
-    //   console.log(newVal);
-    //   this.lyricsObjArr = newVal
-    // }
   },
   async mounted() {
     // 获取query传过来的ID 默认图片 和歌曲列表数据
@@ -293,9 +285,9 @@ export default {
     // 初始化歌曲名
     this.songName = this.songListAudio[0].name
     // 初始化歌手名
-    this.songAr = this.songListAudio[0].ar.reduce((pre,item,index) => {
-        return index > 0 ? pre + ' / ' + item.name : pre + item.name
-    },'')
+    this.songAr = this.songListAudio[0].ar.reduce((pre, item, index) => {
+      return index > 0 ? pre + ' / ' + item.name : pre + item.name
+    }, '')
     if (this.$route.fullPath.indexOf('audioplay') !== -1) {
       document.documentElement.style.overflow = 'hidden'
       document.body.style.overflow = 'hidden'
@@ -308,39 +300,45 @@ export default {
     await this.$store.dispatch('getUserDetInfo', this.userInfo.userId)
     // 执行监听事件
     this.addEventListenerBar()
-    console.log(this.songListAudio)
   },
   methods: {
     addEventListenerBar() {
       // 监听进度条
-      // currentTime属性变化时触发，每秒可能触发4到60次 
+      // currentTime属性变化时触发，每秒可能触发4到60次
       let audio = this.$refs.audio
-      audio.addEventListener("timeupdate", () => { 
-        this.currentTime = audio.currentTime;
-        this.durationTime = audio.duration;
-        this.duration = (this.currentTime / this.durationTime) * 100 + "%";
+      audio.addEventListener('timeupdate', () => {
+        this.currentTime = audio.currentTime
+        this.durationTime = audio.duration
+        this.duration = (this.currentTime / this.durationTime) * 100 + '%'
         // 歌词
-         for (let i = 0; i < this.lyricsObjArr.length; i++) {
-          if (this.currentTime > (parseInt(this.lyricsObjArr[i].time))) {
-            const index = this.$refs.lyric[i].dataset.index
-            if (i === parseInt(index)) {
-              this.lyricIndex = i
-              this.$refs.lyricUL.style.transform = `translateY(${170 - (30 * (i + 1))}px)`
-            }
-          }
-        }
-      });
+        //  for (let i = 0; i < this.lyricsObjArr.length; i++) {
+        //   if (this.currentTime > (parseInt(this.lyricsObjArr[i].time))) {
+        //     const index = this.$refs.lyric[i].dataset.index
+        //     if (i === parseInt(index)) {
+        //       this.lyricIndex = i
+        //       this.$refs.lyricUL.style.transform = `translateY(${170 - (30 * (i + 1))}px)`
+        //     }
+        //   }
+        // }
+      })
+    },
+    toLogin() {
+      this.$message.warn('请下载客户端，并充值VIP')
     },
     // 播放与暂停
     async handlePlay() {
-      if (!this.isPlay) {
-        await this.getSongUrl(this.songId)
-        this.$refs.audio.play()
-        this.isPlay = true
-        await this.getLyric(this.songId)
+      if (localStorage.cookie) {
+        if (!this.isPlay) {
+          await this.getSongUrl(this.songId)
+          this.$refs.audio.play()
+          this.isPlay = true
+          await this.getLyric(this.songId)
+        } else {
+          this.$refs.audio.pause()
+          this.isPlay = false
+        }
       } else {
-        this.$refs.audio.pause()
-        this.isPlay = false
+        this.$message.warn('请登录')
       }
     },
     // 获取歌曲url
@@ -353,12 +351,10 @@ export default {
       if (result.code === 200) {
         this.lyric = result.lrc.lyric
       }
-      console.log(this.lyric)
       // 用正则匹配换行字符对字符串进行分割
       const regNewLine = /\n/
       const lineArr = this.lyric.split(regNewLine)
       const regTime = /\[\d{2}:\d{2}.\d{2,3}\]/
-      // console.log(lineArr);
       // 对lineArr数组进行遍历分隔
       lineArr.forEach((item) => {
         if (item === '') return
@@ -377,50 +373,53 @@ export default {
           this.lyricsObjArr.push(obj)
         }
       })
-      console.log(this.lyricsObjArr)
     },
     // 获取歌词
-    async getLyric(id){
+    async getLyric(id) {
       const result = await reqLyric(id)
       if (result.code === 200) {
         this.lyric = result.lrc.lyric
       }
-      console.log(this.lyric);
       // 用正则匹配换行字符对字符串进行分割
       const regNewLine = /\n/
       const lineArr = this.lyric.split(regNewLine)
       const regTime = /\[\d{2}:\d{2}.\d{2,3}\]/
-      // console.log(lineArr);
       // 对lineArr数组进行遍历分隔
-      lineArr.forEach(item => {
+      lineArr.forEach((item) => {
         if (item === '') return
-          const obj = {}
-          const time = item.match(regTime)
+        const obj = {}
+        const time = item.match(regTime)
 
-          obj.lyric = item.split(']')[1].trim() === '' ? '' : item.split(']')[1].trim()
-          obj.time = time ? this.formatLyricTime(time[0].slice(1, time[0].length - 1)) : 0
-          obj.uid = Math.random().toString().slice(-6)
-          if (obj.lyric === '') {
-            console.log('这一行没有歌词')
-          } else {
-            this.lyricsObjArr.push(obj)
-          }
+        obj.lyric =
+          item.split(']')[1].trim() === '' ? '' : item.split(']')[1].trim()
+        obj.time = time
+          ? this.formatLyricTime(time[0].slice(1, time[0].length - 1))
+          : 0
+        obj.uid = Math.random().toString().slice(-6)
+        if (obj.lyric === '') {
+          console.log('这一行没有歌词')
+        } else {
+          this.lyricsObjArr.push(obj)
+        }
       })
-      console.log(this.lyricsObjArr);
     },
     // 时间转换
-    formatLyricTime (time) { // 格式化歌词的时间 转换成 sss:ms
-     const regMin = /.*:/
-     const regSec = /:.*\./
-     const regMs = /\./
+    formatLyricTime(time) {
+      // 格式化歌词的时间 转换成 sss:ms
+      const regMin = /.*:/
+      const regSec = /:.*\./
+      const regMs = /\./
 
-     const min = parseInt(time.match(regMin)[0].slice(0, 2))
-     let sec = parseInt(time.match(regSec)[0].slice(1, 3))
-     const ms = time.slice(time.match(regMs).index + 1, time.match(regMs).index + 3)
-     if (min !== 0) {
-       sec += min * 60
-     }
-     return Number(sec + '.' + ms)
+      const min = parseInt(time.match(regMin)[0].slice(0, 2))
+      let sec = parseInt(time.match(regSec)[0].slice(1, 3))
+      const ms = time.slice(
+        time.match(regMs).index + 1,
+        time.match(regMs).index + 3
+      )
+      if (min !== 0) {
+        sec += min * 60
+      }
+      return Number(sec + '.' + ms)
     },
     // 进度条移动
     mousedown(e) {
@@ -432,7 +431,7 @@ export default {
       }
     },
     mousemove(e) {
-      this.moveX = e.clientX;
+      this.moveX = e.clientX
       if (this.startX) {
         this.moveDistance = this.moveX - this.startX
       }
@@ -445,11 +444,10 @@ export default {
       }
       // 移动的百分比
       if (this.isClickSlider) {
-        console.log(this.moveDistance)
-        const movep = (this.moveDistance/970)
-        this.currentTime = movep*(this.$refs.audio.duration)
-        this.duration = (this.currentTime / this.durationTime) * 100 + "%";
-        this.$refs.audio.currentTime =this.currentTime 
+        const movep = this.moveDistance / 970
+        this.currentTime = movep * this.$refs.audio.duration
+        this.duration = (this.currentTime / this.durationTime) * 100 + '%'
+        this.$refs.audio.currentTime = this.currentTime
       }
     },
     mouseup(e) {
@@ -457,7 +455,6 @@ export default {
       // 重置
       this.nextStart = this.startX
       this.startX = 0
-      console.log('22', this.moveDistance)
     },
 
     // 判断是否登陆
@@ -547,7 +544,6 @@ body {
   z-index: -2;
   filter: blur(100px);
   background-color: black;
-
 }
 
 .playertitle {
@@ -700,12 +696,12 @@ body {
   overflow-y: scroll;
   height: 67%;
 }
-.lyricUL{
+.lyricUL {
   height: 350px;
   overflow: hidden;
   text-align: center;
 }
-.lyricUL li{
+.lyricUL li {
   line-height: 25px;
 }
 .lyricUL li {
@@ -747,10 +743,10 @@ input {
   align-items: center;
   flex-direction: column;
 }
-.songInfo a{
+.songInfo a {
   color: rgba(225, 225, 225, 0.8) !important;
 }
-.songInfo a:hover{
+.songInfo a:hover {
   color: rgba(225, 225, 225, 1) !important;
 }
 .songInfo div {
@@ -759,7 +755,7 @@ input {
 .songName {
   margin-top: 15px;
 }
-.songInfo a{
+.songInfo a {
   color: rgba(225, 225, 225, 0.8) !important;
 }
 .songInfo .songImg {
