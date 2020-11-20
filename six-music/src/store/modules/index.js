@@ -6,6 +6,7 @@ import mv from "./mv";
 import mymusic from './mymusic'
 import radio from './radio';
 import newdisc from './newdisc';
+import singerlist from './singerlist'
 
 export default {
   home,
@@ -15,5 +16,6 @@ export default {
   mv,
   mymusic,
   radio,
-  newdisc
+  newdisc,
+  singerlist
 };
