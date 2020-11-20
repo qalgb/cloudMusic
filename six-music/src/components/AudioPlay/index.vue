@@ -66,7 +66,7 @@
                 <li class="songListTime">时长</li>
               </ul>
               <i class="songListLine"></i>
-              <ul class="songsList">
+              <ul class="songsList wrapper" ref="wrapper">
                 <li>
                   <input type="checkbox" class="songListEdit" />
                   <span class="songListItem">1</span>
@@ -96,7 +96,7 @@
                   <span class="songListItem">3</span>
                   <span class="songListSongName">感谢你曾经来过</span>
                   <span class="songListAuthor">Ayo97</span>
-                  <span class="songListTime">04:10</span>
+                  <span class="songListTime">{this.timeToString(this.durationTime)}</span>
                 </li>
                 <li>
                   <input type="checkbox" class="songListEdit" />
@@ -300,18 +300,13 @@ export default {
     
     // 获取audio对象
     this.audio = this.$refs.audio;
+    
+
     await this.$store.dispatch('getUserInfo',localStorage.cookie)
     
     // 通过用户id获取用户详细信息
     await this.$store.dispatch('getUserDetInfo',this.userInfo.userId)
     console.log('11',this.userInfo.userId)
-    // currentTime属性变化时触发，每秒可能触发4到60次 
-    this.audio.addEventListener("timeupdate", () => {
-      this.currentTime = this.audio.currentTime;
-      this.durationTime = this.audio.duration;
-      console.log(this.currentTime);
-      this.duration = (this.currentTime / this.durationTime) * 100 + "%";
-    });
     
     
     // 获取params传过来的ID
@@ -322,10 +317,23 @@ export default {
     if (result.code === 200) {
       this.songUrl = result.data[0].url;
     }
+    this.addEventListenerBar()
+    console.log(this.currentTime);
     console.log(this.songUrl)
   },
   methods: {
 
+    addEventListenerBar() {
+      // 监听进度条
+      
+      // currentTime属性变化时触发，每秒可能触发4到60次 
+      this.audio.addEventListener("timeupdate", () => { 
+        // console.log(this.audio.currentTime) 
+        this.currentTime = this.audio.currentTime;
+        this.durationTime = this.audio.duration;
+        this.duration = (this.currentTime / this.durationTime) * 100 + "%";
+      });
+    },
     // 播放与暂停
     async handlePlay() {
       if (!this.isPlay) {
@@ -345,9 +353,11 @@ export default {
       } else {
         this.startX = e.clientX;
       }
+      
       console.log("111", this.moveDistance);
     },
     mousemove(e) {
+      
       this.moveX = e.clientX;
       if (this.startX) {
         this.moveDistance = this.moveX - this.startX;
@@ -361,10 +371,16 @@ export default {
       }
       // 移动的百分比
       if (this.isClickSlider) {
+        console.log(this.moveDistance)
         // this.duration =
-        this.audio.currentTime =((this.moveDistance / 970) * 100 * this.duration) + "%";
+        // this.audio.currentTime =((this.moveDistance / 970) * 100 * this.duration) + "%";
+        const movep = (this.moveDistance/970)
+        this.currentTime = movep*(this.audio.duration)
+        this.duration = (this.currentTime / this.durationTime) * 100 + "%";
+
+        this.$refs.audio.currentTime =this.currentTime 
       }
-      console.log("移动的距离", this.moveDistance);
+      
     },
     mouseup(e) {
       this.isClickSlider = false;
@@ -425,7 +441,7 @@ export default {
 
 };
 </script>
-<style>
+<style scoped>
 html,
 body {
   height: 100%;
@@ -501,6 +517,8 @@ body {
   max-width: 1626px;
   margin: 0 auto;
   color: #e1e1e1cc;
+  display: flex;
+  justify-content: center;
 }
 .playMain .playerForm {
   width: 100%;
@@ -574,9 +592,15 @@ body {
   height: 14px;
   border: 1px solid #fff;
 }
+.songsListTab{
+  height: 100%;
+}
 .songsList {
   overflow-y: scroll;
-  height: 550px;
+  height: 65%;
+}
+.songsList::-webkit-scrollbar{
+  display: none;
 }
 .songsList li {
   width: 100%;
@@ -619,7 +643,7 @@ body {
   display: flex;
 }
 .playFoot {
-  position: relative;
+  position: fixed;
   right: 0;
   left: 0;
   bottom: 0;
