@@ -49,6 +49,7 @@
         </li>
       </ul>
     </div>
+    
     <!-- 下半部分 -->
     <div>
       <div class="mod_part_detail">
@@ -90,7 +91,6 @@
               />
               <img class="mod_playlist__bg_img" src="./image/p5.png" />
             </div>
-
             <!-- 点击跳转到playlistDetail -->
             <p class="playlist__title_txt" @click="goToplaylistDetail(item.id)">
               {{ item.name }}
