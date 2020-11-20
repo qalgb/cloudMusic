@@ -122,7 +122,7 @@ export default {
       this.$router.push({path:'/search',query:{s:this.searchInfo}})
     },
     // 点击导航栏高亮
-    handleClick(e) {
+     handleClick(e) {
       // 判断current
       if (e.target.nodeName === "A") {
         this.$refs.fis.$el.className ? (this.$refs.fis.$el.className = "") : "";

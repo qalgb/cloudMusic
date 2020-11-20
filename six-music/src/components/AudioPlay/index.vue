@@ -22,7 +22,7 @@
             </span>
           </a>
           <a v-show="isShowLogin" class="user" href="###">
-            <img class="userImg" :src="this.userDetInfo.avatarUrl" alt />
+            <img class="userImg" :src="userDetInfo.avatarUrl" alt />
             <span class="userName fontSet">{{
               this.userDetInfo.nickname
             }}</span>
@@ -104,7 +104,7 @@
           </div>
           <div class="songInfo">
             <a class="songInfoShow" href="#####">
-              <img class="songImg" src="./img/photo.jpg" />
+              <img class="songImg" :src="picUrl" />
             </a>
             <div class="songName">
               歌曲名：
@@ -162,8 +162,8 @@
               <a href="##">{{ songAr }}</a>
             </div>
             <div class="songTime">
-              <a href="##">00：00</a>/
-              <a href="##">04：18</a>
+              <a href="##">{{timeToString(currentTime)}}</a>/
+              <a href="##">{{timeToString(durationTime)}}</a>
             </div>
           </div>
           <!-- 进度条 -->
@@ -308,6 +308,7 @@ export default {
     await this.$store.dispatch('getUserDetInfo', this.userInfo.userId)
     // 执行监听事件
     this.addEventListenerBar()
+    console.log(this.songListAudio)
   },
   methods: {
     addEventListenerBar() {
@@ -315,7 +316,6 @@ export default {
       // currentTime属性变化时触发，每秒可能触发4到60次 
       let audio = this.$refs.audio
       audio.addEventListener("timeupdate", () => { 
-        console.log(audio.currentTime) 
         this.currentTime = audio.currentTime;
         this.durationTime = audio.duration;
         this.duration = (this.currentTime / this.durationTime) * 100 + "%";
@@ -446,8 +446,6 @@ export default {
       // 移动的百分比
       if (this.isClickSlider) {
         console.log(this.moveDistance)
-        // this.duration =
-        // this.audio.currentTime =((this.moveDistance / 970) * 100 * this.duration) + "%";
         const movep = (this.moveDistance/970)
         this.currentTime = movep*(this.$refs.audio.duration)
         this.duration = (this.currentTime / this.durationTime) * 100 + "%";
@@ -541,14 +539,17 @@ body {
 }
 
 .player .bgimg {
-  height: 300%;
-  width: 300%;
+  height: 100%;
+  width: 100%;
   position: absolute;
   top: 0;
   transform: scale(1.1);
-  z-index: -1;
+  z-index: -2;
   filter: blur(100px);
+  background-color: black;
+
 }
+
 .playertitle {
   margin: 20px 0 0 20px;
 }
@@ -745,6 +746,12 @@ input {
   display: flex;
   align-items: center;
   flex-direction: column;
+}
+.songInfo a{
+  color: rgba(225, 225, 225, 0.8) !important;
+}
+.songInfo a:hover{
+  color: rgba(225, 225, 225, 1) !important;
 }
 .songInfo div {
   color: rgba(225, 225, 225, 0.8);
