@@ -2,8 +2,6 @@ import Home from "../pages/Home";
 import Radio from "@/pages/Radio"
 //我的音乐
 import MyMusic from "../pages/MyMusic";
-import NewDisc from '../pages/NewDisc';
-import Radio from '../pages/Radio';
 import Rank from "../pages/Rank"
 import Register from "../pages/Register";
 import AudioPlay from '../components/AudioPlay'
@@ -17,7 +15,6 @@ import Pendant from "@/components/Pendant";
 //歌手
 import SingerList from "@/pages/SingerList";
 
-import Radio from "@/pages/Radio"
 // 搜索
 import Search from '@/pages/Search'
 
