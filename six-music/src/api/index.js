@@ -25,8 +25,6 @@ export const reqDiscList = (area) =>
 export const reqTopList = () => ajax.get("/toplist/detail");
 // 获取MV
 export const reqMvList = (location) => ajax.get(`/mv/all?area=${location}`);
-// 获取歌词
-export const reqLyric = (id) => ajax.get(`/lyric?id=${id}`)
 
 /* 歌单详情页请求 */
 // 获取歌单详情
@@ -144,3 +142,5 @@ export const reqCommentList = (id,type,pageNo,PageSize,sortType,cursor) => ajax(
   method: 'GET',
   url: `/comment/new?type=${type}&id=${id}&sortType=${sortType}&cursor=${cursor}&pageSize=${PageSize}&pageNo=${pageNo}`
 })
+// 获取歌词
+export const reqLyric = (id) => ajax.get(`/lyric?id=${id}`)
