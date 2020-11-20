@@ -78,23 +78,24 @@
               </ul>
               <i class="songListLine"></i>
               <ul class="songsList">
-                <li v-for="(item,index) in songListAudio" :key="item.id">
+                <li v-for="(item, index) in songListAudio" :key="item.id">
                   <input type="checkbox" class="songListEdit" />
-                  <span class="songListItem">{{index+1}}</span>
+                  <span class="songListItem">{{ index + 1 }}</span>
+
                   <span class="songListSongName">
-                    <span>{{item.name}}</span>
+                    <span>{{ item.name }}</span>
                     <span class="songListMod">
-                      <i @click="playMusic(item.id)">
-                          <i v-if="!isPlayItem" class="iconfont icon-bofang1" ></i>
-                          <i v-else><a-icon type="pause-circle" /></i>
+                      <i @click="playMusic(item.id, index)">
+                        <i v-if="!isPlayItem" class="iconfont icon-bofang1"></i>
+                        <i v-else><a-icon type="pause-circle" /></i>
                       </i>
                       <i class="iconfont icon--tainjia"></i>
                       <i class="iconfont icon-fenxiang"></i>
                     </span>
                   </span>
-                  <span class="songListAuthor">{{getSongAr(index)}}</span>
+                  <span class="songListAuthor">{{ getSongAr(index) }}</span>
                   <span class="songListTime">
-                    <span>{{getSongTime(item.dt)}}</span>
+                    <span>{{ getSongTime(item.dt) }}</span>
                     <i class="iconfont icon-shanchu_A"></i>
                   </span>
                 </li>
@@ -107,16 +108,33 @@
             </a>
             <div class="songName">
               歌曲名：
-              <a href="####">{{songListAudio[0].name}}</a>
+              <a href="####">{{
+                (!songListAudio || songListAudio.length > 0) &&
+                songListAudio[0].name
+              }}</a>
             </div>
             <div class="songSinger">
               歌手名：
-              <a href="####">{{getSongAr(0)}}</a>
+              <a href="####">{{ getSongAr(0) }}</a>
             </div>
             <div class="songAlbum">
               专辑名：
-              <a href="####">{{songListAudio[0].al.name}}</a>
+              <a href="####">{{
+                (!songListAudio || songListAudio.length > 0) &&
+                songListAudio[0].al.name
+              }}</a>
             </div>
+            <ul ref="lyricUL" class="lyricUL">
+              <li
+                v-for="(item, i) in lyricsObjArr"
+                :style="{ color: lyricIndex === i ? 'skyblue' : '#ded9d9' }"
+                :key="item.uid"
+                :data-index="i"
+                ref="lyric"
+              >
+                {{ item.lyric }}
+              </li>
+            </ul>
           </div>
         </div>
       </div>
@@ -137,8 +155,11 @@
           <!-- 当前歌曲名字和时长 -->
           <div class="progressBarText">
             <div class="nameAndAuthor">
-              <a href="##">{{songListAudio[0].name}}</a>-
-              <a href="##">{{getSongAr(0)}}</a>
+              <a href="##">{{
+                (!songListAudio || songListAudio.length > 0) && songName
+              }}</a
+              >-
+              <a href="##">{{ songAr }}</a>
             </div>
             <div class="songTime">
               <a href="##">00：00</a>/
@@ -173,7 +194,7 @@
 </template>
 <script>
 import GoLogin from '../GoLogin'
-import { reqSongUrl } from '@/api'
+import { reqSongUrl, reqLyric } from '@/api'
 import { mapState } from 'vuex'
 import moment from 'moment'
 import { reqSongInfo } from '@/api'
@@ -208,7 +229,11 @@ export default {
       isButton: 3,
       isShowLogin: false,
       songListAudio: [],
-      picUrl: '' //歌曲图片
+      songName: '',
+      songAr: '',
+      lyric: [], // 歌词
+      lyricsObjArr: [],
+      picUrl: '', //歌曲图片
     }
   },
   computed: {
@@ -219,31 +244,34 @@ export default {
       userDetInfo: (state) => state.play.userDetInfo,
       // 获取歌曲url
       songUrl: (state) => state.play.songUrl,
-      // 获取歌曲详细信息
-      // songListAudio: (state) => state.play.songListAudio,
-      // songListAudio: {
-      //   get: function (state) {
-      //     return state.play.songListAudio
-      //   },
-        // set: function (value) {
-        //   this.songListAudio = value
-        // }
-      // }
     }),
     //统计歌曲歌手数量
-    getSongAr(index){
+    getSongAr(index) {
       return (index) => {
-        return this.songListAudio[index].ar.reduce((pre,item,index) => {
+        if (this.songListAudio.length > 0) {
+          return this.songListAudio[index].ar.reduce((pre, item, index) => {
             return index > 0 ? pre + ' / ' + item.name : pre + item.name
-        }, '')
-      }
-    }, 
-    //获取歌曲时长
-    getSongTime(){
-      return (time) => {
-        return moment(time).format('mm:ss');
+          }, '')
+        }
       }
     },
+    //获取歌曲时长
+    getSongTime: {
+      get: function (time) {
+        return (time) => {
+          return moment(time).format('mm:ss')
+        }
+      },
+      set: function (newVal) {
+        console.log(newVal)
+      },
+    },
+  },
+  watch: {
+    // lyricsObjArr(newVal){
+    //   console.log(newVal);
+    //   this.lyricsObjArr = newVal
+    // }
   },
   async mounted() {
     // 获取query传过来的ID 默认图片 和歌曲列表数据
@@ -251,6 +279,7 @@ export default {
     this.songId = id
     this.picUrl = picUrl
     this.songListAudio = songListAudio
+    console.log(this.songListAudio)
     // 判断当前歌曲列表数据是否为空
     if (!this.songListAudio) {
       // 如果为空则值穿一个歌曲数据
@@ -258,42 +287,52 @@ export default {
       if (result.code === 200) {
         this.songListAudio = result.songs
       }
-    }else {
+    } else {
       // 如果不是全部载入
-      this.songListAudio = songListAudio
+      this.songListAudio = JSON.parse(songListAudio)
     }
+    // 初始化歌曲名
+    this.songName = this.songListAudio[0].name
+    // 初始化歌手名
+    this.songAr = this.songListAudio[0].ar.reduce((pre, item, index) => {
+      return index > 0 ? pre + ' / ' + item.name : pre + item.name
+    }, '')
     if (this.$route.fullPath.indexOf('audioplay') !== -1) {
       document.documentElement.style.overflow = 'hidden'
       document.body.style.overflow = 'hidden'
     }
+    // 判断是否登录
     this.isLogin()
-
-    // 获取audio对象
-    this.audio = this.$refs.audio
+    // 获取用户信息
     await this.$store.dispatch('getUserInfo', localStorage.cookie)
-
     // 通过用户id获取用户详细信息
     await this.$store.dispatch('getUserDetInfo', this.userInfo.userId)
-    // currentTime属性变化时触发，每秒可能触发4到60次
-    // this.audio.addEventListener('timeupdate', () => {
-    //   this.currentTime = this.audio.currentTime
-    //   this.durationTime = this.audio.duration
-    //   this.duration = (this.currentTime / this.durationTime) * 100 + '%'
-    // })
+    // 执行监听事件
     this.addEventListenerBar()
   },
   methods: {
-      addEventListenerBar() {
+    addEventListenerBar() {
       // 监听进度条
-      // console.log(1);
-      // currentTime属性变化时触发，每秒可能触发4到60次 
+      // currentTime属性变化时触发，每秒可能触发4到60次
       let audio = this.$refs.audio
-      audio.addEventListener("timeupdate", () => { 
-        console.log(audio.currentTime) 
-        this.currentTime = audio.currentTime;
-        this.durationTime = audio.duration;
-        this.duration = (this.currentTime / this.durationTime) * 100 + "%";
-      });
+      audio.addEventListener('timeupdate', () => {
+        console.log(audio.currentTime)
+        this.currentTime = audio.currentTime
+        this.durationTime = audio.duration
+        this.duration = (this.currentTime / this.durationTime) * 100 + '%'
+        // 歌词
+        for (let i = 0; i < this.lyricsObjArr.length; i++) {
+          if (this.currentTime > parseInt(this.lyricsObjArr[i].time)) {
+            const index = this.$refs.lyric[i].dataset.index
+            if (i === parseInt(index)) {
+              this.lyricIndex = i
+              this.$refs.lyricUL.style.transform = `translateY(${
+                170 - 30 * (i + 1)
+              }px)`
+            }
+          }
+        }
+      })
     },
     // 播放与暂停
     async handlePlay() {
@@ -301,59 +340,104 @@ export default {
         await this.getSongUrl(this.songId)
         this.$refs.audio.play()
         this.isPlay = true
-        
+        await this.getLyric(this.songId)
       } else {
         this.$refs.audio.pause()
         this.isPlay = false
       }
     },
     // 获取歌曲url
-    async getSongUrl(id){
-        await this.$store.dispatch('getSongUrl',id)
+    async getSongUrl(id) {
+      await this.$store.dispatch('getSongUrl', id)
     },
-    // 进度条
-    mousedown(e) {
-      this.isClickSlider = true;
-      if (this.moveDistance) {
-        this.startX = this.nextStart;
-      } else {
-        this.startX = e.clientX;
+    // 获取歌词
+    async getLyric(id) {
+      const result = await reqLyric(id)
+      if (result.code === 200) {
+        this.lyric = result.lrc.lyric
       }
-      
-      console.log("111", this.moveDistance);
+      console.log(this.lyric)
+      // 用正则匹配换行字符对字符串进行分割
+      const regNewLine = /\n/
+      const lineArr = this.lyric.split(regNewLine)
+      const regTime = /\[\d{2}:\d{2}.\d{2,3}\]/
+      // console.log(lineArr);
+      // 对lineArr数组进行遍历分隔
+      lineArr.forEach((item) => {
+        if (item === '') return
+        const obj = {}
+        const time = item.match(regTime)
+
+        obj.lyric =
+          item.split(']')[1].trim() === '' ? '' : item.split(']')[1].trim()
+        obj.time = time
+          ? this.formatLyricTime(time[0].slice(1, time[0].length - 1))
+          : 0
+        obj.uid = Math.random().toString().slice(-6)
+        if (obj.lyric === '') {
+          console.log('这一行没有歌词')
+        } else {
+          this.lyricsObjArr.push(obj)
+        }
+      })
+      console.log(this.lyricsObjArr)
+    },
+    // 时间转换
+    formatLyricTime(time) {
+      // 格式化歌词的时间 转换成 sss:ms
+      const regMin = /.*:/
+      const regSec = /:.*\./
+      const regMs = /\./
+
+      const min = parseInt(time.match(regMin)[0].slice(0, 2))
+      let sec = parseInt(time.match(regSec)[0].slice(1, 3))
+      const ms = time.slice(
+        time.match(regMs).index + 1,
+        time.match(regMs).index + 3
+      )
+      if (min !== 0) {
+        sec += min * 60
+      }
+      return Number(sec + '.' + ms)
+    },
+    // 进度条移动
+    mousedown(e) {
+      this.isClickSlider = true
+      if (this.moveDistance) {
+        this.startX = this.nextStart
+      } else {
+        this.startX = e.clientX
+      }
     },
     mousemove(e) {
-      
-      this.moveX = e.clientX;
+      this.moveX = e.clientX
       if (this.startX) {
-        this.moveDistance = this.moveX - this.startX;
+        this.moveDistance = this.moveX - this.startX
       }
       if (this.moveDistance < 0) {
-        this.moveDistance = 0;
+        this.moveDistance = 0
       }
       if (this.moveDistance > 970) {
-        this.moveDistance = 970;
-        return;
+        this.moveDistance = 970
+        return
       }
       // 移动的百分比
       if (this.isClickSlider) {
         console.log(this.moveDistance)
         // this.duration =
         // this.audio.currentTime =((this.moveDistance / 970) * 100 * this.duration) + "%";
-        const movep = (this.moveDistance/970)
-        this.currentTime = movep*(this.audio.duration)
-        this.duration = (this.currentTime / this.durationTime) * 100 + "%";
-
-        this.$refs.audio.currentTime =this.currentTime 
+        const movep = this.moveDistance / 970
+        this.currentTime = movep * this.$refs.audio.duration
+        this.duration = (this.currentTime / this.durationTime) * 100 + '%'
+        this.$refs.audio.currentTime = this.currentTime
       }
-      
     },
     mouseup(e) {
-      this.isClickSlider = false;
+      this.isClickSlider = false
       // 重置
-      this.nextStart = this.startX;
-      this.startX = 0;
-      console.log("22", this.moveDistance);
+      this.nextStart = this.startX
+      this.startX = 0
+      console.log('22', this.moveDistance)
     },
 
     // 判断是否登陆
@@ -403,18 +487,27 @@ export default {
       }
     },
     // 点击播放与暂停
-    async playMusic(id) {
+    async playMusic(id, index) {
       if (!this.isPlayItem) {
         await this.getSongUrl(id)
         this.$refs.audio.play()
         this.isPlay = true
         this.isPlayItem = true
-      }else {
+        this.picUrl = this.songListAudio[index].al.picUrl
+        this.songName = this.songListAudio[index].name
+        this.songAr = this.songListAudio[index].ar.reduce(
+          (pre, item, index) => {
+            return index > 0 ? pre + ' / ' + item.name : pre + item.name
+          },
+          ''
+        )
+        await this.getLyric(id)
+      } else {
         this.$refs.audio.pause()
         this.isPlay = false
         this.isPlayItem = false
       }
-    }
+    },
   },
 }
 </script>
@@ -526,6 +619,9 @@ body {
   border-color: white;
   cursor: pointer;
 }
+.playMain .playerSongs .funBtn button i {
+  margin-right: 5px;
+}
 .songListLine {
   display: block;
   width: 100%;
@@ -548,8 +644,8 @@ body {
   display: flex;
   justify-content: space-between;
 }
-.songsList li:hover .songListSongName .songListMod{
-  visibility:visible;
+.songsList li:hover .songListSongName .songListMod {
+  visibility: visible;
 }
 .songListMod {
   width: 138px;
@@ -574,14 +670,22 @@ body {
   height: 14px;
   border: 1px solid #fff;
 }
-.songsListTab{
+.songsListTab {
   height: 80%;
 }
 .songsList {
   overflow-y: scroll;
-  height: 65%;
+  height: 67%;
 }
-.songsList::-webkit-scrollbar{
+.lyricUL {
+  height: 350px;
+  overflow: hidden;
+  text-align: center;
+}
+.lyricUL li {
+  line-height: 25px;
+}
+.songsList::-webkit-scrollbar {
   display: none;
 }
 .songsList li {
@@ -590,7 +694,7 @@ body {
   border-bottom: 1px solid rgba(255, 255, 255, 0.02);
   display: flex;
 }
-input{
+input {
   color: -internal-light-dark(black, white);
   opacity: 0.3;
   width: 15px;
@@ -598,7 +702,7 @@ input{
 }
 .songsList input,
 .songsList span {
-  line-height: 50px;
+  line-height: 55px;
   height: 50px;
 }
 .songListItem {
@@ -622,6 +726,9 @@ input{
 }
 .songName {
   margin-top: 15px;
+}
+.songInfo a {
+  color: rgba(225, 225, 225, 0.8) !important;
 }
 .songInfo .songImg {
   width: 186px;

@@ -7,6 +7,7 @@ import mymusic from './mymusic'
 import radio from './radio';
 import newdisc from './newdisc';
 import mvvideo from "./mvvideo";
+import search from "./search"
 
 export default {
   home,
@@ -17,5 +18,6 @@ export default {
   mymusic,
   radio,
   newdisc,
-  mvvideo
+  mvvideo,
+  search
 };

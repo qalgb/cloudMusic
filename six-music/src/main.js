@@ -1,7 +1,7 @@
 // 引入Vue
 import Vue from "vue";
 // 引入App
-import App from "./APP.vue";
+import App from "./App.vue";
 // 引入router
 import router from "./router";
 // 引入store

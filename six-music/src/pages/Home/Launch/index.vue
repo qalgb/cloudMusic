@@ -18,11 +18,11 @@
       <!-- 点击滑动 -->
       <div class="swiper-container" ref="sw1">
         <div class="swiper-wrapper">
-          <div class="swiper-slide" v-for="item in newSongList" :key="item.id">
-            <div class="song_cover" @click="toPlay(item.id)">
+          <div class="swiper-slide" v-for="(item,index) in newSongList" :key="item.id">
+            <div class="song_cover" @click="toPlay(newSongList[index].id,newSongList[index].album.picUrl)">
               <img v-lazy="item.album.picUrl" />
               <i class="mod_cover__mask"></i>
-              <i class="mod_cover__icon_play" @click="toPlay(item.id)"></i>
+              <i class="mod_cover__icon_play" @click="toPlay(newSongList[index].id,newSongList[index].album.picUrl)"></i>
             </div>
             <div class="songInfo">
               <a href="javascript:;" class="songlist_song">{{ item.name }}</a>
@@ -112,8 +112,8 @@ export default {
       this.getNewSongList(type)
     },
     // 点击播放按钮
-    toPlay (id) {
-      this.$router.push({name:'audioplay',params:{id}})
+    toPlay (id,picUrl) {
+      this.$router.push({path:'/audioplay',query:{id,picUrl}})
     }
   },
 }

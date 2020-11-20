@@ -28,6 +28,7 @@
       </ul>
       <div class="search">
         <input
+          @keyup.enter="toSearch"
           type="text"
           class="searchInput"
           aria-label="请输入搜索内容"
@@ -77,7 +78,7 @@
     </div>
     <!-- 音乐馆导航栏 -->
     <ul class="musicPavilionNav" :style="{ display: isShow ? '' : 'none' }" @click="handleClick">
-      <li><router-link to="/" class="smallActive">首页</router-link></li>
+      <li><router-link to="/" class="smallActive" ref="fis">首页</router-link></li>
       <li><a href="javascript:;">歌手</a></li>
       <li><router-link to="/newdisc">新碟</router-link></li>
       <li>
@@ -115,12 +116,18 @@ export default {
     GoLogin,
   },
   methods: {
+    // 跳转搜索
+    toSearch(e) {
+      this.searchInfo = e.target.value
+      this.$router.push({path:'/search',query:{s:this.searchInfo}})
+    },
     // 点击导航栏高亮
     handleClick(e) {
       // 判断current
-      this.current ? (this.current.className = '') : ''
-      if (e.target.nodeName === 'A') {
-        e.target.className = 'smallActive'
+      if (e.target.nodeName === "A") {
+        this.$refs.fis.$el.className ? (this.$refs.fis.$el.className = "") : "";
+        this.current ? (this.current.className = "") : "";
+        e.target.className = "smallActive";
         // 更新current
         this.current = e.target;
       }

@@ -49,7 +49,17 @@
           </li>
         </ul>
         <div class="data_actions">
-          <a href="javascript:;" class="btn_green">
+          <a
+            href="javascript:;"
+            class="btn_green"
+            @click="
+              toPlayAll(
+                playList.tracks,
+                playList.tracks[0].id,
+                playList.tracks[0].al.picUrl
+              )
+            "
+          >
             <i class="btn_green_icon_play"></i>
             播放全部
           </a>
@@ -86,7 +96,12 @@
               <div class="songlist_item">
                 <div class="songlist_number">{{ index + 1 }}</div>
                 <div class="songlist_songname">
-                  <a href="javascript:;" class="songlist_icon_mv" title="Mv" v-if="item.mv !== 0"></a>
+                  <a
+                    href="javascript:;"
+                    class="songlist_icon_mv"
+                    title="Mv"
+                    v-if="item.mv !== 0"
+                  ></a>
                   <i
                     v-if="item.copyright === 1"
                     class="songlist_icon songlist_icon_exclusive"
@@ -108,7 +123,7 @@
                     >
                       <i
                         class="list_menu_icon_play"
-                        @click="toPlay(item.id)"
+                        @click="toPlay(item.id, playList.tracks[0].al.picUrl)"
                       ></i>
                       <span class="icon_txt">播放</span>
                     </a>
@@ -179,16 +194,18 @@
           <h3 class="about_tit">简介</h3>
           <div class="about_cont">
             <p>
-              {{playList.description}}
+              {{ playList.description }}
             </p>
           </div>
-          <a href="javascript:;" class="about_more" @click="handleMore">[更多]</a>
+          <a href="javascript:;" class="about_more" @click="handleMore"
+            >[更多]</a
+          >
         </div>
       </div>
       <div class="data_detail" v-if="isShow">
         <div class="data_detail_cont">
           <h3 class="data_detail_tit">简介</h3>
-          <p>{{playList.description}}</p>
+          <p>{{ playList.description }}</p>
         </div>
         <i class="data_detail_arrow"></i>
       </div>
@@ -206,7 +223,7 @@ export default {
     return {
       playListId: '', // 歌单id
       playList: {}, // 歌单详情数据
-      isShow: false //默认不显示专辑简介
+      isShow: false, //默认不显示专辑简介
     }
   },
   async mounted() {
@@ -224,16 +241,23 @@ export default {
       return moment(time).format('mm:ss')
     },
     // 传递歌曲id
-    toPlay(id) {
+    toPlay(id, picUrl) {
       // 获取歌单id
-      this.playListId = id
+      // this.playListId = id
       // 路由跳转
-      this.$router.push({ name: 'audioplay', params: { id: this.playListId } })
+      this.$router.push({ path: '/audioplay', query: { id, picUrl } })
+    },
+    // 播放全部
+    toPlayAll(songListAudio, id, picUrl) {
+      this.$router.push({
+        path: '/audioplay',
+        query: { songListAudio, id, picUrl },
+      })
     },
     // 点击更多
-    handleMore () {
+    handleMore() {
       this.isShow = !this.isShow
-    }
+    },
   },
 }
 </script>
@@ -415,14 +439,14 @@ export default {
   font-size: 14px;
   overflow: hidden;
 }
-.songlist_icon_mv{
+.songlist_icon_mv {
   display: inline-block;
-    width: 33px;
-    height: 16px;
-    background-position: -40px -280px;
-    vertical-align: middle;
-    margin-right: 6px;
-    background-image: url('../Home/images/icon_sprite.png');
+  width: 33px;
+  height: 16px;
+  background-position: -40px -280px;
+  vertical-align: middle;
+  margin-right: 6px;
+  background-image: url('../Home/images/icon_sprite.png');
 }
 .songlist_header {
   background-color: #fbfbfd;
@@ -572,7 +596,7 @@ export default {
 .songlist_album,
 .songlist_artist,
 .songlist_header_album,
-.songlist_header_author{
+.songlist_header_author {
   width: 20%;
   float: left;
   padding-left: 15px;
@@ -585,12 +609,13 @@ export default {
   right: 38px;
   width: 50px;
 }
-.songlist_time,.songlist_header_time{
+.songlist_time,
+.songlist_header_time {
   margin-right: 0;
   position: absolute;
-    top: 0;
-    right: 38px;
-    width: 50px;
+  top: 0;
+  right: 38px;
+  width: 50px;
 }
 .songlist_album,
 .songlist_artist,
@@ -662,45 +687,44 @@ export default {
 .about_more {
   margin-right: 10px;
 }
-.data_detail{
+.data_detail {
   /* display: none; */
   position: absolute;
   z-index: 1000000;
   top: 376px;
   right: 303px;
-    width: 580px;
-    background: #fff;
-    box-shadow: 0 0 4px rgba(0,0,0,.35);
-    border-radius: 4px;
-    /* border: 1px solid #ddd; */
+  width: 580px;
+  background: #fff;
+  box-shadow: 0 0 4px rgba(0, 0, 0, 0.35);
+  border-radius: 4px;
+  /* border: 1px solid #ddd; */
 }
-.data_detail_cont{
+.data_detail_cont {
   max-height: 400px;
   font-size: 14px;
   line-height: 22px;
   margin: 30px 5px 30px 10px;
   overflow-y: auto;
 }
-.data_detail_tit{
+.data_detail_tit {
   line-height: 22px;
-    font-size: 20px;
-    font-weight: 400;
-    padding: 0 0 20px;
-    margin: 0 24px 0 19px;
+  font-size: 20px;
+  font-weight: 400;
+  padding: 0 0 20px;
+  margin: 0 24px 0 19px;
 }
-.data_detail_cont p{
-      min-height: 22px;
-    text-align: justify;
-    word-break: break-all;
-    margin: 0 24px 0 19px;
+.data_detail_cont p {
+  min-height: 22px;
+  text-align: justify;
+  word-break: break-all;
+  margin: 0 24px 0 19px;
 }
-.data_detail_arrow{
+.data_detail_arrow {
   position: absolute;
-    top: 50px;
-    right: -11px;
-    width: 11px;
-    height: 17px;
-    background: url('../Home/images/popup_arrow.png') 0 -17px no-repeat;
+  top: 50px;
+  right: -11px;
+  width: 11px;
+  height: 17px;
+  background: url('../Home/images/popup_arrow.png') 0 -17px no-repeat;
 }
-
 </style>
