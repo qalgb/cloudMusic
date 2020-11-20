@@ -28,6 +28,7 @@
       </ul>
       <div class="search">
         <input
+          @keyup.enter="toSearch"
           type="text"
           class="searchInput"
           aria-label="请输入搜索内容"
@@ -115,6 +116,11 @@ export default {
     GoLogin,
   },
   methods: {
+    // 跳转搜索
+    toSearch(e) {
+      this.searchInfo = e.target.value
+      this.$router.push({path:'/search',query:{s:this.searchInfo}})
+    },
     // 点击导航栏高亮
     handleClick(e) {
       // 判断current

@@ -35,7 +35,7 @@
             <div class="song_cover">
               <img v-lazy="item.picUrl" />
               <i class="mod_cover__mask" @click="sendPlayListId(item.id)"></i>
-              <i class="mod_cover__icon_play" @click="toPlay(item.id)"></i>
+              <i class="mod_cover__icon_play"></i>
             </div>
             <div class="song_info">
               <a href="javascript:;">{{ item.name }}</a>
@@ -49,7 +49,7 @@
             </div>
           </div>
         </div>
-        <div class="swiper-button-njext"></div>
+        <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
         <div class="swiper-pagination"></div>
       </div>
@@ -197,10 +197,6 @@ export default {
       this.songId = id
       // 跳转
       this.$router.push({path:'/playlistdetail',query:{id:this.songId}})
-    },
-    // 点击播放按钮
-    toPlay (id) {
-      this.$router.push({path:'/audioplay',query:{id}})
     }
   },
 }

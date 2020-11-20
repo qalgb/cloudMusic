@@ -16,8 +16,9 @@
       <!-- 热门搜索 -->
       <div class="search_tips">
         热门搜索：
-        <a href="javascript:;">我们的歌</a>
-        <a href="javascript:;">冰雪奇缘</a>
+        <a href="javascript:;" v-for="(item, index) in hots" :key="index">{{
+          item.first
+        }}</a>
       </div>
     </div>
     <!-- 搜索内容 -->
@@ -63,7 +64,7 @@
                 <li class="songlist_header_time">时长</li>
               </ul>
               <ul class="songlist_list">
-                <li>
+                <li v-for="item in searchDetail" :key="item.id">
                   <div class="songlist_item">
                     <div class="songlist_songname">
                       <i class="songlist_icon songlist_icon_exclusive"></i>
@@ -72,7 +73,7 @@
                         class="songlist_icon songlist_icon_mv"
                       ></a>
                       <span class="songlist_songname_txt">
-                        <a href="javascript:;">光辉岁月</a>
+                        <a href="javascript:;">{{item.name}}</a>
                       </span>
                       <!-- 移入显示图标 -->
                       <div class="list_menu">
@@ -114,18 +115,20 @@
                       </div>
                     </div>
                     <div class="songlist_artist">
-                      <a href="javascript:;" class="singer_name">钟镇涛</a>
-                      /
-                      <a href="javascript:;" class="singer_name">黄绮珊</a>
+                      <a
+                        href="javascript:;"
+                        class="singer_name"
+                        v-for="ar in item.ar"
+                        :key="ar.id"
+                        >{{ ar.name }}</a
+                      >
                     </div>
                     <div class="songlist_album">
                       <a href="javascript:;" class="album_name">
-                        中国梦之声
-                        <span class="highlight">我们的歌</span>
-                        第二季 第6期
+                        {{ item.al.name }}
                       </a>
                     </div>
-                    <div class="songlist_time">04:34</div>
+                    <div class="songlist_time">{{ timeFormat(item.dt) }}</div>
                   </div>
                 </li>
               </ul>
@@ -133,11 +136,11 @@
           </div>
           <!-- 下载 -->
           <div class="page_box">
-          <div class="client_guide">
-            <p class="client_guide_txt">查看更多内容，请下载客户端</p>
-            <a href="javascript:;" class="client_guide_btn">立即下载</a>
+            <div class="client_guide">
+              <p class="client_guide_txt">查看更多内容，请下载客户端</p>
+              <a href="javascript:;" class="client_guide_btn">立即下载</a>
+            </div>
           </div>
-        </div>
         </div>
       </div>
     </div>
@@ -145,7 +148,8 @@
 </template>
 
 <script>
-import {reqSearchCon} from '@/api'
+import { mapState } from 'vuex'
+import moment from 'moment'
 
 export default {
   name: 'Search',
@@ -155,13 +159,25 @@ export default {
       keyWord: '', // 搜索框关键字
     }
   },
+  
+  computed: {
+    ...mapState({
+      searchDetail: (state) => state.search.searchDetail,
+      hots: (state) => state.search.hots,
+    }),
+  },
+
   async mounted() {
     // 页面滚动事件
     window.addEventListener('scroll', this.handleScroll)
     // 搜索请求
     // 更新关键字
-    this.keyWord = this.$route.query.keyWord
-    const result = await reqSearchCon(this.keyWord)
+    this.keyWord = this.$route.query.s
+    // 分发搜索结果
+    await this.$store.dispatch('getSearchDetail', this.keyWord)
+    // 分发热词
+    await this.$store.dispatch('getHots')
+
   },
   methods: {
     // 页面滚动
@@ -175,6 +191,10 @@ export default {
       // let offsetTop = this.$refs.ipt.offsetTop
       scrollTop > 300 ? (this.isMove = true) : (this.isMove = false)
     },
+    // 时间格式
+    timeFormat(time) {
+      return moment(time).format('mm:ss')
+    }
   },
 }
 </script>
@@ -558,5 +578,4 @@ export default {
   color: #fff;
   background-color: #2caf6f;
 }
-
 </style>

@@ -2,7 +2,9 @@
 import ajax from "./ajax";
 
 /* 搜索 */
-export const reqSearchCon = (keyword) => ajax.get(`/search?keywords= ${keyword}`)
+export const reqSearchCon = (keyword) => ajax.get(`/cloudsearch?keywords=${keyword}`)
+// 搜索热词
+export const reqSearchKeyword = () => ajax.get('/search/hot')
 
 /* Home页面请求 */
 // 获取歌单分类标签
@@ -23,6 +25,8 @@ export const reqDiscList = (area) =>
 export const reqTopList = () => ajax.get("/toplist/detail");
 // 获取MV
 export const reqMvList = (location) => ajax.get(`/mv/all?area=${location}`);
+// 获取歌词
+export const reqLyric = (id) => ajax.get(`/lyric?id=${id}`)
 
 /* 歌单详情页请求 */
 // 获取歌单详情
